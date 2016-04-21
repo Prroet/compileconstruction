@@ -39,7 +39,7 @@ typedef struct {
 
 
 /** baut ein wort. erwartet eine vergleichsoption die char nimmt und bool zurück gibt **/
-token buildWord(function<bool (char)> fp, ifstream &is, char lastChar, int id) {
+token buildWord(function<int (int)> fp, ifstream &is, char lastChar, int id) {
 	token ret = {0, "EOF"};	
 	string str = {lastChar};	
 
@@ -61,15 +61,15 @@ token buildWord(function<bool (char)> fp, ifstream &is, char lastChar, int id) {
 
 
 /** operanten (Deren Bestandteile) im Sinne unseres Syntaxes**/
-bool isOperator(char c) {
+int isOperator(int c) {
 	return (c=='+' || c=='-' || c=='*' || c=='/' || c=='=' || c=='<' || c=='>') || 
-		   (c==':') || (c=='.') ||
+		   (c==':') || (c=='.') || (c==',') || 
 		   (c=='(' || c==')' || c=='[' || c==']' || c=='{' || c=='}');
 }
 
 
 /** delimiter, ergo trennzeichen zwischen befehlen **/
-bool isDelimiter(char c) {
+int isDelimiter(int c) {
 	return (c=='\n' || c==';');
 }
 
@@ -118,31 +118,33 @@ token getToken(ifstream &is) {
 
 	// get identifyers and controll words
 	if (isalpha(lastChar)) { // identifier: [a-zA-Z][a-zA-Z0-9]*
-		auto fp = [](char c)->bool{return isalnum(c);};
+		auto fp = [](int c)->int{return isalnum(c);};
 		return buildWord(fp, is, lastChar, static_cast<int>(token_ident::identifier));
 	}
 
 	// get numbers
 	if (isdigit(lastChar)) {   // Number: [0-9.]+
-		auto fp = [](char c)->bool{return isdigit(c);};
+		auto fp = [](int c)->int{return isdigit(c);};
 		return buildWord(fp, is, lastChar, static_cast<int>(token_ident::number));
 	
 		//TODO: use for something - should we check for "this is a number"?
 		//NumVal = strtod(NumStr.c_str(), 0);
 	}
 
+	// get comments
+	if (lastChar == '#') {
+		auto fp = [](int c)->int{ return (c!='\n' && c!='\r'); };
+		return buildWord(fp, is, lastChar, static_cast<int>(token_ident::oneline_comment));
+	}
+	if (lastChar == '/' && is.peek() == '/') {
+		auto fp = [](int c)->int{ return (c!='\n' && c!='\r'); };
+		return buildWord(fp, is, lastChar, static_cast<int>(token_ident::oneline_comment));
+	}	
+
 	// get operants
 	if(isOperator(lastChar)) {
 		return buildWord(isOperator, is, lastChar, static_cast<int>(token_ident::operand));
 	}
-
-	// get comments
-	if (lastChar == '#') {
-		auto fp = [](char c)->bool{ return (c!='\n' && c!='\r'); };
-		return buildWord(fp, is, lastChar, static_cast<int>(token_ident::oneline_comment));
-	}
-	//TODO: // comments
-	
 
 	if(lastChar == '"') {
 		string StrValue = "";
