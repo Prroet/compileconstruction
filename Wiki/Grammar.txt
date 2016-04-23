@@ -7,8 +7,7 @@ Comment can not start inside rune or string literal
 4 classes of tokens in go:
 	identifiers -> such as variables and types
 	keywords -> doesn't need an explanation
-	operators -> +-*/ == = && etc.
-	delimiteters -> , ; .
+	operators&delimiteters -> 
 	literals -> everything you can put into a variable like int float string etc. but this is constant!
 
 	
