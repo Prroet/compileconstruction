@@ -25,6 +25,8 @@ int isDelimiter(int c) {
 // ----------------------- 
 
 Lexor::Lexor() {
+	this->keyWords = {"break","default","func","interface","select","case","defer","go","map","struct","chan",
+    "else","goto","package","switch","const", "fallthrough", "if", "range", "type", "continue","for", "import", "return", "var"};
 }
 
 
@@ -103,7 +105,10 @@ token Lexor::getToken() {
 	// get identifyers and controll words
 	if (isalpha(lastChar)) { // identifier: [a-zA-Z][a-zA-Z0-9]*
 		auto fp = [](int c)->int{return isalnum(c);};
-		return this->buildWord(fp, lastChar, static_cast<int>(token_ident::identifier));
+		// could be a keyword
+		token myToken = this->buildWord(fp, lastChar, static_cast<int>(token_ident::identifier));
+		return findKeyWord(myToken);
+//		return this->buildWord(fp, lastChar, static_cast<int>(token_ident::identifier));
 	}
 
 	// numbers
@@ -183,3 +188,12 @@ token Lexor::buildWord(function<int (int)> fp, char lastChar, int id) {
 	return ret;
 }
 
+token Lexor::findKeyWord(token& theToken)
+{
+	for(auto i: this->keyWords)
+	{
+		if(i.compare(theToken.value) == 0)
+			theToken.type = static_cast<int>(token_ident::keyWord);
+	}
+	return theToken;
+}

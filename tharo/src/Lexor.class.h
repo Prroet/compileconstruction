@@ -15,6 +15,7 @@ enum class token_ident {
 
 	// primary
 	identifier,
+	keyWord,
 	number,
 	string, 
 	
@@ -43,10 +44,10 @@ class Lexor {
 		
 		token getToken();
 		token buildWord(std::function<int (int)>, char, int);
-
+		token findKeyWord(token& );
 	public:
 		std::vector<token>	tokens;
-
+		std::vector<std::string> keyWords;
 		Lexor();
 		Lexor* Read(std::string);
 		Lexor* Print();
