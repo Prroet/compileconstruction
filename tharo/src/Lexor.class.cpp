@@ -136,6 +136,10 @@ token Lexor::getToken() {
 		return buildString(lastChar, ECast(string));
 	}
 
+	if(lastChar == '`') {
+		return buildString(lastChar, ECast(string));
+	}
+
 	// whatever.
 	ret.type = 0;
 	ret.value = "unknown";
