@@ -24,7 +24,7 @@ class Parser {
 		token* currToken;
 		int position;
 
-		token* nextToken();
+		void nextToken();
 		bool eot();		
 
 		treeNode* E();
