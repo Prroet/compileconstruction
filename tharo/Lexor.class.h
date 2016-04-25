@@ -38,7 +38,6 @@ typedef struct {
 
 class Lexor {
 	private:
-		std::vector<token>	tokens;
 		std::string 		filename;
 		std::ifstream		instream;
 		
@@ -46,6 +45,8 @@ class Lexor {
 		token buildWord(std::function<int (int)>, char, int);
 
 	public:
+		std::vector<token>	tokens;
+
 		Lexor();
 		Lexor* Read(std::string);
 		Lexor* Print();
