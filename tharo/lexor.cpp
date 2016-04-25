@@ -29,7 +29,7 @@ Lexor::Lexor() {
 
 
 /** starts reading and tokenisize the given filename **/
-void Lexor::Read(std::string fname) {
+Lexor* Lexor::Read(std::string fname) {
 	this->filename = fname;
 	this->instream.open(this->filename.c_str(), ios_base::in);
 	
@@ -44,15 +44,17 @@ void Lexor::Read(std::string fname) {
 	}
 
 	this->instream.close();
+	return this;
 }
 
 
 /** prints out our tokens **/
-void Lexor::Print() {
+Lexor* Lexor::Print() {
 	for (auto t : this->tokens ) {
 		cout << "\033[1;31m(" << t.type << ")\033[0m";
 		cout << t.value << " ";
 	}
+	return this;
 }
 
 

@@ -47,8 +47,8 @@ class Lexor {
 
 	public:
 		Lexor();
-		void Read(std::string);
-		void Print();
+		Lexor* Read(std::string);
+		Lexor* Print();
 };
 
 #endif

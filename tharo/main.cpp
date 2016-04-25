@@ -5,9 +5,7 @@
 using namespace std;
 
 int main() {
-	Lexor* lex = new Lexor();
-	lex->Read("input.txt");
-	lex->Print();
+	(new Lexor())->Read("input.txt")->Print();
 
 	cout << endl;
 	return 0;	
