@@ -133,31 +133,7 @@ token Lexor::getToken() {
 	
 	// double quoted strings
 	if(lastChar == '"') {
-		string StrValue = "";
-		//TODO: needs an advanced lambda function. since its the only "block"-lex we do so far
-		// i leave it as it was
-
-		do {
-			if(this->instream.eof()) {
-				ret.type = ECast(string);
-				ret.value = "Unsescaped String (EOF)";
-				return ret;
-			}
-
-   			this->instream.get(lastChar);
-			if(lastChar=='"') break;
-			if(lastChar=='\n' || lastChar=='\r') {
-				ret.type = ECast(string);
-				ret.value = "Unsescaped String";
-				return ret;
-			}
-
-			StrValue += lastChar;
-		} while (1);
-
-		ret.type = ECast(string);
-		ret.value = StrValue;
-    	return ret;
+		return buildString(lastChar, ECast(string));
 	}
 
 	// whatever.
@@ -186,6 +162,29 @@ token Lexor::buildWord(function<int (int)> fp, char lastChar, int id) {
 	ret.value = str;/**/
 
 	return ret;
+}
+
+token Lexor::buildString(char lastChar, int id) {
+	token ret = {0, "EOF"};	
+	string str = "";
+	char esc = lastChar;
+
+	do {
+		if(this->instream.eof()) break;
+   		this->instream.get(lastChar);
+		if(lastChar==esc) break;
+		if(lastChar=='\n' || lastChar=='\r') {
+			ret.type = id;
+			ret.value = "Unsescaped String";
+			return ret;
+		}
+
+		str += lastChar;
+	} while (1);
+
+	ret.type = id;
+	ret.value = str;
+    return ret;
 }
 
 /** is this token an keyword? **/ 

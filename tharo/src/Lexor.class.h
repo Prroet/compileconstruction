@@ -46,6 +46,7 @@ class Lexor {
 		
 		token getToken();
 		token buildWord(std::function<int (int)>, char, int);
+		token buildString(char, int);
 		token findKeyWord(token& );
 	public:
 		std::vector<token>	tokens;
