@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "lexor.h"
+#include "Lexor.class.h"
 
 using namespace std;
 
 int main() {
-	(new Lexor())->Read("input.txt")->Print();
+	Lexor* lex = (new Lexor())->Read("input.txt")->Print();
 
 	cout << endl;
-	return 0;	
+	return 0;
 }
