@@ -64,7 +64,7 @@ Lexor* Lexor::Print() {
 token Lexor::getToken() {
 	char lastChar;
 	token ret;
-	ret.type = static_cast<int>(token_ident::eof);
+	ret.type = ECast(eof);
 	ret.value = "";
 
 	// get char
@@ -78,17 +78,17 @@ token Lexor::getToken() {
 
 	// singletons
 	ret.value += lastChar;
-	if(lastChar=='(') {	ret.type = static_cast<int>(token_ident::list_open); return ret; }
-	if(lastChar==')') {	ret.type = static_cast<int>(token_ident::list_close); return ret; }
-	if(lastChar=='[') {	ret.type = static_cast<int>(token_ident::option_open); return ret; }
-	if(lastChar==']') {	ret.type = static_cast<int>(token_ident::option_close); return ret; }
-	if(lastChar=='{') {	ret.type = static_cast<int>(token_ident::block_open); return ret; }
-	if(lastChar=='}') {	ret.type = static_cast<int>(token_ident::block_close); return ret; }
+	if(lastChar=='(') {	ret.type = ECast(list_open); return ret; }
+	if(lastChar==')') {	ret.type = ECast(list_close); return ret; }
+	if(lastChar=='[') {	ret.type = ECast(option_open); return ret; }
+	if(lastChar==']') {	ret.type = ECast(option_close); return ret; }
+	if(lastChar=='{') {	ret.type = ECast(block_open); return ret; }
+	if(lastChar=='}') {	ret.type = ECast(block_close); return ret; }
 
 	// delimiter?
 	if(isDelimiter(lastChar)) {
 		// merge delimiters
-		//return buildWord(isDelimiter, is, lastChar, static_cast<int>(token_ident::delimiter));
+		//return buildWord(isDelimiter, is, lastChar, ECast(delimiter));
 
 		while(isDelimiter(lastChar)) {
 			if(this->instream.eof()) return ret;
@@ -98,7 +98,7 @@ token Lexor::getToken() {
 		// last read was NOT valid: restore it, cut it!
 		this->instream.seekg(-1, ios::cur);
 
-		ret.type = static_cast<int>(token_ident::delimiter); 
+		ret.type = ECast(delimiter); 
 		return ret;
 	}
 
@@ -106,15 +106,15 @@ token Lexor::getToken() {
 	if (isalpha(lastChar)) { // identifier: [a-zA-Z][a-zA-Z0-9]*
 		auto fp = [](int c)->int{return isalnum(c);};
 		// could be a keyword
-		token myToken = this->buildWord(fp, lastChar, static_cast<int>(token_ident::identifier));
+		token myToken = this->buildWord(fp, lastChar, ECast(identifier));
 		return findKeyWord(myToken);
-//		return this->buildWord(fp, lastChar, static_cast<int>(token_ident::identifier));
+//		return this->buildWord(fp, lastChar, ECast(identifier));
 	}
 
 	// numbers
 	if (isdigit(lastChar)) {   // Number: [0-9.]+
 		auto fp = [](int c)->int{return isdigit(c);};
-		return this->buildWord(fp, lastChar, static_cast<int>(token_ident::number));
+		return this->buildWord(fp, lastChar, ECast(number));
 	
 		//TODO: use for something - should we check for "this is a number"?
 		//NumVal = strtod(NumStr.c_str(), 0);
@@ -123,12 +123,12 @@ token Lexor::getToken() {
 	// comments
 	if (lastChar == '/' && this->instream.peek() == '/') {
 		auto fp = [](int c)->int{ return (c!='\n' && c!='\r'); };
-		return this->buildWord(fp, lastChar, static_cast<int>(token_ident::oneline_comment));
+		return this->buildWord(fp, lastChar, ECast(oneline_comment));
 	}
 
 	// get operants
 	if(isOperator(lastChar)) {
-		return this->buildWord(isOperator, lastChar, static_cast<int>(token_ident::operand));
+		return this->buildWord(isOperator, lastChar, ECast(operand));
 	}
 	
 	// double quoted strings
@@ -139,7 +139,7 @@ token Lexor::getToken() {
 
 		do {
 			if(this->instream.eof()) {
-				ret.type = static_cast<int>(token_ident::string);
+				ret.type = ECast(string);
 				ret.value = "Unsescaped String (EOF)";
 				return ret;
 			}
@@ -147,7 +147,7 @@ token Lexor::getToken() {
    			this->instream.get(lastChar);
 			if(lastChar=='"') break;
 			if(lastChar=='\n' || lastChar=='\r') {
-				ret.type = static_cast<int>(token_ident::string);
+				ret.type = ECast(string);
 				ret.value = "Unsescaped String";
 				return ret;
 			}
@@ -155,7 +155,7 @@ token Lexor::getToken() {
 			StrValue += lastChar;
 		} while (1);
 
-		ret.type = static_cast<int>(token_ident::string);
+		ret.type = ECast(string);
 		ret.value = StrValue;
     	return ret;
 	}
@@ -188,12 +188,13 @@ token Lexor::buildWord(function<int (int)> fp, char lastChar, int id) {
 	return ret;
 }
 
+/** is this token an keyword? **/ 
 token Lexor::findKeyWord(token& theToken)
 {
 	for(auto i: this->keyWords)
 	{
 		if(i.compare(theToken.value) == 0)
-			theToken.type = static_cast<int>(token_ident::keyWord);
+			theToken.type = ECast(keyWord);
 	}
 	return theToken;
 }

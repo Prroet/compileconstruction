@@ -31,6 +31,8 @@ enum class token_ident {
 	error,
 };
 
+#define ECast(ID) { static_cast<int>(token_ident::ID) }
+
 typedef struct {
 	int type;
 	std::string value;
