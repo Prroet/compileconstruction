@@ -17,7 +17,8 @@ enum class token_ident {
 	identifier,
 	keyWord,
 	number,
-	string, 
+	string,
+	raw_string, 
 	
 	// comments
 	oneline_comment,

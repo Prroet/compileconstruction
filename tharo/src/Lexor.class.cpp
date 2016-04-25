@@ -137,7 +137,7 @@ token Lexor::getToken() {
 	}
 
 	if(lastChar == '`') {
-		return buildString(lastChar, ECast(string));
+		return buildString(lastChar, ECast(raw_string));
 	}
 
 	// whatever.
