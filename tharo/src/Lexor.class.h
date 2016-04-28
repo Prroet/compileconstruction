@@ -32,12 +32,18 @@ enum class token_ident {
 	error,
 };
 
-#define ECast(ID) { static_cast<int>(token_ident::ID) }
+#define ECast(ID) static_cast<int>(token_ident::ID)
 
-typedef struct {
+typedef struct token token; 
+struct token {
 	int type;
 	std::string value;
-} token;
+
+	token(int t, std::string val) {
+		this->type = t;
+		this->value = val;
+	}
+};
 
 
 class Lexor {
@@ -45,16 +51,17 @@ class Lexor {
 		std::string 		filename;
 		std::ifstream		instream;
 		
-		token getToken();
-		token buildWord(std::function<int (int)>, char, int);
-		token buildString(char, int);
-		token findKeyWord(token& );
+		token* getToken();
+		token* buildWord(std::function<int (int)>, char, int);
+		token* buildString(char, int);
+		token* findKeyWord(token*);
 	public:
-		std::vector<token>	tokens;
+		std::vector<token*>	tokens;
 		std::vector<std::string> keyWords;
 		Lexor();
 		Lexor* Read(std::string);
 		Lexor* Print();
+		Lexor* Filter();
 };
 
 #endif
