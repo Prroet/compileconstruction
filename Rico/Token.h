@@ -6,15 +6,16 @@
 class Token
 {
 	private:
-		const unsigned int _line;
-		const std::string _tokenName;
+		const unsigned int	_line;
+		const std::string	_tokenName;
 
 	private:
 		inline Token& operator= (const Token& right) { right; return *this; };
 		inline Token(void) : _line(0), _tokenName("") {};
 
 	public:
-		inline explicit Token(const unsigned int& line, const char* const tokenName) : _line(line), _tokenName(tokenName) {};
+		inline explicit Token(const unsigned int& line, const char* const tokenName) 
+							: _line(line), _tokenName(tokenName) {};
 		inline virtual ~Token(void) {};
 
 		inline const unsigned int& getLineNumber(void) const { return _line; };
@@ -23,20 +24,16 @@ class Token
 
 class Identifier : public Token
 {
-	public:
-		inline Identifier (const unsigned int& line, const char* const tokenName) : Token(line, tokenName) {};
-};
+	private:
+		const unsigned int	_attribute_value;
 
-class Keyword : public Token
-{
-	public:
-		inline Keyword (const unsigned int& line, const char* const tokenName) : Token(line, tokenName) {};
-};
+	private:
+		inline Identifier& operator= (const Identifier& right) { right; return *this; };
+		inline Identifier(void) : Token(0,""), _attribute_value(0) {};
 
-class Operator : public Token
-{
 	public:
-		inline Operator (const unsigned int& line, const char* const tokenName) : Token(line, tokenName) {};
+		inline Identifier (const unsigned int& line, const char* const tokenName, const unsigned int& attribute_value) : Token(line, tokenName), _attribute_value(attribute_value) {};
+		inline const unsigned int& getAttributeValue(void) const { return _attribute_value; };
 };
 
 class Delimiter : public Token
@@ -45,34 +42,37 @@ class Delimiter : public Token
 		inline Delimiter (const unsigned int& line, const char* const tokenName) : Token(line, tokenName) {};
 };
 
-class Semicolon : public Token
+class Terminator : public Token
 {
 	public:
-		inline Semicolon (const unsigned int& line, const char* const tokenName) : Token(line, tokenName) {};
+		inline Terminator (const unsigned int& line, const char* const tokenName) : Token(line, tokenName) {};
 };
 
-class Parenthesis : public Token
+template<typename T>
+class Literal : public Token
 {
 	public:
-		inline Parenthesis (const unsigned int& line, const char* const tokenName) : Token(line, tokenName) {};
+		typedef T value_type;
+
+	private:
+		const value_type _value;
+
+	public:
+		inline Literal (const unsigned int& line, const char* const tokenName, const value_type& value) : Token(line, tokenName), _value(value) {};
+		inline const value_type& getValue(void) const { return _value; };
 };
 
-class Literal abstract : public Token
+class Integer : public Literal<int>
 {
 	public:
-		inline Literal (const unsigned int& line, const char* const tokenName) : Token(line, tokenName) {};
+		inline Integer (const unsigned int& line, const char* const tokenName, const int& value) : Literal(line, tokenName, value) {};
 };
 
-class Integer : public Literal
+class String : public Literal<std::string>
 {
 	public:
-		inline Integer (const unsigned int& line, const char* const tokenName) : Literal(line, tokenName) {};
-};
+		inline String (const unsigned int& line, const char* const tokenName, const std::string& value) 
+			: Literal(line, tokenName, value) {};
 
-class String : public Literal
-{
-	public:
-		inline String (const unsigned int& line, const char* const tokenName) : Literal(line, tokenName) {};
 };
-
 #endif _TOKEN_

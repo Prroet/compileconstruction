@@ -1,11 +1,15 @@
 #include <fstream>
 #include "Tokenizer.h"
+#include "TokenizerLib.h"
 
 int main (int argc, char** argv)
 {
 	std::ifstream goFile("Beispiel2.go", std::ios::in);
 
-	Tokenizer Lexer(&goFile);
+	SymbolTable symbols;
+	Tokenizer Lexer(&goFile, &symbols);
+
+	symbols.printSymbolTable();
 
 	goFile.close();
 
