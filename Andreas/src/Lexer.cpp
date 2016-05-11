@@ -69,7 +69,6 @@ void Lexer::addOperatorDelimiter()
         if(lastChar == '(' || lastChar == ')')
         {
             currentTokenValue = lastChar;
-            std::cout << "addOperatorDelimiter "<< currentTokenValue <<std::endl;
             insertToken(static_cast<int>(TokenType::operatorDelimiter));
             currentTokenValue = "";
             sourceFile.get(lastChar);
@@ -80,7 +79,8 @@ void Lexer::addOperatorDelimiter()
             sourceFile.get(lastChar);
         }
     }
-    insertToken(static_cast<int>(TokenType::operatorDelimiter));
+    if(currentTokenValue.size() != 0)
+        insertToken(static_cast<int>(TokenType::operatorDelimiter));
     currentTokenValue = ""; // clear currentToken
 }
 
