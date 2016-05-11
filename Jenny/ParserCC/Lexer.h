@@ -18,16 +18,15 @@ class Lexer
         std::ifstream sourceFile;
         std::vector<Token*> tokens;
         std::string currentTokenValue;
-        // all keywords ?Keyword = Type 1?
+        // all keywords
         std::vector<std::string> keyWords = {"break","default","func","interface","select",
                                                 "case","defer","go","map","struct","chan",
                                             "else","goto","package","switch","const", "fallthrough",
                                             "if", "range", "type", "continue","for", "import", "return", "var"};
-        // maybe too much ?operators = Type ????
+        // maybe too much
         std::vector<std::string> operators = { "||", "&&", "==", "!=", "<", "<=", ">",
                                                 ">=", "+", "-", "|", "^", "*", "/", "%",
                                                 "<<", ">>", "&", "&^", "+", "-", "!", "^", "*", "&", "<-", ".", ":="};
-        //?operatorDelimStartSymbols = Type 2??
         std::vector<char> operatorDelimStartSymbols = {'(', ')', '{', '}', '.', ';', ',', '+', '=', ':'}; // might need further extension
         unsigned lineNumber;
         char lastChar = ' ';
@@ -37,7 +36,7 @@ class Lexer
         void skip(char charToSkip);
         void addOperatorDelimiter();
         void findStringLiteral();
-        void findIdentifier(); //?id = Type 0?
+        void findIdentifier();
         void findNumLiteral();
         void insertToken(int type);
         void insertToken(int type, int literalType);

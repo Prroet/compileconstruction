@@ -26,7 +26,7 @@
 #include "B2ndHalfNode.h"
 
 Tree::Tree() {
-    
+    buildTree();
 }
 
 Tree::Tree(const Tree& orig) {

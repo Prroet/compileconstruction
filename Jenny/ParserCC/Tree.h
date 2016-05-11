@@ -24,6 +24,7 @@ public:
     Tree(const Tree& orig);
     virtual ~Tree();
     
+protected:    
     void buildTree();
     TreeNode* A();
     TreeNode* P();

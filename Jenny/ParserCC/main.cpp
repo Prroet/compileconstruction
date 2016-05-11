@@ -13,6 +13,7 @@
 
 #include <cstdlib>
 
+#include "Lexer.h"
 #include "Tree.h"
 
 using namespace std;
@@ -21,8 +22,9 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    Tree t;
-    t.buildTree();
+    std::string codefile = "Beispiel1.go";
+    Lexer lex(codefile);
+    //Tree t;
 
     return 0;
 }
