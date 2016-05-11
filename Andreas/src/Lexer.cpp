@@ -66,42 +66,22 @@ void Lexer::addOperatorDelimiter()
 {
     while(isDelimStartSymbols(lastChar))
     {
-        currentTokenValue += lastChar;
-        sourceFile.get(lastChar);
-    }
-    // or this fucks fucks everything up?
-    // std::cout << currentTokenValue << std::endl;
-    if(isOperator(currentTokenValue))
-    {
-        insertToken(static_cast<int>(TokenType::operatorDelimiter));
-    }
-    else
-    {
-        sourceFile.seekg(-2, sourceFile.cur); // set back cursor
-        sourceFile.get(lastChar);
-        currentTokenValue = lastChar;
-        insertToken(static_cast<int>(TokenType::operatorDelimiter));
-    }
-    /*currentTokenValue = lastChar;
-    while(isDelimStartSymbols(lastChar))
-    {
-        if(isOperator(currentTokenValue))
+        if(lastChar == '(' || lastChar == ')')
         {
-            insertToken(static_cast<int>(TokenType::operatorDelimiter));
-        }
-        else if(isDelimStartSymbols(lastChar)){
+            currentTokenValue = lastChar;
+            std::cout << "addOperatorDelimiter "<< currentTokenValue <<std::endl;
             insertToken(static_cast<int>(TokenType::operatorDelimiter));
             currentTokenValue = "";
+            sourceFile.get(lastChar);
         }
-        currentTokenValue += lastChar;
-        // insertToken(static_cast<int>(TokenType::operatorDelimiter));
-        sourceFile.get(lastChar);
-        if(sourceFile.eof()) // kill the loop not good but works for now
-            break;
-    } */
-
-    sourceFile.get(lastChar);
-    currentTokenValue = "";
+        else
+        {
+            currentTokenValue += lastChar;
+            sourceFile.get(lastChar);
+        }
+    }
+    insertToken(static_cast<int>(TokenType::operatorDelimiter));
+    currentTokenValue = ""; // clear currentToken
 }
 
 void Lexer::findStringLiteral()
