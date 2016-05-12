@@ -39,10 +39,16 @@ const std::string StringCheck::truncString(std::string sourceStr) const
 		if (sourceStr.at(0)=='\"') //string opened
 		{
 			sourceStr.erase(sourceStr.begin());
-			for (std::string::const_iterator it=sourceStr.begin(); it!=sourceStr.end(); ++it)
+//			for (std::string::const_iterator it=sourceStr.begin(); it!=sourceStr.end(); ++it)
+//				if (*it=='\"') 
+//				{
+//                                  sourceStr.erase(it--);                                  
+//				}
+//			return sourceStr;
+                        for (std::string::iterator it=sourceStr.begin(); it!=sourceStr.end(); ++it)
 				if (*it=='\"') 
 				{
-					sourceStr.erase(it--);
+                                  sourceStr.erase(it--);                                  
 				}
 			return sourceStr;
 		}
