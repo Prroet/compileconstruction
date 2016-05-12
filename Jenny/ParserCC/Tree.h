@@ -15,6 +15,7 @@
 #define TREE_H
 #include "TreeNode.h"
 #include <string>
+#include <fstream>
 
 typedef std::string tokenType;
 
@@ -25,20 +26,25 @@ public:
     virtual ~Tree();
     
     void buildTree();
-    TreeNode* A();
-    TreeNode* P();
-    TreeNode* P2ndHalf();
-    TreeNode* I(tokenType id);
-    TreeNode* M();
-    TreeNode* S();
-    TreeNode* F();
-    TreeNode* B();
-    TreeNode* B2Half(tokenType b2);
+    
     
     tokenType gettok();
 private:
+    TreeNode* A(int counter);
+    TreeNode* P(int counter);
+    TreeNode* P2ndHalf(int counter);
+    TreeNode* I(int counter, tokenType id);
+    TreeNode* M(int counter);
+    TreeNode* S(int counter);
+    TreeNode* F(int counter);
+    TreeNode* B(int counter);
+    TreeNode* B2Half(int counter, tokenType b2);
+    void calcWriteTab(int counter);
+    
     tokenType next_token;
-
+    TreeNode* Root;
+    std::ofstream myfile;
+    
 };
 
 #endif /* TREE_H */
