@@ -1,6 +1,6 @@
 #include "TokenizerLib.h"
 
-AlphaNum::AlphaNum(const Subset &alpha, const Subset &numeric) 
+AlphaNum::AlphaNum(const Subset &alpha, const Subset &numeric)
 : _alpha(alpha), _numeric(numeric)
 {
 
@@ -39,8 +39,8 @@ const std::string StringCheck::truncString(std::string sourceStr) const
 		if (sourceStr.at(0)=='\"') //string opened
 		{
 			sourceStr.erase(sourceStr.begin());
-			for (std::string::const_iterator it=sourceStr.begin(); it!=sourceStr.end(); ++it)
-				if (*it=='\"') 
+			for (std::string::iterator it=sourceStr.begin(); it!=sourceStr.end(); ++it)
+				if (*it=='\"')
 				{
 					sourceStr.erase(it--);
 				}
@@ -96,9 +96,9 @@ const SymbolTable::first_type SymbolTable::findFirst(const std::string& findSeco
 }
 
 void SymbolTable::insertEntry(const SymbolTable::first_type& keyType, const SymbolTable::second_type& symbolInfo)
-{ 
+{
 	if (!getTable().empty())
-		getTable().insert(--getTable().end(),tableValue(keyType,symbolInfo)); 
+		getTable().insert(--getTable().end(),tableValue(keyType,symbolInfo));
 	else
 		getTable().insert(getTable().begin(),tableValue(keyType,symbolInfo));
 }

@@ -18,6 +18,19 @@ Lexer::~Lexer()
     //dtor
 }
 
+/**
+    returns the next token
+**/
+Token* Lexer::gettoken()
+{
+    Token* tokenToReturn = this->tokens[tokenCounter];
+    if(tokenCounter < tokens.size())
+        tokenCounter++;
+    else
+        return nullptr;
+    return tokenToReturn;
+}
+
 void Lexer::printTokens()
 {
     std::cout << "Line Number" << "\t" << "Type" << "\t" << "value" << std::endl;

@@ -1,10 +1,10 @@
 package main;
 
-// import "fmt";
+import "fmt";
 
-func main() {
-	x:=5;
-	y:=6;
-	z:=x+y;
+func main () {
+	x := 5;
+	y := 6;
+	z := x + y;
 	x = z;
 }
