@@ -27,12 +27,10 @@
 #include "B2ndHalfNode.h"
 
 Tree::Tree() {
-<<<<<<< HEAD
     Root = nullptr;
     myfile.open("ast.txt");
-=======
+
     buildTree();
->>>>>>> e8bf752993c60f31cf7204cf79c682418f4ddc9b
 }
 
 Tree::Tree(const Tree& orig) {
