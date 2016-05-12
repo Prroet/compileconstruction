@@ -35,6 +35,7 @@ class Lexer
         void tokenize();
         void printTokens();
         void skip(char charToSkip);
+        void skipUntil(std::string&);
         void addOperatorDelimiter();
         void findStringLiteral();
         void findIdentifier(); //?id = Type 0?

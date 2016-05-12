@@ -5,20 +5,20 @@
 
 enum class TokenType
 {
-    identifier,
-    keyword,
-    operatorDelimiter,
-    literal
+    identifier,     // 0
+    keyword,        // 1
+    operatorDelimiter,  // 2
+    literal            // 3
 };
 
 enum class LiteralType
 {
-    noLiteral,
-    stringLiteral,
-    floatLiteral,
-    imaginaryLiteral,
-    runeLiteral,
-    intLiteral
+    noLiteral,  // 0
+    stringLiteral,  // 1
+    floatLiteral,   // 2
+    imaginaryLiteral,   // 3
+    runeLiteral,    // 4
+    intLiteral  // 5
 };
 
 enum class operatorType

@@ -45,7 +45,9 @@ void Lexer::tokenize()
     if(isdigit(lastChar))
         findNumLiteral();
 }
-
+/**
+    skip all chars that equal charToSkip param
+**/
 void Lexer::skip(char charToSkip)
 {
     if(lastChar == charToSkip)
@@ -61,7 +63,20 @@ void Lexer::skip(char charToSkip)
         }
     }
 }
-// This needs improvement like everything else
+
+/**
+    skips all the chars until endString is found
+    @param endstring
+**/
+void Lexer::skipUntil(std::string& endstring)
+{
+
+}
+
+/**
+    adds all the operator or delimiter symbols to token vector
+    still missing comments
+**/
 void Lexer::addOperatorDelimiter()
 {
     while(isDelimStartSymbols(lastChar))
@@ -70,7 +85,7 @@ void Lexer::addOperatorDelimiter()
         {
             currentTokenValue = lastChar;
             insertToken(static_cast<int>(TokenType::operatorDelimiter));
-            currentTokenValue = "";
+            currentTokenValue = ""; // here size is 0
             sourceFile.get(lastChar);
         }
         else
@@ -79,7 +94,7 @@ void Lexer::addOperatorDelimiter()
             sourceFile.get(lastChar);
         }
     }
-    if(currentTokenValue.size() != 0)
+    if(currentTokenValue.size() != 0) // here test for size 0 because of above if
         insertToken(static_cast<int>(TokenType::operatorDelimiter));
     currentTokenValue = ""; // clear currentToken
 }
@@ -149,12 +164,18 @@ void Lexer::findNumLiteral()
     }
 }
 
+/**
+    insert Token for all non Literal types
+**/
 void Lexer::insertToken(int type)
 {
     Token* toki = new Token(type, currentTokenValue, lineNumber);
     this->tokens.push_back(toki);
 }
 
+/**
+    insert Token for Literals
+**/
 void Lexer::insertToken(int type, int literalType)
 {
     Token* toki = new Token(type, currentTokenValue, lineNumber, literalType);
