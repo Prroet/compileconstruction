@@ -10,8 +10,8 @@
             <sourceEncoding>UTF-8</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>../../Andreas/src</sourceRootElem>
                 <sourceRootElem>../../Andreas/include</sourceRootElem>
+                <sourceRootElem>../../Andreas/src</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

@@ -35,12 +35,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/de6f7b91/Lexer.o \
 	${OBJECTDIR}/ANode.o \
 	${OBJECTDIR}/B2ndHalfNode.o \
 	${OBJECTDIR}/BNode.o \
 	${OBJECTDIR}/FNode.o \
 	${OBJECTDIR}/INode.o \
-	${OBJECTDIR}/Lexer.o \
 	${OBJECTDIR}/MNode.o \
 	${OBJECTDIR}/P2Node.o \
 	${OBJECTDIR}/PNode.o \
@@ -74,6 +74,11 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parsercc: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parsercc ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/_ext/de6f7b91/Lexer.o: ../../Andreas/src/Lexer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/de6f7b91
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/de6f7b91/Lexer.o ../../Andreas/src/Lexer.cpp
+
 ${OBJECTDIR}/ANode.o: ANode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -98,11 +103,6 @@ ${OBJECTDIR}/INode.o: INode.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/INode.o INode.cpp
-
-${OBJECTDIR}/Lexer.o: Lexer.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Lexer.o Lexer.cpp
 
 ${OBJECTDIR}/MNode.o: MNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}

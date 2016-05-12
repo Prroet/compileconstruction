@@ -35,12 +35,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/de6f7b91/Lexer.o \
 	${OBJECTDIR}/ANode.o \
 	${OBJECTDIR}/B2ndHalfNode.o \
 	${OBJECTDIR}/BNode.o \
 	${OBJECTDIR}/FNode.o \
 	${OBJECTDIR}/INode.o \
-	${OBJECTDIR}/Lexer.o \
 	${OBJECTDIR}/MNode.o \
 	${OBJECTDIR}/P2Node.o \
 	${OBJECTDIR}/PNode.o \
@@ -74,70 +74,70 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parsercc: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/parsercc ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/_ext/de6f7b91/Lexer.o: ../../Andreas/src/Lexer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/de6f7b91
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/de6f7b91/Lexer.o ../../Andreas/src/Lexer.cpp
+
 ${OBJECTDIR}/ANode.o: ANode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ANode.o ANode.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ANode.o ANode.cpp
 
 ${OBJECTDIR}/B2ndHalfNode.o: B2ndHalfNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/B2ndHalfNode.o B2ndHalfNode.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/B2ndHalfNode.o B2ndHalfNode.cpp
 
 ${OBJECTDIR}/BNode.o: BNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/BNode.o BNode.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/BNode.o BNode.cpp
 
 ${OBJECTDIR}/FNode.o: FNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FNode.o FNode.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FNode.o FNode.cpp
 
 ${OBJECTDIR}/INode.o: INode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/INode.o INode.cpp
-
-${OBJECTDIR}/Lexer.o: Lexer.cpp 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Lexer.o Lexer.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/INode.o INode.cpp
 
 ${OBJECTDIR}/MNode.o: MNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MNode.o MNode.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MNode.o MNode.cpp
 
 ${OBJECTDIR}/P2Node.o: P2Node.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/P2Node.o P2Node.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/P2Node.o P2Node.cpp
 
 ${OBJECTDIR}/PNode.o: PNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PNode.o PNode.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PNode.o PNode.cpp
 
 ${OBJECTDIR}/SNode.o: SNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SNode.o SNode.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SNode.o SNode.cpp
 
 ${OBJECTDIR}/Tree.o: Tree.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tree.o Tree.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Tree.o Tree.cpp
 
 ${OBJECTDIR}/TreeNode.o: TreeNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TreeNode.o TreeNode.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/TreeNode.o TreeNode.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
+	$(COMPILE.cc) -g -I../../Andreas/include -std=c++11 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.cpp
 
 # Subprojects
 .build-subprojects:

@@ -13,7 +13,7 @@ class Lexer
     public:
         Lexer(std::string& filename);
         virtual ~Lexer();
-        void gettoken();
+        Token* gettoken();
     protected:
         std::ifstream sourceFile;
         std::vector<Token*> tokens;
@@ -30,6 +30,7 @@ class Lexer
         //?operatorDelimStartSymbols = Type 2??
         std::vector<char> operatorDelimStartSymbols = {'(', ')', '{', '}', '.', ';', ',', '+', '=', ':'}; // might need further extension
         unsigned lineNumber;
+        unsigned tokenCounter = 0;
         char lastChar = ' ';
 
         void tokenize();

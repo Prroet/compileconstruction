@@ -67,8 +67,9 @@ void Tokenizer::tokenizeInput(void)
 	const unsigned int str_size=256;
 	char str_line[str_size];
 	unsigned int line=1;
-
-	while(!getFileStream().eof())
+        
+        std::ifstream* bla = &getFileStream();
+	while(!bla->eof())
 	{
 		expression.clear();
 		getFileStream().getline(str_line,str_size,'\n');
@@ -78,6 +79,7 @@ void Tokenizer::tokenizeInput(void)
 		while(!lineStream.eof())
 		{
 			lineStream>>expression;
+                        std::cout << "expression: " <<expression << std::endl;
 			
 			//must have to avoid accessviolation in empty lines through iterators in expression
 			if (str_line[0]=='\0')
