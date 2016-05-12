@@ -5,9 +5,13 @@
 
 using namespace std;
 
-int main() {
-	Lexor* lex = (new Lexor())->Read("input.txt")->Print();
-	//Parser* pa = (new Parser(lex))->Start();
+int main(int argc, char *argv[]) {
+	string file = "input.txt";
+	
+	if(argc==2) file = argv[1];
+
+	Lexor* lex = (new Lexor())->Read(file)->Filter()->Print();
+	Parser* pa = (new Parser(lex))->Start()->Print();
 
 	cout << endl;
 	return 0;

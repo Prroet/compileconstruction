@@ -37,9 +37,11 @@ Lexor* Lexor::Read(std::string fname) {
 	
 	if(!this->instream) {
 		//TODO: throw something
+		cout << "\033[1;31m" << "ERROR" << "\033[0m" << ": Cannot open " << fname << endl;
+		return this;	
 	}
 
-	token toki;
+	token *toki;
 	while(!this->instream.eof()) {
 		toki = this->getToken();
 		this->tokens.push_back(toki);
@@ -53,19 +55,48 @@ Lexor* Lexor::Read(std::string fname) {
 /** prints out our tokens **/
 Lexor* Lexor::Print() {
 	for (auto t : this->tokens ) {
-		cout << "\033[1;31m(" << t.type << ")\033[0m";
-		cout << t.value << " ";
+		cout << "\033[1;31m(" << t->type << ")\033[0m";
+		cout << t->value << " ";
 	}
 	return this;
 }
 
 
+/** filters stuff that might just irritate the parser **/
+Lexor* Lexor::Filter() {
+	for(int i=0; i<this->tokens.size(); i++) {
+		token* item = this->tokens[i];
+
+		
+	// kommentare raus
+		if(item->type == ECast(oneline_comment)) {
+			this->tokens.erase(this->tokens.begin() + i);
+			i=0;
+			continue;
+		}
+
+		if(i < this->tokens.size()-1) {
+			token* next = this->tokens[i+1];
+
+	// delimter delimter raus			
+			if(item->type == ECast(delimiter) && (next->type == ECast(delimiter))) {
+				this->tokens.erase(this->tokens.begin() + i);
+				i=0;
+				continue;
+			}/**/
+		}
+	}
+	//TODO { delimiter raus
+
+	return this;
+}
+
+
+
 /** catches the next token **/
-token Lexor::getToken() {
+token* Lexor::getToken() {
 	char lastChar;
-	token ret;
-	ret.type = ECast(eof);
-	ret.value = "";
+	token* ret = new token(ECast(eof), "");
 
 	// get char
 	this->instream.get(lastChar);
@@ -77,13 +108,13 @@ token Lexor::getToken() {
 	}
 
 	// singletons
-	ret.value += lastChar;
-	if(lastChar=='(') {	ret.type = ECast(list_open); return ret; }
-	if(lastChar==')') {	ret.type = ECast(list_close); return ret; }
-	if(lastChar=='[') {	ret.type = ECast(option_open); return ret; }
-	if(lastChar==']') {	ret.type = ECast(option_close); return ret; }
-	if(lastChar=='{') {	ret.type = ECast(block_open); return ret; }
-	if(lastChar=='}') {	ret.type = ECast(block_close); return ret; }
+	ret->value += lastChar;
+	if(lastChar=='(') {	ret->type = ECast(list_open); return ret; }
+	if(lastChar==')') {	ret->type = ECast(list_close); return ret; }
+	if(lastChar=='[') {	ret->type = ECast(option_open); return ret; }
+	if(lastChar==']') {	ret->type = ECast(option_close); return ret; }
+	if(lastChar=='{') {	ret->type = ECast(block_open); return ret; }
+	if(lastChar=='}') {	ret->type = ECast(block_close); return ret; }
 
 	// delimiter?
 	if(isDelimiter(lastChar)) {
@@ -98,7 +129,7 @@ token Lexor::getToken() {
 		// last read was NOT valid: restore it, cut it!
 		this->instream.seekg(-1, ios::cur);
 
-		ret.type = ECast(delimiter); 
+		ret->type = ECast(delimiter); 
 		return ret;
 	}
 
@@ -106,7 +137,7 @@ token Lexor::getToken() {
 	if (isalpha(lastChar)) { // identifier: [a-zA-Z][a-zA-Z0-9]*
 		auto fp = [](int c)->int{return isalnum(c);};
 		// could be a keyword
-		token myToken = this->buildWord(fp, lastChar, ECast(identifier));
+		token* myToken = this->buildWord(fp, lastChar, ECast(identifier));
 		return findKeyWord(myToken);
 //		return this->buildWord(fp, lastChar, ECast(identifier));
 	}
@@ -141,15 +172,15 @@ token Lexor::getToken() {
 	}
 
 	// whatever.
-	ret.type = 0;
-	ret.value = "unknown";
+	ret->type = 0;
+	ret->value = "unknown";
 	return ret;
 }
 
 
 /** baut ein wort. erwartet eine vergleichsoption die char nimmt und bool zurück gibt **/
-token Lexor::buildWord(function<int (int)> fp, char lastChar, int id) {
-	token ret = {0, "EOF"};	
+token* Lexor::buildWord(function<int (int)> fp, char lastChar, int id) {
+	token* ret = new token(0, "EOF");	
 	string str = {lastChar};	
 
 	while (fp(lastChar)) {
@@ -162,14 +193,14 @@ token Lexor::buildWord(function<int (int)> fp, char lastChar, int id) {
 	this->instream.seekg(-1, ios::cur);
 	str.pop_back();
 
-	ret.type = id;
-	ret.value = str;/**/
+	ret->type = id;
+	ret->value = str;/**/
 
 	return ret;
 }
 
-token Lexor::buildString(char lastChar, int id) {
-	token ret = {0, "EOF"};	
+token* Lexor::buildString(char lastChar, int id) {
+	token* ret = new token(0, "EOF");	
 	string str = "";
 	char esc = lastChar;
 
@@ -178,26 +209,26 @@ token Lexor::buildString(char lastChar, int id) {
    		this->instream.get(lastChar);
 		if(lastChar==esc) break;
 		if(lastChar=='\n' || lastChar=='\r') {
-			ret.type = id;
-			ret.value = "Unsescaped String";
+			ret->type = id;
+			ret->value = "Unsescaped String";
 			return ret;
 		}
 
 		str += lastChar;
 	} while (1);
 
-	ret.type = id;
-	ret.value = str;
+	ret->type = id;
+	ret->value = str;
     return ret;
 }
 
 /** is this token an keyword? **/ 
-token Lexor::findKeyWord(token& theToken)
+token* Lexor::findKeyWord(token* theToken)
 {
 	for(auto i: this->keyWords)
 	{
-		if(i.compare(theToken.value) == 0)
-			theToken.type = ECast(keyWord);
+		if(i.compare(theToken->value) == 0)
+			theToken->type = ECast(keyWord);
 	}
 	return theToken;
 }

@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/BNode.o \
 	${OBJECTDIR}/FNode.o \
 	${OBJECTDIR}/INode.o \
+	${OBJECTDIR}/Lexer.o \
 	${OBJECTDIR}/MNode.o \
 	${OBJECTDIR}/P2Node.o \
 	${OBJECTDIR}/PNode.o \
@@ -97,6 +98,11 @@ ${OBJECTDIR}/INode.o: INode.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/INode.o INode.cpp
+
+${OBJECTDIR}/Lexer.o: Lexer.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Lexer.o Lexer.cpp
 
 ${OBJECTDIR}/MNode.o: MNode.cpp 
 	${MKDIR} -p ${OBJECTDIR}
