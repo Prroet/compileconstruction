@@ -14,6 +14,7 @@
 #include <cstdlib>
 
 #include "Tree.h"
+#include <fstream>
 
 using namespace std;
 
@@ -23,7 +24,6 @@ using namespace std;
 int main(int argc, char** argv) {
     Tree t;
     t.buildTree();
-
     return 0;
 }
 
