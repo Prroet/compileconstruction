@@ -1,7 +1,11 @@
 #include "Lexer.h"
 
 
-
+/**
+    @param file
+    expects a string which contains the filename
+    then it extracts all the tokens from the file
+**/
 Lexer::Lexer(std::string& file)
 {
     sourceFile.open(file);
@@ -19,7 +23,8 @@ Lexer::~Lexer()
 }
 
 /**
-    returns the next token
+    return: Token*
+    return: nullptr if no more tokens
 **/
 Token* Lexer::gettoken()
 {
@@ -87,49 +92,67 @@ void Lexer::skipUntil(std::string& endstring)
 }
 
 /**
+    Splits the currentTokenValue and adds the parts
+    as token to tokens
+**/
+void Lexer::splitCurrentToken()
+{
+    std::string copyOfCurrentToken = currentTokenValue;
+    for(auto i : copyOfCurrentToken)
+    {
+        currentTokenValue = i;
+        insertToken(static_cast<int>(TokenType::operatorDelimiter));
+    }
+
+}
+
+bool Lexer::isComment()
+{
+    if(currentTokenValue == "//")
+        return true;
+    else
+        return false;
+}
+
+void Lexer::skipComment()
+{
+    while(lastChar != '\n')
+        sourceFile.get(lastChar);
+    currentTokenValue = "";
+}
+
+/**
     adds all the operator or delimiter symbols to token vector
     still missing comments
 **/
 void Lexer::addOperatorDelimiter()
 {
-    while(isDelimStartSymbols(lastChar))
+    while(isDelimStartSymbols(lastChar) && !sourceFile.eof())
     {
-        if(lastChar == '(' || lastChar == ')')
-        {
-            currentTokenValue = lastChar;
-            insertToken(static_cast<int>(TokenType::operatorDelimiter));
-            currentTokenValue = ""; // here size is 0
-            sourceFile.get(lastChar);
-        }
-        else
-        {
-            currentTokenValue += lastChar;
-            sourceFile.get(lastChar);
-        }
+        currentTokenValue += lastChar;
+        sourceFile.get(lastChar);
     }
-    if(currentTokenValue.size() != 0) // here test for size 0 because of above if
+    if(isComment())
+        skipComment();
+    else if( isOperator(currentTokenValue) )
         insertToken(static_cast<int>(TokenType::operatorDelimiter));
-    currentTokenValue = ""; // clear currentToken
+    else
+        splitCurrentToken();
 }
 
 void Lexer::findStringLiteral()
 {
-    if(lastChar == '"')
+    currentTokenValue = lastChar;
+    sourceFile.get(lastChar);
+    while(lastChar != '"' && !sourceFile.eof())
     {
-        currentTokenValue = lastChar;
-        sourceFile.get(lastChar);
-        while(lastChar != '"' && !sourceFile.eof())
-        {
-            currentTokenValue += lastChar;
-            sourceFile.get(lastChar);
-        }
         currentTokenValue += lastChar;
-
-        insertToken(static_cast<int>(TokenType::literal), static_cast<int> (LiteralType::stringLiteral));
-
-        currentTokenValue = ""; // clear current token
-        sourceFile.get(lastChar); // clear last char
+        sourceFile.get(lastChar);
     }
+    currentTokenValue += lastChar;
+
+    insertToken(static_cast<int>(TokenType::literal), static_cast<int> (LiteralType::stringLiteral));
+    sourceFile.get(lastChar); // clear last char
 }
 
 void Lexer::findIdentifier()
@@ -152,7 +175,6 @@ void Lexer::findIdentifier()
         {
             insertToken(static_cast<int>(TokenType::identifier));
         }
-        currentTokenValue = ""; // clear
         sourceFile.get(lastChar); // get new last char
     }
 }
@@ -171,8 +193,6 @@ void Lexer::findNumLiteral()
         sourceFile.seekg(-1, sourceFile.cur);
 
         insertToken(static_cast<int>(TokenType::literal), static_cast<int>(LiteralType::intLiteral));
-
-        currentTokenValue = "";
         sourceFile.get(lastChar);
     }
 }
@@ -184,6 +204,7 @@ void Lexer::insertToken(int type)
 {
     Token* toki = new Token(type, currentTokenValue, lineNumber);
     this->tokens.push_back(toki);
+    currentTokenValue = "";
 }
 
 /**
@@ -193,6 +214,7 @@ void Lexer::insertToken(int type, int literalType)
 {
     Token* toki = new Token(type, currentTokenValue, lineNumber, literalType);
     this->tokens.push_back(toki);
+    currentTokenValue = ""; // clear current
 }
 
 bool Lexer::isKeyWord(std::string& tokenValue)

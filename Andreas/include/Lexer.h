@@ -8,6 +8,9 @@
 #include <typeinfo>
 #include "Token.h"
 
+/**
+    Has all the tokens in it's internal Data Structure
+**/
 class Lexer
 {
     public:
@@ -18,17 +21,17 @@ class Lexer
         std::ifstream sourceFile;
         std::vector<Token*> tokens;
         std::string currentTokenValue;
-        // all keywords ?Keyword = Type 1?
+        // all keywords
         std::vector<std::string> keyWords = {"break","default","func","interface","select",
                                                 "case","defer","go","map","struct","chan",
                                             "else","goto","package","switch","const", "fallthrough",
                                             "if", "range", "type", "continue","for", "import", "return", "var"};
-        // maybe too much ?operators = Type ????
+        // maybe too much operators
         std::vector<std::string> operators = { "||", "&&", "==", "!=", "<", "<=", ">",
                                                 ">=", "+", "-", "|", "^", "*", "/", "%",
                                                 "<<", ">>", "&", "&^", "+", "-", "!", "^", "*", "&", "<-", ".", ":="};
-        //?operatorDelimStartSymbols = Type 2??
-        std::vector<char> operatorDelimStartSymbols = {'(', ')', '{', '}', '.', ';', ',', '+', '=', ':'}; // might need further extension
+        //operatorDelimStartSymbols
+        std::vector<char> operatorDelimStartSymbols = {'(', ')', '{', '}', '.', ';', ',', '+', '=', ':', '/'}; // might need further extension
         unsigned lineNumber;
         unsigned tokenCounter = 0;
         char lastChar = ' ';
@@ -37,6 +40,9 @@ class Lexer
         void printTokens();
         void skip(char charToSkip);
         void skipUntil(std::string&);
+        void splitCurrentToken();
+        bool isComment();
+        void skipComment();
         void addOperatorDelimiter();
         void findStringLiteral();
         void findIdentifier(); //?id = Type 0?

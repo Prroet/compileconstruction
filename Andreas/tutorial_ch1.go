@@ -1,5 +1,7 @@
 package main;
-
+// This is a comment
+// this is another comment
+// and so on
 import (
 	"fmt";
 	"math/rand";
