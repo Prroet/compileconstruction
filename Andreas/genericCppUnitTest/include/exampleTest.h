@@ -2,6 +2,7 @@
 #define EXAMPLETEST_H
 
 #include <TestCase.h>
+#include <TestCaller.h>
 #include "Complex.h"
 
 class ExampleTest : public CppUnit::TestFixture
@@ -9,6 +10,14 @@ class ExampleTest : public CppUnit::TestFixture
     private:
         Complex *m10_1, *m_1_1, *m_11_2;
     public:
+    static CppUnit::Test *suite()
+    {
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite( "ExampleTest" );
+        suiteOfTests->addTest( new CppUnit::TestCaller<ExampleTest>(
+            "testEquality",
+            &ExampleTest::testEquality ) );
+        return suiteOfTests;
+    }
         void setUp()
         {
             m10_1 = new Complex(10,1);
