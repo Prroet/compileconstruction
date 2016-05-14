@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>ANode.h</itemPath>
+      <itemPath>B2ndHalfNode.h</itemPath>
+      <itemPath>BNode.h</itemPath>
+      <itemPath>FNode.h</itemPath>
+      <itemPath>INode.h</itemPath>
+      <itemPath>../../Rico/Keyword.h</itemPath>
+      <itemPath>../../Rico/KeywordFactory.h</itemPath>
+      <itemPath>MNode.h</itemPath>
+      <itemPath>../../Rico/Operator.h</itemPath>
+      <itemPath>../../Rico/OperatorFactory.h</itemPath>
+      <itemPath>P2Node.h</itemPath>
+      <itemPath>PNode.h</itemPath>
+      <itemPath>../../Rico/Parenthesis.h</itemPath>
+      <itemPath>../../Rico/ParenthesisFactory.h</itemPath>
+      <itemPath>SNode.h</itemPath>
+      <itemPath>../../Rico/StringSet.h</itemPath>
+      <itemPath>../../Rico/Subset.h</itemPath>
+      <itemPath>../../Rico/Token.h</itemPath>
+      <itemPath>../../Rico/TokenFactory.h</itemPath>
+      <itemPath>../../Rico/Tokenizer.h</itemPath>
+      <itemPath>../../Rico/TokenizerLib.h</itemPath>
+      <itemPath>Tree.h</itemPath>
+      <itemPath>TreeNode.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>ANode.cpp</itemPath>
+      <itemPath>B2ndHalfNode.cpp</itemPath>
+      <itemPath>BNode.cpp</itemPath>
+      <itemPath>FNode.cpp</itemPath>
+      <itemPath>INode.cpp</itemPath>
+      <itemPath>../../Rico/Keyword.cpp</itemPath>
+      <itemPath>../../Rico/KeywordFactory.cpp</itemPath>
+      <itemPath>MNode.cpp</itemPath>
+      <itemPath>../../Rico/Operator.cpp</itemPath>
+      <itemPath>../../Rico/OperatorFactory.cpp</itemPath>
+      <itemPath>P2Node.cpp</itemPath>
+      <itemPath>PNode.cpp</itemPath>
+      <itemPath>../../Rico/Parenthesis.cpp</itemPath>
+      <itemPath>../../Rico/ParenthesisFactory.cpp</itemPath>
+      <itemPath>SNode.cpp</itemPath>
+      <itemPath>../../Rico/StringSet.cpp</itemPath>
+      <itemPath>../../Rico/Subset.cpp</itemPath>
+      <itemPath>../../Rico/Token.cpp</itemPath>
+      <itemPath>../../Rico/TokenFactory.cpp</itemPath>
+      <itemPath>../../Rico/Tokenizer.cpp</itemPath>
+      <itemPath>../../Rico/TokenizerLib.cpp</itemPath>
+      <itemPath>Tree.cpp</itemPath>
+      <itemPath>TreeNode.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <standard>8</standard>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>../../Rico</pElem>
+          </incDir>
+        </ccTool>
+      </compileType>
+      <item path="../../Rico/Keyword.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Keyword.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/KeywordFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/KeywordFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Operator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Operator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/OperatorFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/OperatorFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Parenthesis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Parenthesis.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/ParenthesisFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/ParenthesisFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/StringSet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/StringSet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Subset.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Subset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Token.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Token.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/TokenFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/TokenFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Tokenizer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Tokenizer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/TokenizerLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/TokenizerLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ANode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ANode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="B2ndHalfNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="B2ndHalfNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="BNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="INode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="INode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="P2Node.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="P2Node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TreeNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TreeNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="../../Rico/Keyword.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Keyword.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/KeywordFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/KeywordFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Operator.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Operator.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/OperatorFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/OperatorFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Parenthesis.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Parenthesis.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/ParenthesisFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/ParenthesisFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/StringSet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/StringSet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Subset.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Subset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Token.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Token.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/TokenFactory.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/TokenFactory.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/Tokenizer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/Tokenizer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../../Rico/TokenizerLib.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../../Rico/TokenizerLib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ANode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="ANode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="B2ndHalfNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="B2ndHalfNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="BNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="BNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="FNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="INode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="INode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="MNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="MNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="P2Node.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="P2Node.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="PNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="SNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tree.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tree.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="TreeNode.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="TreeNode.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
