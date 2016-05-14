@@ -26,8 +26,10 @@
 #include "BNode.h"
 #include "B2ndHalfNode.h"
 
-Tree::Tree() {
+Tree::Tree(Lexer &lex) {
     Root = nullptr;
+    lexer = lex;
+    //In der Datei steht dann der Baum
     myfile.open("ast.txt");
 
     buildTree();
@@ -53,10 +55,10 @@ TreeNode* Tree::A(int counter){
 }
 
 TreeNode* Tree::P(int counter){//muss man einen PNode erstellen und an ANode anhängen oder darf man direkt das INode anhängen
-    next_token = gettok();//müsste package drin stehen
+    next_token = *lexer.gettoken();//müsste "package" drin stehen
     if(next_token == "package"){
-        tokenType id = Tree::gettok();
-        next_token = gettok();
+        tokenType id = *lexer.gettoken();
+        next_token = *lexer.gettoken();
         if(next_token == ";"){
             calcWriteTab(counter);
             myfile << "P(\"package\" id ;)->\n";
@@ -72,7 +74,7 @@ TreeNode* Tree::P(int counter){//muss man einen PNode erstellen und an ANode anh
 }
 
 TreeNode* Tree::P2ndHalf(int counter) {
-    next_token = gettok();
+    next_token = *lexer.gettoken();
     if(next_token == "func" ) {
         calcWriteTab(counter);
         myfile << "P2(\"func\")->\n";
@@ -98,7 +100,7 @@ TreeNode* Tree::I(int counter, tokenType id) {
 }
 
 TreeNode* Tree::M(int counter) {
-    next_token = gettok();
+    next_token = *lexer.gettoken();
     calcWriteTab(counter);   
     myfile << "M()->\n";
     counter++;
@@ -112,10 +114,10 @@ TreeNode* Tree::S(int counter) {
 }
 
 TreeNode* Tree::F(int counter) {
-    tokenType id = gettok();
-    next_token = gettok();
+    tokenType id = *lexer.gettoken();
+    next_token = *lexer.gettoken();
     if(next_token == "()"){
-        next_token = gettok();
+        next_token = *lexer.gettoken();
         calcWriteTab(counter);   
         myfile << "F( \"()\" )->\n";
         counter++;
@@ -129,10 +131,10 @@ TreeNode* Tree::F(int counter) {
 }
 
 TreeNode* Tree::B(int counter) {
-    next_token = gettok();
+    next_token = *lexer.gettoken();
     if(next_token == "{"){
-        tokenType b2 = gettok();       
-        next_token = gettok();
+        tokenType b2 = *lexer.gettoken();       
+        next_token = *lexer.gettoken();
         if(next_token == "}"){
             calcWriteTab(counter);   
             myfile << "B()->\n";
@@ -158,11 +160,3 @@ void Tree::calcWriteTab(int counter){
         myfile <<"\t";
     }
 }
-
-
-
-
-tokenType Tree::gettok() {
-//eigentlich ist das eine Funktion die der Lexer  zu verfügung stellen muss
-}
-

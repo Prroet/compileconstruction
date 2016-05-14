@@ -14,9 +14,10 @@
 #ifndef FNODE_H
 #define FNODE_H
 #include "TreeNode.h"
+#include "Token.h"
 #include <string>
 
-typedef std::string tokenType;
+typedef Token tokenType;
 
 class FNode : public TreeNode {
 public:

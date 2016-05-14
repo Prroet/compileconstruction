@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
 
     std::string codefile = "Beispiel1.go";
     Lexer lex(codefile);
-    Tree t;
+    Tree t(lex);
     
     return 0;
 }

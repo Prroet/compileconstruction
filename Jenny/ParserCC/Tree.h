@@ -14,22 +14,22 @@
 #ifndef TREE_H
 #define TREE_H
 #include "TreeNode.h"
+#include "Lexer.h"
+#include "Token.h"
 #include <string>
 #include <fstream>
 
-typedef std::string tokenType;
+typedef Token tokenType;
 
 class Tree {
 public:
-    Tree();
+    Tree(Lexer &lexer);
     Tree(const Tree& orig);
     virtual ~Tree();
     
 protected:    
     void buildTree();
     
-    
-    tokenType gettok();
 private:
     TreeNode* A(int counter);
     TreeNode* P(int counter);
@@ -42,6 +42,7 @@ private:
     TreeNode* B2Half(int counter, tokenType b2);
     void calcWriteTab(int counter);
     
+    Lexer lexer;
     tokenType next_token;
     TreeNode* Root;
     std::ofstream myfile;

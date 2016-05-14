@@ -13,6 +13,7 @@
 
 #ifndef TREENODE_H
 #define TREENODE_H
+#include "Lexer.h"
 
 class TreeNode {
 public:
