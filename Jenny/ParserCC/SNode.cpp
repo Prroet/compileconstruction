@@ -14,7 +14,7 @@
 #include "SNode.h"
 #include "TreeNode.h"
 
-SNode::SNode(tokenType strLit) {
+SNode::SNode(Token strLit) {
     string_literal = strLit;
 }
 

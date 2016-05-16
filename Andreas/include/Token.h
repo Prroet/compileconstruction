@@ -37,6 +37,10 @@ enum class delimiterType
     then
 **/
 struct Token{
+    Token()
+    {
+        
+    }
     Token(int type, std::string value, unsigned lineNumber)
     {
         this->lineNumber = lineNumber;

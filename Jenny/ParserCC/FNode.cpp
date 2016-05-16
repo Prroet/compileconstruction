@@ -15,9 +15,9 @@
 #include "TreeNode.h"
 
 FNode::FNode(TreeNode* i, TreeNode* b) {
-    func = "func";
+    func.value = "func";
     setFirstNode(i);
-    brac = "()";
+    brac.value = "()";
     setSecondNode(b);
 }
 

@@ -21,7 +21,7 @@ typedef Token tokenType;
 
 class SNode : public TreeNode {
 public:
-    SNode(tokenType strLit);
+    SNode(Token strLit);
     SNode(const SNode& orig);
     virtual ~SNode();
 private:

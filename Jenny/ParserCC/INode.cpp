@@ -14,7 +14,7 @@
 #include "Tree.h"
 #include "INode.h"
 
-INode::INode(tokenType id) {
+INode::INode(Token id) {
     id_ = id;
 }
 

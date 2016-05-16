@@ -15,7 +15,7 @@
 #include "TreeNode.h"
 
 MNode::MNode(TreeNode* s) {
-    import = "import";
+    import.value = "import";
     setFirstNode(s);
 }
 

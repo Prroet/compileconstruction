@@ -15,9 +15,9 @@
 #include "TreeNode.h"
 
 BNode::BNode(TreeNode* b2) {
-    braceOpen = "{";
+    braceOpen.value = "{";
     setFirstNode(b2);
-    braceClose = "}";
+    braceClose.value = "}";
 }
 
 BNode::BNode(const BNode& orig) {

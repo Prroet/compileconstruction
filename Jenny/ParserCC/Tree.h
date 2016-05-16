@@ -19,11 +19,10 @@
 #include <string>
 #include <fstream>
 
-typedef Token tokenType;
 
 class Tree {
 public:
-    Tree(Lexer &lexer);
+    Tree(std::string codefile);
     Tree(const Tree& orig);
     virtual ~Tree();
     
@@ -34,19 +33,18 @@ private:
     TreeNode* A(int counter);
     TreeNode* P(int counter);
     TreeNode* P2ndHalf(int counter);
-    TreeNode* I(int counter, tokenType id);
+    TreeNode* I(int counter, Token id);
     TreeNode* M(int counter);
     TreeNode* S(int counter);
     TreeNode* F(int counter);
     TreeNode* B(int counter);
-    TreeNode* B2Half(int counter, tokenType b2);
+    TreeNode* B2Half(int counter, Token b2);
     void calcWriteTab(int counter);
     
     Lexer lexer;
-    tokenType next_token;
+    Token next_token;
     TreeNode* Root;
     std::ofstream myfile;
-    
 };
 
 #endif /* TREE_H */

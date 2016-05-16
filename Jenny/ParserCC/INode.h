@@ -21,11 +21,11 @@ typedef Token tokenType;
 
 class INode : public TreeNode {
 public:
-    INode(tokenType id);
+    INode(Token id);
     INode(const INode& orig);
     virtual ~INode();
 private:
-    tokenType id_;
+    Token id_;
 
 };
 

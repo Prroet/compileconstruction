@@ -15,9 +15,9 @@
 #include "PNode.h"
 
 PNode::PNode(TreeNode* i) {
-    package = "package";
+    package.value = "package";
     setFirstNode(i);
-    semicolon = ";";
+    semicolon.value = ";";
     
 }
 

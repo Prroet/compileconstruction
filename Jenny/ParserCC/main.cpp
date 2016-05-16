@@ -24,9 +24,8 @@ using namespace std;
  */
 int main(int argc, char** argv) {
 
-    std::string codefile = "Beispiel1.go";
-    Lexer lex(codefile);
-    Tree t(lex);
+    //std::string codefile = "Beispiel1.go";
+    Tree t("Beispiel1.go");
     
     return 0;
 }

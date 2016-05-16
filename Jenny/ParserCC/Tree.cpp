@@ -26,9 +26,8 @@
 #include "BNode.h"
 #include "B2ndHalfNode.h"
 
-Tree::Tree(Lexer &lex) {
+Tree::Tree(std::string codefile): lexer(codefile) {
     Root = nullptr;
-    lexer = lex;
     //In der Datei steht dann der Baum
     myfile.open("ast.txt");
 
@@ -43,7 +42,7 @@ Tree::~Tree() {
 }
 
 void Tree::buildTree() { 
-   Root = A(1);
+   Root = A(0);
     
 }
 
@@ -56,10 +55,10 @@ TreeNode* Tree::A(int counter){
 
 TreeNode* Tree::P(int counter){//muss man einen PNode erstellen und an ANode anhängen oder darf man direkt das INode anhängen
     next_token = *lexer.gettoken();//müsste "package" drin stehen
-    if(next_token == "package"){
-        tokenType id = *lexer.gettoken();
+    if((next_token.type == static_cast<int>(TokenType::keyword))&& (next_token.value == "package")){
+        Token id = *lexer.gettoken();
         next_token = *lexer.gettoken();
-        if(next_token == ";"){
+        if(next_token.value == ";"){
             calcWriteTab(counter);
             myfile << "P(\"package\" id ;)->\n";
             counter++;
@@ -75,13 +74,13 @@ TreeNode* Tree::P(int counter){//muss man einen PNode erstellen und an ANode anh
 
 TreeNode* Tree::P2ndHalf(int counter) {
     next_token = *lexer.gettoken();
-    if(next_token == "func" ) {
+    if(next_token.value == "func" ) {
         calcWriteTab(counter);
         myfile << "P2(\"func\")->\n";
         counter++;
         return new P2Node( F(counter) );
     }
-    else if(next_token == "import" ){
+    else if(next_token.value == "import" ){
         calcWriteTab(counter);
         myfile << "P2(\"import\")->\n";
         counter++;
@@ -92,9 +91,9 @@ TreeNode* Tree::P2ndHalf(int counter) {
     }
 }
 
-TreeNode* Tree::I(int counter, tokenType id) {
+TreeNode* Tree::I(int counter, Token id) {
     calcWriteTab(counter);   
-    myfile << "I(id)->\n";
+    myfile << "I(id="<< id <<")->\n";
     counter++;
     return new INode(id);
 }
@@ -109,33 +108,35 @@ TreeNode* Tree::M(int counter) {
 
 TreeNode* Tree::S(int counter) {
     calcWriteTab(counter);   
-    myfile << "S(" << next_token << ")->\n";
+    myfile << "S(" << next_token.value << ")->\n";
     return new SNode(next_token);
 }
 
 TreeNode* Tree::F(int counter) {
-    tokenType id = *lexer.gettoken();
+    Token id = *lexer.gettoken();
     next_token = *lexer.gettoken();
-    if(next_token == "()"){
+    if(next_token.value == "("){
         next_token = *lexer.gettoken();
-        calcWriteTab(counter);   
-        myfile << "F( \"()\" )->\n";
-        counter++;
-        return new FNode( I(counter, id), B(counter) );
-    }
-    else{
-        std::cout << "kein \"()\"" << std::endl;
-        return nullptr;
+        if(next_token.value == ")"){
+            next_token = *lexer.gettoken();
+            calcWriteTab(counter);   
+            myfile << "F( \"()\" )->\n";
+            counter++;
+            return new FNode( I(counter, id), B(counter) );
+        }
     }
 
+    std::cout << "kein \"(\"" << std::endl;
+    return nullptr;
 }
 
 TreeNode* Tree::B(int counter) {
-    next_token = *lexer.gettoken();
-    if(next_token == "{"){
-        tokenType b2 = *lexer.gettoken();       
+    next_token = (*lexer.gettoken());
+    std::cout << next_token.value << std::endl; //Ausgabe}
+    if(next_token.value == "{"){
+        Token b2 = *lexer.gettoken();       
         next_token = *lexer.gettoken();
-        if(next_token == "}"){
+        if(next_token.value == "}"){
             calcWriteTab(counter);   
             myfile << "B()->\n";
             counter++;
@@ -150,13 +151,13 @@ TreeNode* Tree::B(int counter) {
 
 }
 
-TreeNode* Tree::B2Half(int counter, tokenType b2 ) {
+TreeNode* Tree::B2Half(int counter, Token b2 ) {
     return new B2ndHalfNode();
 
 }
 
 void Tree::calcWriteTab(int counter){
-    for(int i = 0; i <= counter; i++){
+    for(int i = 0; i < counter; i++){
         myfile <<"\t";
     }
 }

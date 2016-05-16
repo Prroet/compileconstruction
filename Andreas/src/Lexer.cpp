@@ -2,7 +2,7 @@
 
 
 
-Lexer::Lexer(std::string& file)
+Lexer::Lexer(std::string file)
 {
     sourceFile.open(file);
     lineNumber = 1;
