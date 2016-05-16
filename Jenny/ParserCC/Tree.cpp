@@ -93,7 +93,7 @@ TreeNode* Tree::P2ndHalf(int counter) {
 
 TreeNode* Tree::I(int counter, Token id) {
     calcWriteTab(counter);   
-    myfile << "I(id="<< id <<")->\n";
+    myfile << "I(id="<< id.value <<")->\n";
     counter++;
     return new INode(id);
 }
