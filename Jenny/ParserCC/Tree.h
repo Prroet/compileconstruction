@@ -34,12 +34,13 @@ private:
     TreeNode* P(int counter);
     TreeNode* P2ndHalf(int counter);
     TreeNode* I(int counter, Token id);
-    TreeNode* M(int counter);
-    TreeNode* S(int counter);
+    TreeNode* M(int counter, Token strLit);
+    TreeNode* S(int counter, Token strLit);
     TreeNode* F(int counter);
     TreeNode* B(int counter);
     TreeNode* B2Half(int counter, Token b2);
     void calcWriteTab(int counter);
+    Token saveGetToken();
     
     Lexer lexer;
     Token next_token;

@@ -28,9 +28,9 @@
 
 Tree::Tree(std::string codefile): lexer(codefile) {
     Root = nullptr;
-    //In der Datei steht dann der Baum
+    //In dieser Datei steht dann der AST-Baum
     myfile.open("ast.txt");
-
+    
     buildTree();
 }
 
@@ -46,118 +46,144 @@ void Tree::buildTree() {
     
 }
 
-TreeNode* Tree::A(int counter){
-    myfile << "Root(A)->\n";
-    counter++;
-    return new ANode( P(counter), P2ndHalf(counter) );
+TreeNode* Tree::A(int tabCounter){//counter ist für die Anzahl der Tabulatoren die in die Datei ast.txt gesschrieben werden um eine Baumstruktur darzustellen
+    myfile << "Root(A->P P2)->\n";
+    tabCounter++;
+    return new ANode( P(tabCounter), P2ndHalf(tabCounter) );
     
 }
 
-TreeNode* Tree::P(int counter){//muss man einen PNode erstellen und an ANode anhängen oder darf man direkt das INode anhängen
-    next_token = *lexer.gettoken();//müsste "package" drin stehen
+TreeNode* Tree::P(int tabCounter){//muss man einen PNode erstellen und an ANode anhängen oder darf man direkt das INode anhängen
+    next_token = saveGetToken();
     if((next_token.type == static_cast<int>(TokenType::keyword))&& (next_token.value == "package")){
-        Token id = *lexer.gettoken();
-        next_token = *lexer.gettoken();
+        Token id = saveGetToken();
+        next_token = saveGetToken();
         if(next_token.value == ";"){
-            calcWriteTab(counter);
-            myfile << "P(\"package\" id ;)->\n";
-            counter++;
-            return new PNode( I(counter, id) );
+            calcWriteTab(tabCounter);
+            myfile << "P(\"package\" I ;)->\n";
+            tabCounter++;
+            return new PNode( I(tabCounter, id) );
         }else{
-            std::cout << "Delimiter \";\" fehlt" << std::endl;
+            std::cout << next_token.lineNumber <<": Delimiter \";\" fehlt" << std::endl;
         }
     } 
-    std::cout << "Keyword \"package\" fehlt" << std::endl;
+    std::cout << next_token.lineNumber << ": Keyword \"package\" fehlt" << std::endl;
     return nullptr; 
     
 }
 
-TreeNode* Tree::P2ndHalf(int counter) {
-    next_token = *lexer.gettoken();
+TreeNode* Tree::P2ndHalf(int tabCounter) {
+    next_token = saveGetToken();
     if(next_token.value == "func" ) {
-        calcWriteTab(counter);
+        calcWriteTab(tabCounter);
         myfile << "P2(\"func\")->\n";
-        counter++;
-        return new P2Node( F(counter) );
+        tabCounter++;
+        return new P2Node( F(tabCounter) );
     }
     else if(next_token.value == "import" ){
-        calcWriteTab(counter);
+        calcWriteTab(tabCounter);
         myfile << "P2(\"import\")->\n";
-        counter++;
-        return new P2Node( M(counter), F(counter) );
+        tabCounter++;
+        Token strLit = next_token = saveGetToken();
+        
+        //Ist Deliminator da?
+        if((next_token = saveGetToken()).value != ";"){std::cout << next_token.lineNumber << ": kein \";\""<< std::endl;}
+        
+        //nach F() Gültigkeit abfragen
+        next_token = saveGetToken();
+        if(next_token.value == "func"){
+            return new P2Node( M(tabCounter, strLit), F(tabCounter) );
+        }
     }else{
-        std::cout << "keine der beiden Keywords func or import" << std::endl;
+        std::cout << next_token.lineNumber << ": keine der beiden Keywords func or import" << std::endl;
         return nullptr;
     }
 }
 
-TreeNode* Tree::I(int counter, Token id) {
-    calcWriteTab(counter);   
-    myfile << "I(id="<< id.value <<")->\n";
-    counter++;
+TreeNode* Tree::I(int tabCounter, Token id) {
+    calcWriteTab(tabCounter);   
+    myfile << "I(id="<< id.value <<")\n";
+    tabCounter++;
     return new INode(id);
 }
 
-TreeNode* Tree::M(int counter) {
-    next_token = *lexer.gettoken();
-    calcWriteTab(counter);   
+TreeNode* Tree::M(int tabCounter, Token strLit) {
+    calcWriteTab(tabCounter);   
     myfile << "M()->\n";
-    counter++;
-    return new MNode( S(counter) );
+    tabCounter++;
+    return new MNode( S(tabCounter, strLit) );
 }
 
-TreeNode* Tree::S(int counter) {
-    calcWriteTab(counter);   
-    myfile << "S(" << next_token.value << ")->\n";
-    return new SNode(next_token);
+TreeNode* Tree::S(int tabCounter, Token strLit) {
+    calcWriteTab(tabCounter);   
+    myfile << "S(" << strLit.value << ")->\n";
+    return new SNode(strLit);
 }
 
-TreeNode* Tree::F(int counter) {
-    Token id = *lexer.gettoken();
-    next_token = *lexer.gettoken();
+TreeNode* Tree::F(int tabCounter) {
+    Token id = saveGetToken();
+    next_token = saveGetToken();
     if(next_token.value == "("){
-        next_token = *lexer.gettoken();
+        next_token = saveGetToken();
         if(next_token.value == ")"){
-            next_token = *lexer.gettoken();
-            calcWriteTab(counter);   
+            calcWriteTab(tabCounter);   
             myfile << "F( \"()\" )->\n";
-            counter++;
-            return new FNode( I(counter, id), B(counter) );
+            tabCounter++;
+            return new FNode( I(tabCounter, id), B(tabCounter) );
         }
     }
-
-    std::cout << "kein \"(\"" << std::endl;
+    std::cout << next_token.lineNumber << ": kein \"(\"" << std::endl;
     return nullptr;
 }
 
-TreeNode* Tree::B(int counter) {
-    next_token = (*lexer.gettoken());
-    std::cout << next_token.value << std::endl; //Ausgabe}
+TreeNode* Tree::B(int tabCounter) {
+    next_token = saveGetToken();
     if(next_token.value == "{"){
-        Token b2 = *lexer.gettoken();       
-        next_token = *lexer.gettoken();
-        if(next_token.value == "}"){
-            calcWriteTab(counter);   
-            myfile << "B()->\n";
-            counter++;
-            return new BNode( B2Half( counter, b2 ) );
+        Token b2 = saveGetToken(); 
+        //sind die {} leer?
+        if(b2.value == "}"){
+            next_token = b2;
+            b2.value = "Epsilon";
+        }
+        else{
+            std::cout << (next_token.lineNumber +1) << ": die {} ist NICHT leer" << std::endl;
+            while((next_token = saveGetToken()).value != "}"){
+                //schmeiss alles innerhalb der {} weg
+            }
+        }
+        //egal ob leer oder nicht
+        if (next_token.value == "}"){
+            calcWriteTab(tabCounter);   
+            myfile << "B( \"{}\")->\n";
+            tabCounter++;
+            return new BNode( B2Half( tabCounter, b2 ) );
         }else{
-            std::cout << "keine \"}\"" << std::endl;
+            std::cout << next_token.lineNumber << ": keine \"}\"" << std::endl;
             return nullptr;
         }
     }
-    std::cout << "keine \"{\"" << std::endl;
+    std::cout << next_token.lineNumber << ": keine \"{\"" << std::endl;
     return nullptr;
 
 }
 
-TreeNode* Tree::B2Half(int counter, Token b2 ) {
+TreeNode* Tree::B2Half(int tabCounter, Token b2 ) {
+    calcWriteTab(tabCounter);
+    myfile << "B2ndHalf("<< b2.value <<")->\n";
     return new B2ndHalfNode();
 
 }
 
-void Tree::calcWriteTab(int counter){
-    for(int i = 0; i < counter; i++){
+void Tree::calcWriteTab(int tabCounter){
+    for(int i = 0; i < tabCounter; i++){
         myfile <<"\t";
     }
+}
+
+Token Tree::saveGetToken(){
+   Token* tok = lexer.gettoken();
+   if(tok != nullptr){
+       return *tok;
+   }
+   std::cout<< "Kein Token mehr im Lexer: lexer.gettoken() == nullptr" << std::endl;
 }
