@@ -57,8 +57,7 @@ TreeNode* Tree::P(int tabCounter){//muss man einen PNode erstellen und an ANode 
     next_token = saveGetToken();
     if((next_token.type == static_cast<int>(TokenType::keyword))&& (next_token.value == "package")){
         Token id = saveGetToken();
-        next_token = saveGetToken();
-        if(next_token.value == ";"){
+        if((next_token = saveGetToken()).value == ";"){
             calcWriteTab(tabCounter);
             myfile << "P(\"package\" I ;)->\n";
             tabCounter++;

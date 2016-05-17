@@ -92,7 +92,7 @@ void Lexer::skipUntil(std::string& endstring)
 **/
 void Lexer::addOperatorDelimiter()
 {
-    while(isDelimStartSymbols(lastChar))
+    while(isDelimStartSymbols(lastChar) && !sourceFile.eof())
     {
         if(lastChar == '(' || lastChar == ')')
         {
@@ -110,6 +110,7 @@ void Lexer::addOperatorDelimiter()
     if(currentTokenValue.size() != 0) // here test for size 0 because of above if
         insertToken(static_cast<int>(TokenType::operatorDelimiter));
     currentTokenValue = ""; // clear currentToken
+    
 }
 
 void Lexer::findStringLiteral()
