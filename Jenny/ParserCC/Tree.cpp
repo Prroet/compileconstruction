@@ -107,8 +107,11 @@ TreeNode* Tree::I(int tabCounter, Token id) {
         return nullptr;
     }
     else{
+        //In datei schreiben
         calcWriteTab(tabCounter);
         myfile << "I(id= "<< id.value <<")\n";
+        myfile.flush();
+        
         tabCounter++;
         return new INode(id);
     }
@@ -227,6 +230,7 @@ TreeNode* Tree::E(int tabCounter, Token allocOp){
             next_token.literalType == static_cast<int>(LiteralType::floatLiteral) ||
             next_token.type == static_cast<int>(TokenType::identifier)){
         Token idOrNumLit = next_token;
+        
         writeInASTfile(tabCounter, "E(:= oder =)->");
         tabCounter++;
         return new ENode(D(tabCounter, idOrNumLit), allocOp) ;
@@ -237,16 +241,44 @@ TreeNode* Tree::E(int tabCounter, Token allocOp){
 TreeNode* Tree::D(int tabCounter, Token idOrNumLit){
     if(idOrNumLit.literalType == static_cast<int>(LiteralType::intLiteral) || 
             idOrNumLit.literalType == static_cast<int>(LiteralType::floatLiteral)){
+        //in Datei schreiben
+        calcWriteTab(tabCounter);
+        myfile << "D( numLiteral = "<< idOrNumLit.value << " )->\n";
+        myfile.flush();
+        
+        //; wegschmeisen
+        next_token = getTokenFromBuffer();
+        if(next_token.type != static_cast<int>(TokenType::operatorDelimiter) && next_token.value != ";"){
+            std::cout << "Kein ; nach dem := D in D" << std::endl;
+        }
+               
         return new DNode(idOrNumLit);
     }//dann isses IL
+    
+    writeInASTfile(tabCounter, "D(I L)->");
+    tabCounter++;
     return new DNode(I(tabCounter, idOrNumLit), L(tabCounter));
 }
 
 TreeNode* Tree::L(int tabCounter){//!!!
     next_token = getTokenFromBuffer();
-    if(next_token.type != (-1)){//tokenBuffer ist nicht leer
-        return new LNode(I(tabCounter, next_token));
-    }//also Epsilon
+    //ist es + id?
+    if(next_token.value == "+" && next_token.type != (-1)){//tokenBuffer ist nicht leer
+        next_token = getTokenFromBuffer();
+        if(next_token.type == static_cast<int>(TokenType::identifier)){
+            Token id = next_token;            
+            //; wegschmeisen
+            next_token = getTokenFromBuffer();
+            if(next_token.type != static_cast<int>(TokenType::operatorDelimiter) && next_token.value != ";"){
+                std::cout << "Kein ; nach dem := D in L" << std::endl;
+            }
+            
+            writeInASTfile(tabCounter, "L(\"+\" I )->");
+            tabCounter++;
+            return new LNode(I(tabCounter, id));
+        }
+        std::cout << "Nach dem \"+\" kommt KEINE id" << std::endl;
+    }//also Epsilon bzw. kein "+" oder id
     return nullptr;
 }
 
@@ -254,8 +286,10 @@ TreeNode* Tree::L(int tabCounter){//!!!
 Token Tree::getTokenFromBuffer(){
     Token tok;
     tok.type = -1;//um abfragen zu können ob der TokenBuffer leer ist
-    tok = tokenBuffer.front();//erstes Zeichen auslesen
-    tokenBuffer.pop_front();
+    if(tokenBuffer.size() != 0){
+        tok = tokenBuffer.front();//erstes Zeichen auslesen
+        tokenBuffer.pop_front();
+    }
 //    Token test = tokenBuffer.front();
 //    std::cout << "1. Token in Buffer: " << test.value << std::endl;
 //    std::cout << "Tok: " << tok.value << std::endl;

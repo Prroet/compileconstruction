@@ -53,7 +53,7 @@ struct Token{
         this->lineNumber = lineNumber;
         this->type = type;
         this->value = value;
-        this->literlType = literalType;
+        this->literalType = literalType;
     }
     
     int type;
