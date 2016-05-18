@@ -25,9 +25,11 @@
 #include "FNode.h"
 #include "BNode.h"
 #include "B2ndHalfNode.h"
+#include "NNode.h"
 
 Tree::Tree(std::string codefile): lexer(codefile) {
     Root = nullptr;
+    epsilon = false;
     //In dieser Datei steht dann der AST-Baum
     myfile.open("ast.txt");
     
@@ -47,7 +49,7 @@ void Tree::buildTree() {
 }
 
 TreeNode* Tree::A(int tabCounter){//counter ist für die Anzahl der Tabulatoren die in die Datei ast.txt gesschrieben werden um eine Baumstruktur darzustellen
-    myfile << "Root(A->P P2)->\n";
+    writeInASTfile(tabCounter, "Root(A->P P2)->");
     tabCounter++;
     return new ANode( P(tabCounter), P2ndHalf(tabCounter) );
     
@@ -58,8 +60,7 @@ TreeNode* Tree::P(int tabCounter){//muss man einen PNode erstellen und an ANode 
     if((next_token.type == static_cast<int>(TokenType::keyword))&& (next_token.value == "package")){
         Token id = saveGetToken();
         if((next_token = saveGetToken()).value == ";"){
-            calcWriteTab(tabCounter);
-            myfile << "P(\"package\" I ;)->\n";
+            writeInASTfile(tabCounter, "P(\"package\" I ;)->");
             tabCounter++;
             return new PNode( I(tabCounter, id) );
         }else{
@@ -74,14 +75,12 @@ TreeNode* Tree::P(int tabCounter){//muss man einen PNode erstellen und an ANode 
 TreeNode* Tree::P2ndHalf(int tabCounter) {
     next_token = saveGetToken();
     if(next_token.value == "func" ) {
-        calcWriteTab(tabCounter);
-        myfile << "P2(\"func\")->\n";
+        writeInASTfile(tabCounter, "P2(\"func\")->");
         tabCounter++;
         return new P2Node( F(tabCounter) );
     }
     else if(next_token.value == "import" ){
-        calcWriteTab(tabCounter);
-        myfile << "P2(\"import\")->\n";
+        writeInASTfile(tabCounter, "P2(\"import\")->");
         tabCounter++;
         Token strLit = next_token = saveGetToken();
         
@@ -100,15 +99,20 @@ TreeNode* Tree::P2ndHalf(int tabCounter) {
 }
 
 TreeNode* Tree::I(int tabCounter, Token id) {
-    calcWriteTab(tabCounter);   
-    myfile << "I(id="<< id.value <<")\n";
-    tabCounter++;
-    return new INode(id);
+    if(id.type != static_cast<int>(TokenType::identifier)){
+        std::cout << next_token.lineNumber << ": "<< id.value << " ist nicht vom Tokentyp identifier" << std::endl;
+        return nullptr;
+    }
+    else{
+        calcWriteTab(tabCounter);
+        myfile << "I(id= "<< id.value <<")\n";
+        tabCounter++;
+        return new INode(id);
+    }
 }
 
 TreeNode* Tree::M(int tabCounter, Token strLit) {
-    calcWriteTab(tabCounter);   
-    myfile << "M()->\n";
+    writeInASTfile(tabCounter, "M()->");   
     tabCounter++;
     return new MNode( S(tabCounter, strLit) );
 }
@@ -125,8 +129,7 @@ TreeNode* Tree::F(int tabCounter) {
     if(next_token.value == "("){
         next_token = saveGetToken();
         if(next_token.value == ")"){
-            calcWriteTab(tabCounter);   
-            myfile << "F( \"()\" )->\n";
+            writeInASTfile(tabCounter, "F( \"()\" )->");   
             tabCounter++;
             return new FNode( I(tabCounter, id), B(tabCounter) );
         }
@@ -141,21 +144,22 @@ TreeNode* Tree::B(int tabCounter) {
         Token b2 = saveGetToken(); 
         //sind die {} leer?
         if(b2.value == "}"){
-            next_token = b2;
-            b2.value = "Epsilon";
+            epsilon =true;
         }
         else{
             std::cout << (next_token.lineNumber +1) << ": die {} ist NICHT leer" << std::endl;
+            int i = 0;
             while((next_token = saveGetToken()).value != "}"){
-                //schmeiss alles innerhalb der {} weg
+                tokenBuffer.push_back(next_token);
+                std::cout<< tokenBuffer.at(i).value << std::endl;
+                i++;
             }
         }
         //egal ob leer oder nicht
         if (next_token.value == "}"){
-            calcWriteTab(tabCounter);   
-            myfile << "B( \"{}\")->\n";
+            writeInASTfile(tabCounter, "B( \"{ N B oder Epsilon }\")->");   
             tabCounter++;
-            return new BNode( B2Half( tabCounter, b2 ) );
+            return new BNode( B2Half( tabCounter) );
         }else{
             std::cout << next_token.lineNumber << ": keine \"}\"" << std::endl;
             return nullptr;
@@ -166,10 +170,14 @@ TreeNode* Tree::B(int tabCounter) {
 
 }
 
-TreeNode* Tree::B2Half(int tabCounter, Token b2 ) {
+TreeNode* Tree::B2Half(int tabCounter) {
     calcWriteTab(tabCounter);
-    myfile << "B2ndHalf("<< b2.value <<")->\n";
-    return new B2ndHalfNode();
+    myfile << "B2ndHalf(N B2ndHalf)->\n";
+    tabCounter++;
+    if(epsilon){
+        return new B2ndHalfNode();
+    }
+    return new B2ndHalfNode(N(tabCounter), B2Half(tabCounter));
 
 }
 
@@ -185,4 +193,34 @@ Token Tree::saveGetToken(){
        return *tok;
    }
    std::cout<< "Kein Token mehr im Lexer: lexer.gettoken() == nullptr" << std::endl;
+}
+
+bool Tree::writeInASTfile(int tabCounter, std::string branch){
+    calcWriteTab(tabCounter);
+    myfile << branch << "\n";
+}
+
+TreeNode* Tree::N(int tabCounter){
+    //hier wird nur noch mit dem tokenBuffer gearbeitet, nicht mit dem Lexer;
+    Token id = tokenBuffer.pop_;//erstes Zeichen auslesen;
+    next_token = saveGetToken();
+    if(next_token.value == ":=" || next_token.value == "="  ){
+        writeInASTfile(tabCounter, "N( I E )->");
+        tabCounter++;
+        return new NNode( I(tabCounter, id), E(tabCounter));
+    }
+    std::cout << "Kein := oder =" <<std::endl;
+    return nullptr;
+}
+
+TreeNode* Tree::E(int tabCounter){
+    return nullptr;
+}
+
+TreeNode* Tree::D(int tabCounter){
+    
+}
+
+TreeNode* Tree::L(int tabCounter){
+    
 }

@@ -27,8 +27,8 @@ int main(int argc, char** argv) {
     //Tree t("Beispiel1.go");
     //Tree t("Beispiel1a.go");
     //Tree t("WrongInputFile1.go");
-    //Tree t("Beispiel2.go");
-    Tree t("WrongInputFile1a.go");
+    Tree t("Beispiel2.go");
+    //Tree t("WrongInputFile1a.go");
     std::cout << "Bin bis zum Ende gekommen" <<std::endl;
     
     return 0;

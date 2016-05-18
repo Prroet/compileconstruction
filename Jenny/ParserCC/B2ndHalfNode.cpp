@@ -12,8 +12,13 @@
  */
 
 #include "B2ndHalfNode.h"
+B2ndHalfNode::B2ndHalfNode(){
+    
+}
 
-B2ndHalfNode::B2ndHalfNode() {
+B2ndHalfNode::B2ndHalfNode(TreeNode* n, TreeNode* b2) {
+    setFirstNode(n);
+    setSecondNode(b2);
 }
 
 B2ndHalfNode::B2ndHalfNode(const B2ndHalfNode& orig) {

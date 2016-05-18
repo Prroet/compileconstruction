@@ -18,6 +18,7 @@
 class B2ndHalfNode : public TreeNode {
 public:
     B2ndHalfNode();
+    B2ndHalfNode(TreeNode* n, TreeNode* b2);
     B2ndHalfNode(const B2ndHalfNode& orig);
     virtual ~B2ndHalfNode();
 private:
