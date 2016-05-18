@@ -26,6 +26,9 @@
 #include "BNode.h"
 #include "B2ndHalfNode.h"
 #include "NNode.h"
+#include "ENode.h"
+#include "DNode.h"
+#include "LNode.h"
 
 Tree::Tree(std::string codefile): lexer(codefile) {
     Root = nullptr;
@@ -148,11 +151,14 @@ TreeNode* Tree::B(int tabCounter) {
         }
         else{
             std::cout << (next_token.lineNumber +1) << ": die {} ist NICHT leer" << std::endl;
-            int i = 0;
+            //tokenBUffer füllen, alles zwischen {}
+            tokenBuffer.push_back(b2);
             while((next_token = saveGetToken()).value != "}"){
                 tokenBuffer.push_back(next_token);
-                std::cout<< tokenBuffer.at(i).value << std::endl;
-                i++;
+            }
+            //nur zum testen:
+            for(Token element : tokenBuffer){
+               std::cout<< element.value << std::endl; 
             }
         }
         //egal ob leer oder nicht
@@ -198,29 +204,60 @@ Token Tree::saveGetToken(){
 bool Tree::writeInASTfile(int tabCounter, std::string branch){
     calcWriteTab(tabCounter);
     myfile << branch << "\n";
+    myfile.flush();
 }
 
 TreeNode* Tree::N(int tabCounter){
     //hier wird nur noch mit dem tokenBuffer gearbeitet, nicht mit dem Lexer;
-    Token id = tokenBuffer.pop_;//erstes Zeichen auslesen;
-    next_token = saveGetToken();
+    Token id = getTokenFromBuffer();
+    next_token = getTokenFromBuffer();
     if(next_token.value == ":=" || next_token.value == "="  ){
         writeInASTfile(tabCounter, "N( I E )->");
         tabCounter++;
-        return new NNode( I(tabCounter, id), E(tabCounter));
+        return new NNode( I(tabCounter, id), E(tabCounter, next_token));
     }
     std::cout << "Kein := oder =" <<std::endl;
     return nullptr;
 }
 
-TreeNode* Tree::E(int tabCounter){
+TreeNode* Tree::E(int tabCounter, Token allocOp){
+    next_token = getTokenFromBuffer();
+    //ist es ein Numberliteral oder id?
+    if(next_token.literalType == static_cast<int>(LiteralType::intLiteral) || 
+            next_token.literalType == static_cast<int>(LiteralType::floatLiteral) ||
+            next_token.type == static_cast<int>(TokenType::identifier)){
+        Token idOrNumLit = next_token;
+        writeInASTfile(tabCounter, "E(:= oder =)->");
+        tabCounter++;
+        return new ENode(D(tabCounter, idOrNumLit), allocOp) ;
+    }        
     return nullptr;
 }
 
-TreeNode* Tree::D(int tabCounter){
-    
+TreeNode* Tree::D(int tabCounter, Token idOrNumLit){
+    if(idOrNumLit.literalType == static_cast<int>(LiteralType::intLiteral) || 
+            idOrNumLit.literalType == static_cast<int>(LiteralType::floatLiteral)){
+        return new DNode(idOrNumLit);
+    }//dann isses IL
+    return new DNode(I(tabCounter, idOrNumLit), L(tabCounter));
 }
 
-TreeNode* Tree::L(int tabCounter){
-    
+TreeNode* Tree::L(int tabCounter){//!!!
+    next_token = getTokenFromBuffer();
+    if(next_token.type != (-1)){//tokenBuffer ist nicht leer
+        return new LNode(I(tabCounter, next_token));
+    }//also Epsilon
+    return nullptr;
+}
+
+//get first Token from Buffer and deletes it
+Token Tree::getTokenFromBuffer(){
+    Token tok;
+    tok.type = -1;//um abfragen zu können ob der TokenBuffer leer ist
+    tok = tokenBuffer.front();//erstes Zeichen auslesen
+    tokenBuffer.pop_front();
+//    Token test = tokenBuffer.front();
+//    std::cout << "1. Token in Buffer: " << test.value << std::endl;
+//    std::cout << "Tok: " << tok.value << std::endl;
+    return tok;
 }

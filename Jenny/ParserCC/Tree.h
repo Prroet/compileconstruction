@@ -18,7 +18,7 @@
 #include "Token.h"
 #include <string>
 #include <fstream>
-#include <vector>
+#include <list>
 
 
 class Tree {
@@ -44,15 +44,16 @@ private:
     Token saveGetToken();
     bool writeInASTfile(int tabCounter, std::string branch);
     TreeNode* N(int tabCounter);
-    TreeNode* E(int tabcounter);
-    TreeNode* D(int tabCounter);
+    TreeNode* E(int tabcounter, Token allocOp);
+    TreeNode* D(int tabCounter, Token idOrNumLit);
     TreeNode* L(int tabcounter);
+    Token getTokenFromBuffer();
     
     Lexer lexer;
     Token next_token;
     TreeNode* Root;
     std::ofstream myfile;
-    std::vector<Token> tokenBuffer;
+    std::list<Token> tokenBuffer;
     bool epsilon;
 };
 
