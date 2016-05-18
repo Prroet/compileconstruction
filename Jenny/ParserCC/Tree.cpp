@@ -214,12 +214,16 @@ TreeNode* Tree::N(int tabCounter){
     //hier wird nur noch mit dem tokenBuffer gearbeitet, nicht mit dem Lexer;
     Token id = getTokenFromBuffer();
     next_token = getTokenFromBuffer();
-    if(next_token.value == ":=" || next_token.value == "="  ){
-        writeInASTfile(tabCounter, "N( I E )->");
-        tabCounter++;
-        return new NNode( I(tabCounter, id), E(tabCounter, next_token));
-    }
-    std::cout << "Kein := oder =" <<std::endl;
+    if(next_token.type != -1){//-1 = TokenBuffer ist leer
+        if(next_token.value == ":=" || next_token.value == "="  ){
+            writeInASTfile(tabCounter, "N( I E )->");
+            tabCounter++;
+            return new NNode( I(tabCounter, id), E(tabCounter, next_token));
+        }
+        std::cout << next_token.lineNumber << ": Kein := oder =" <<std::endl;
+    }//Epsilon
+    epsilon = true; //für B2ndHalf
+    std::cout << "TokenBuffer ist leer => Epsilon" << std::endl;
     return nullptr;
 }
 
