@@ -9,6 +9,7 @@ id			[a-zA-Z][a-zA-Z_0-9]*
 int			[0-9]+
 ws			[ \t\n]
 delim		[;,]
+keyword		[break|default|func|interface|select|case|defer|go|map|struct|chan|else|goto|package|switch|const|fallthrough|if|range|type|continue|for|import|return|var]
 
 %%
 
