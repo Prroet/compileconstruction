@@ -55,6 +55,7 @@ private:
     std::ofstream myfile;
     std::list<Token> tokenBuffer;
     bool epsilon;
+
 };
 
 #endif /* TREE_H */

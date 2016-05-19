@@ -160,14 +160,22 @@ TreeNode* Tree::B(int tabCounter) {
                 tokenBuffer.push_back(next_token);
             }
             //nur zum testen:
-            for(Token element : tokenBuffer){
-               std::cout<< element.value << std::endl; 
-            }
+//            for(Token element : tokenBuffer){
+//               std::cout<< element.value << std::endl; 
+//            }
         }
         //egal ob leer oder nicht
         if (next_token.value == "}"){
             writeInASTfile(tabCounter, "B( \"{ N B oder Epsilon }\")->");   
             tabCounter++;
+            
+            //Check ob weitere Tokens hinter } sind
+            Token testok = saveGetToken(); //dürfte kein Token mehr da sein
+            if(testok.type != -1){
+                std::cout << next_token.lineNumber << ": mehr Token im Lexer als Grammatik erlaubt." << std::endl;
+                return nullptr;
+            }
+            
             return new BNode( B2Half( tabCounter) );
         }else{
             std::cout << next_token.lineNumber << ": keine \"}\"" << std::endl;
@@ -200,8 +208,13 @@ Token Tree::saveGetToken(){
    Token* tok = lexer.gettoken();
    if(tok != nullptr){
        return *tok;
+   }else{
+       std::cout<< "Kein Token mehr im Lexer: lexer.gettoken() == nullptr" << std::endl;
+       Token tmp;
+       tmp.type = -1;
+       return tmp;
    }
-   std::cout<< "Kein Token mehr im Lexer: lexer.gettoken() == nullptr" << std::endl;
+   
 }
 
 bool Tree::writeInASTfile(int tabCounter, std::string branch){
@@ -229,16 +242,22 @@ TreeNode* Tree::N(int tabCounter){
 
 TreeNode* Tree::E(int tabCounter, Token allocOp){
     next_token = getTokenFromBuffer();
+    Token idOrNumLit = next_token;
     //ist es ein Numberliteral oder id?
     if(next_token.literalType == static_cast<int>(LiteralType::intLiteral) || 
             next_token.literalType == static_cast<int>(LiteralType::floatLiteral) ||
             next_token.type == static_cast<int>(TokenType::identifier)){
-        Token idOrNumLit = next_token;
-        
+          
         writeInASTfile(tabCounter, "E(:= oder =)->");
         tabCounter++;
         return new ENode(D(tabCounter, idOrNumLit), allocOp) ;
-    }        
+    }else if(next_token.type == static_cast<int>(TokenType::identifier)){//dann isses IL
+    
+        writeInASTfile(tabCounter, "D(I L)->");
+        tabCounter++;
+        return new ENode(D(tabCounter, idOrNumLit), allocOp) ;
+    }
+    std::cout<< next_token.lineNumber << ": "<< next_token.value <<" ist keine id" << std::endl;     
     return nullptr;
 }
 
@@ -253,15 +272,18 @@ TreeNode* Tree::D(int tabCounter, Token idOrNumLit){
         //; wegschmeisen
         next_token = getTokenFromBuffer();
         if(next_token.type != static_cast<int>(TokenType::operatorDelimiter) && next_token.value != ";"){
-            std::cout << "Kein ; nach dem := D in D" << std::endl;
+            std::cout << idOrNumLit.lineNumber << ": Kein ; nach dem := D in D" << std::endl;
         }
                
         return new DNode(idOrNumLit);
-    }//dann isses IL
+    }else if(idOrNumLit.type == static_cast<int>(TokenType::identifier)){//dann isses IL
     
-    writeInASTfile(tabCounter, "D(I L)->");
-    tabCounter++;
-    return new DNode(I(tabCounter, idOrNumLit), L(tabCounter));
+        writeInASTfile(tabCounter, "D(I L)->");
+        tabCounter++;
+        return new DNode(I(tabCounter, idOrNumLit), L(tabCounter));
+    }
+    std::cout<< idOrNumLit.lineNumber << ": "<< idOrNumLit.value <<" ist keine id" << std::endl;
+    return nullptr;
 }
 
 TreeNode* Tree::L(int tabCounter){//!!!
@@ -274,15 +296,15 @@ TreeNode* Tree::L(int tabCounter){//!!!
             //; wegschmeisen
             next_token = getTokenFromBuffer();
             if(next_token.type != static_cast<int>(TokenType::operatorDelimiter) && next_token.value != ";"){
-                std::cout << "Kein ; nach dem := D in L" << std::endl;
+                std::cout << next_token.lineNumber << ": Kein ; nach dem := D in L" << std::endl;
             }
             
             writeInASTfile(tabCounter, "L(\"+\" I )->");
             tabCounter++;
             return new LNode(I(tabCounter, id));
         }
-        std::cout << "Nach dem \"+\" kommt KEINE id" << std::endl;
-    }//also Epsilon bzw. kein "+" oder id
+        std::cout <<next_token.value << ": Nach dem \"+\" kommt KEINE id" << std::endl;
+    }//also Epsilon bzw. kein "+" 
     return nullptr;
 }
 
