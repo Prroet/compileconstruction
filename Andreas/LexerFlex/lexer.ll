@@ -14,15 +14,15 @@ keyword		break|default|func|interface|select|case|defer|go|map|struct|chan|else|
 %%
 
 {ws}			;
-{keyword}		{std::cout << "Found Keyword " << yytext << std::endl;}
-{id}			{std::cout << "Found identifier " << yytext << std::endl;}
+{keyword}		{std::cout << "Found Keyword " << yytext << std::endl; return TOKEN_KEYWORD;}
+{id}			{std::cout << "Found identifier " << yytext << std::endl;return TOKEN_IDENTIFIER;}
 {int}			{std::cout << "Found integer Number " << yytext << std::endl;}
 {int}.{int}* 		{std::cout << "Found Float " << yytext << std::endl;}
 ";"			{return TOKEN_SEMICOLON;}
-"("			{std::cout << "Found left parenthesis " << yytext << std::endl;}
-")"			{std::cout << "Found right parenthesis " << yytext << std::endl;}		
-"{"			{std::cout << "Found left curly bracket " << yytext << std::endl;}
-"}"			{std::cout << "Found right curly bracket " << yytext << std::endl;}
+"("			{std::cout << "Found left parenthesis " << yytext << std::endl; return TOKEN_LPAREN;}
+")"			{std::cout << "Found right parenthesis " << yytext << std::endl;return TOKEN_RPAREN;}		
+"{"			{std::cout << "Found left curly bracket " << yytext << std::endl;return TOKEN_LCPAREN;}
+"}"			{std::cout << "Found right curly bracket " << yytext << std::endl;return TOKEN_RCPAREN;}
 ":="			{std::cout << "Found Assignment operator " << yytext << std::endl;}
 "="			{std::cout << "Found equality sign " << yytext << std::endl;}
 "\""+{id}*+"\""		{std::cout << "Found String " << yytext << std::endl;}
