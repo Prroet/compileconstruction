@@ -1,5 +1,6 @@
 %{
 #include <iostream>
+#define YY_DECL extern "C" int yylex()
 #include "Parser.h"
 
 %}
@@ -31,18 +32,4 @@ keyword		break|default|func|interface|select|case|defer|go|map|struct|chan|else|
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]	{std::cout << "Found Multilinecomment " << yytext << std::endl;}
 %%
 
-void printUsage()
-{
-	std::cout << "Usage: lexer gofile.go" << std::endl;
-}
 
-int main(int argc, char* args[])
-{
-	if(argc != 2)
-		printUsage();
-	else
-	{
-		yyin = fopen(args[1], "r");
-		yylex();
-	}
-}

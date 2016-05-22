@@ -1,10 +1,12 @@
 %{
 	#include <iostream>
+	#include <stdio.h>
 	#define YYPARSE_PARAM scanner
 	#define YYLEX_PARAM scanner
 	extern "C" int yylex();
 	extern "C" int yyparse();
-	void yyerror(char const*);
+	extern "C" FILE *yyin;	
+	void yyerror(const char* s);	
 %}
 
 %output		"Parser.cpp"
@@ -38,3 +40,40 @@ S:	TOKEN_STRING_LIT;
 F:	TOKEN_KEYWORD I TOKEN_LPAREN TOKEN_RPAREN B;
 B:	TOKEN_LCPAREN BPrime TOKEN_RCPAREN
 BPrime:	;
+
+%%
+
+void printUsage()
+{
+        std::cout << "Usage: lexer gofile.go" << std::endl;
+}
+
+int main(int argc, char* args[])
+{
+        if(argc != 2)
+                printUsage();
+        else
+        {	
+		FILE* myFile = fopen(args[1], "r");
+		if(!myFile)
+		{
+			std::cout << "Coldn't open File!" << std::endl;
+			return -1;
+		}
+		else
+		{
+                	yyin = myFile;
+                	do {
+				yyparse();
+			}while(!feof(yyin));
+		}
+        }
+}
+	
+void yyerror(char const* s)
+{
+	std::cout << "Parsing error! Message: " << s << std::endl;
+	// should halt here
+}
+
+
