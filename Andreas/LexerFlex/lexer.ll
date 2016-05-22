@@ -1,6 +1,6 @@
 %{
 #include <iostream>
-
+#include "Parser.h"
 
 %}
 %option noyywrap nounput batch noinput
