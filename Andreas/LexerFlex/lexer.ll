@@ -25,8 +25,10 @@ keyword		break|default|func|interface|select|case|defer|go|map|struct|chan|else|
 "}"			{std::cout << "Found right curly bracket " << yytext << std::endl;}
 ":="			{std::cout << "Found Assignment operator " << yytext << std::endl;}
 "="			{std::cout << "Found equality sign " << yytext << std::endl;}
-"\""+{id}*"\""		{std::cout << "Found String " << yytext << std::endl;}
+"\""+{id}*+"\""		{std::cout << "Found String " << yytext << std::endl;}
 "+"			{std::cout << "Found Operator " << yytext << std::endl;}
+"//".*			{std::cout << "Found comment " << yytext << std::endl;}
+[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]	{std::cout << "Found Multilinecomment " << yytext << std::endl;}
 %%
 
 void printUsage()
