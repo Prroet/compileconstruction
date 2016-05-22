@@ -5,14 +5,19 @@ CFLAGS= -o
 LEX=flex
 YACC=bison
 YFLAGS=-v -d
-TARGET=lexer
+# lexer Name
+LEXER=lexer
+# Parser Name
+PARSER=Parser
 
+all: $(LEXER).cpp $(PARSER).cpp
+	$(CC) $(CFLAGS) $(PARSER)  $(LEXER).cpp $(PARSER).cpp
 
-all: $(TARGET).cc
-	$(CC) $(CFLAGS) $(TARGET) $(TARGET).cc
+$(LEXER).cpp:
+	$(LEX) -o $(LEXER).cpp $(LEXER).ll
 
-$(TARGET).cc: $(TARGET).ll
-	$(LEX) -o $(TARGET).cc $(TARGET).ll
+$(PARSER).cpp :
+	$(YACC) $(PARSER).yy
 
 clean:
-	$(RM) $(TARGET).cc $(TARGET)
+	$(RM) $(LEXER).cpp $(LEXER) $(PARSER) $(PARSER).cpp $(PARSER).h

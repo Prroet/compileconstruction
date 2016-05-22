@@ -18,7 +18,7 @@ keyword		break|default|func|interface|select|case|defer|go|map|struct|chan|else|
 {id}			{std::cout << "Found identifier " << yytext << std::endl;}
 {int}			{std::cout << "Found integer Number " << yytext << std::endl;}
 {int}.{int}* 		{std::cout << "Found Float " << yytext << std::endl;}
-{delim}			{std::cout << "Found Delimiter " << yytext << std::endl;}
+";"			{return TOKEN_SEMICOLON;}
 "("			{std::cout << "Found left parenthesis " << yytext << std::endl;}
 ")"			{std::cout << "Found right parenthesis " << yytext << std::endl;}		
 "{"			{std::cout << "Found left curly bracket " << yytext << std::endl;}
