@@ -14,22 +14,22 @@ keyword		break|default|func|interface|select|case|defer|go|map|struct|chan|else|
 
 %%
 
-{ws}			;
-{keyword}		{std::cout << "Found Keyword " << yytext << std::endl; return TOKEN_KEYWORD;}
-{id}			{std::cout << "Found identifier " << yytext << std::endl;return TOKEN_IDENTIFIER;}
-{int}			{std::cout << "Found integer Number " << yytext << std::endl;}
-{int}.{int}* 		{std::cout << "Found Float " << yytext << std::endl;}
-";"			{return TOKEN_SEMICOLON;}
-"("			{std::cout << "Found left parenthesis " << yytext << std::endl; return TOKEN_LPAREN;}
-")"			{std::cout << "Found right parenthesis " << yytext << std::endl;return TOKEN_RPAREN;}		
-"{"			{std::cout << "Found left curly bracket " << yytext << std::endl;return TOKEN_LCPAREN;}
-"}"			{std::cout << "Found right curly bracket " << yytext << std::endl;return TOKEN_RCPAREN;}
-":="			{std::cout << "Found Assignment operator " << yytext << std::endl;}
-"="			{std::cout << "Found equality sign " << yytext << std::endl;}
-"\""+{id}*+"\""		{std::cout << "Found String " << yytext << std::endl;}
-"+"			{std::cout << "Found Operator " << yytext << std::endl;}
-"//".*			{std::cout << "Found comment " << yytext << std::endl;}
-[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]	{std::cout << "Found Multilinecomment " << yytext << std::endl;}
+{ws}								;
+{keyword}							{return TOKEN_KEYWORD; }
+{id}								{yylval.str = yytext;return TOKEN_IDENTIFIER;}
+{int}								{std::cout << "Found integer Number " << yytext << std::endl;}
+{int}.{int}* 						{std::cout << "Found Float " << yytext << std::endl;}
+";"									{return TOKEN_SEMICOLON;}
+"("									{return TOKEN_LPAREN;}
+")"									{return TOKEN_RPAREN;}		
+"{"									{return TOKEN_LCPAREN;}
+"}"									{return TOKEN_RCPAREN;}
+":="								{/*TOKEN_ASSIGNMENT needs to be defined in parser.yy for now do nothing */ }
+"="									{}
+"\""+{id}*+"\""						{return TOKEN_STRING_LIT;}
+"+"									{}
+"//".*								{}
+[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]	{}
 %%
 
 

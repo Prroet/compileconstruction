@@ -4,7 +4,6 @@
 	#define YYPARSE_PARAM scanner
 	#define YYLEX_PARAM scanner
 	extern "C" int yylex();
-	extern "C" int yyparse();
 	extern "C" FILE *yyin;	
 	void yyerror(const char* s);	
 %}
@@ -75,5 +74,3 @@ void yyerror(char const* s)
 	std::cout << "Parsing error! Message: " << s << std::endl;
 	// should halt here
 }
-
-
