@@ -1,7 +1,7 @@
 
 
 CC=clang++
-CFLAGS= -o
+CFLAGS=--std=c++11
 LEX=flex
 YACC=bison
 YFLAGS=-v -d
@@ -11,7 +11,7 @@ LEXER=lexer
 PARSER=Parser
 
 all: $(LEXER).cpp $(PARSER).cpp
-	$(CC) $(CFLAGS) $(PARSER) $(PARSER).cpp $(LEXER).cpp 
+	$(CC) $(CFLAGS) -o $(PARSER) $(PARSER).cpp $(LEXER).cpp 
 
 $(LEXER).cpp:
 	$(LEX) -o $(LEXER).cpp $(LEXER).ll
@@ -19,5 +19,7 @@ $(LEXER).cpp:
 $(PARSER).cpp :
 	$(YACC) $(PARSER).yy
 
+ParseTree: ParseTree.h ParseTree.cpp 
+	$(CC) -o ParseTree ParseTree.cpp
 clean:
-	$(RM) $(LEXER).cpp $(LEXER) $(PARSER) $(PARSER).cpp $(PARSER).h
+	$(RM) $(LEXER).cpp $(LEXER) $(PARSER) $(PARSER).cpp $(PARSER).h ParseTree

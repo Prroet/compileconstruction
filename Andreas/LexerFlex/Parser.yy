@@ -1,6 +1,7 @@
 %{
 	#include <iostream>
 	#include <stdio.h>
+	#include <string.h>
 	#define YYPARSE_PARAM scanner
 	#define YYLEX_PARAM scanner
 	extern "C" int yylex();
@@ -14,6 +15,8 @@
 %left '+' TOKEN_PLUS
 %left '*' TOKEN_MULTIPLY
 
+
+/* yylval.str or yylval.num to assign values in flex*/
 %union {
 	int num;
 	char* str;
@@ -28,16 +31,31 @@
 %token<str> TOKEN_IDENTIFIER
 %token<str> TOKEN_STRING_LIT
 
+%type <str> P I PPrime M S F B BPrime
+
 %%
 
-A:	P PPrime;
-P:	TOKEN_KEYWORD I TOKEN_SEMICOLON;
-PPrime:	F | M F;
-I:	TOKEN_IDENTIFIER;
+A:	P PPrime {/* hier kommen die Anweisungen für die Baumstruktur rein */} ;
+P:	TOKEN_KEYWORD I TOKEN_SEMICOLON { if(strncmp( $1, "package", 7)!= 0) 
+									  {
+										yyerror("keyword package not found!"); 
+									  }
+										//std::cout << "Package Token value: " << $1 << std::endl;
+										// std::cout << "I Token value: " << $2 << std::endl;
+										//std::cout << "Semicolon Token value: " << $3 << std::endl;
+									 };
+PPrime:	F | M F {};
+I:	TOKEN_IDENTIFIER { /*std::cout << "Identifier Token Value: " << $1 << std::endl;*/ };
 M:	TOKEN_KEYWORD S TOKEN_SEMICOLON;
 S:	TOKEN_STRING_LIT;
-F:	TOKEN_KEYWORD I TOKEN_LPAREN TOKEN_RPAREN B;
-B:	TOKEN_LCPAREN BPrime TOKEN_RCPAREN
+F:	TOKEN_KEYWORD I TOKEN_LPAREN TOKEN_RPAREN B { if(strncmp( $1, "func", 4)!= 0) 
+									  			  {
+													yyerror("keyword func not found!"); 
+									  			  }
+													//std::cout << "Keyword Token value: " << ($1) << std::endl;
+													// std::cout << "S value: " << $2.str << std::endl; 
+												};
+B:	TOKEN_LCPAREN BPrime TOKEN_RCPAREN {/*std::cout << "Curly Parenthesis " << $1 << std::endl; */};
 BPrime:	;
 
 %%
