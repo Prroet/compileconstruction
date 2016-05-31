@@ -40,10 +40,7 @@ P:	TOKEN_KEYWORD I TOKEN_SEMICOLON { if(strncmp( $1, "package", 7)!= 0)
 									  {
 										yyerror("keyword package not found!"); 
 									  }
-										//std::cout << "Package Token value: " << $1 << std::endl;
-										// std::cout << "I Token value: " << $2 << std::endl;
-										//std::cout << "Semicolon Token value: " << $3 << std::endl;
-									 };
+																			 };
 PPrime:	F | M F {};
 I:	TOKEN_IDENTIFIER { /*std::cout << "Identifier Token Value: " << $1 << std::endl;*/ };
 M:	TOKEN_KEYWORD S TOKEN_SEMICOLON;

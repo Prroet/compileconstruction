@@ -19,7 +19,7 @@ $(LEXER).cpp:
 $(PARSER).cpp :
 	$(YACC) $(PARSER).yy
 
-ParseTree: ParseTree.h ParseTree.cpp 
-	$(CC) -o ParseTree ParseTree.cpp
+Ast: Ast.h Ast.cpp Node.h
+	$(CC) -o Ast Ast.cpp
 clean:
 	$(RM) $(LEXER).cpp $(LEXER) $(PARSER) $(PARSER).cpp $(PARSER).h ParseTree
