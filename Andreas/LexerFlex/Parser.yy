@@ -2,6 +2,7 @@
 	#include <iostream>
 	#include <stdio.h>
 	#include <string.h>
+	#include "Node.h"
 	#define YYPARSE_PARAM scanner
 	#define YYLEX_PARAM scanner
 	extern "C" int yylex();
@@ -20,13 +21,14 @@
 %union {
 	int num;
 	char* str;
+	Node nonTerminal;
 }
 
-%token<str> TOKEN_LPAREN
-%token<str> TOKEN_RPAREN
-%token<str> TOKEN_LCPAREN
-%token<str> TOKEN_RCPAREN
-%token<str> TOKEN_SEMICOLON
+%token TOKEN_LPAREN
+%token TOKEN_RPAREN
+%token TOKEN_LCPAREN
+%token TOKEN_RCPAREN
+%token TOKEN_SEMICOLON
 %token<str> TOKEN_KEYWORD
 %token<str> TOKEN_IDENTIFIER
 %token<str> TOKEN_STRING_LIT

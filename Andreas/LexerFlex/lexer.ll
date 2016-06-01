@@ -23,14 +23,14 @@ keyword		break|default|func|interface|select|case|defer|go|map|struct|chan|else|
 {id}								{yylval.str = yytext;return TOKEN_IDENTIFIER;}
 {int}								{std::cout << "Found integer Number " << yytext << std::endl;}
 {int}.{int}* 						{std::cout << "Found Float " << yytext << std::endl;}
-";"									{/*std::cout << "Lexer semicolon " << yylval.str =  yytext << std::endl*/ yylval.str = yytext ; return TOKEN_SEMICOLON;}
+";"									{return TOKEN_SEMICOLON;}
 "("									{return TOKEN_LPAREN;}
 ")"									{return TOKEN_RPAREN;}		
 "{"									{return TOKEN_LCPAREN;}
 "}"									{return TOKEN_RCPAREN;}
 ":="								{/*TOKEN_ASSIGNMENT needs to be defined in parser.yy for now do nothing */ }
 "="									{}
-"\""+{id}*+"\""						{return TOKEN_STRING_LIT;}
+"\""+{id}*+"\""						{yylval.str=yytext; return TOKEN_STRING_LIT;}
 "+"									{}
 "//".*								{}
 [/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]	{}

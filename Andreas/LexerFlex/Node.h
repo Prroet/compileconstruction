@@ -23,6 +23,7 @@ class Node
 		{
 			
 		}
+		Node(){};
 	protected:
 	private:
 		NodeType type;

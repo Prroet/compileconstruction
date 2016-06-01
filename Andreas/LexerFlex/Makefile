@@ -22,4 +22,4 @@ $(PARSER).cpp :
 Ast: Ast.h Ast.cpp Node.h
 	$(CC) -o Ast Ast.cpp
 clean:
-	$(RM) $(LEXER).cpp $(LEXER) $(PARSER) $(PARSER).cpp $(PARSER).h ParseTree
+	$(RM) $(LEXER).cpp $(LEXER) $(PARSER) $(PARSER).cpp $(PARSER).h Ast
