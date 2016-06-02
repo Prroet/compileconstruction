@@ -33,9 +33,11 @@ typedef void* yyscan_t;
 %parse-param { yyscan_t scanner }
 
 %union {
-    int value;
+	int value;
 	char* identifier;
-    SExpression *node; // terminal!!!!!!
+	char* keyword;
+	char* stringLiteral;
+	SExpression *node; // terminal!!!!!!
 }
  
 %left '+' TOKEN_PLUS
@@ -47,20 +49,20 @@ typedef void* yyscan_t;
 %token TOKEN_CRPAREN
 %token TOKEN_PLUS
 %token TOKEN_MULTIPLY
-%token TOKEN_IDENTIFIER
-%token TOKEN_KEYWORD
-%token TOKEN_STRING_LIT
+%token <identifier> TOKEN_IDENTIFIER
+%token <keyword> TOKEN_KEYWORD
+%token <stringLiteral> TOKEN_STRING_LIT
 %token <value> TOKEN_NUMBER
+%token <value> TOKEN_INT_LIT
 
 %type <node> expr
  
 %%
-
-
-/**
-	This will make the first node for the tree
-**/ 
-input
+/*
+	set *expression to value of expr
+	where does expression come from ??
+*/
+input  /*first alternative is empty */
     : expr { *expression = $1; }
     ;
 

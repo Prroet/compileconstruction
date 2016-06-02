@@ -35,16 +35,15 @@ STRINGLIT	"\"".*"\""
 %%
  
 {WS}            { /* Skip blanks. */ }
-{INT_LIT}        { sscanf(yytext, "%d", &yylval->value); return TOKEN_INT_LIT; }
- 
+{INT_LIT}       { sscanf(yytext, "%d", &yylval->value); return TOKEN_INT_LIT; }
 {MULTIPLY}      { return TOKEN_MULTIPLY; }
 {PLUS}          { return TOKEN_PLUS; }
 {LPAREN}        { return TOKEN_LPAREN; }
 {RPAREN}        { return TOKEN_RPAREN; }
-{CLPAREN}		{ return TOKEN_CLPAREN; }
-{CRPAREN}		{ return TOKEN_CRPAREN; }
-{IDENTIFIER}	{ return TOKEN_IDENTIFIER;	}
-{STRINGLIT}		{sscanf(yytext, "%s", &yylaval->value);  return TOKEN_STRING_LIT;	}
+{CLPAREN}	{ return TOKEN_CLPAREN; }
+{CRPAREN}	{ return TOKEN_CRPAREN; }
+{IDENTIFIER}	{  sscanf(yytext, "%s", &yylval->identifier); return TOKEN_IDENTIFIER;	}
+{STRINGLIT}	{sscanf(yytext, "%s", &yylval->stringLiteral);  return TOKEN_STRING_LIT;}
 .               {/* skip everything else*/  }
  
 %%
