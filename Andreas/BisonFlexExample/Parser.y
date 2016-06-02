@@ -35,7 +35,7 @@ typedef void* yyscan_t;
 %union {
     int value;
 	char* identifier;
-    SExpression *node;
+    SExpression *node; // terminal!!!!!!
 }
  
 %left '+' TOKEN_PLUS
@@ -49,6 +49,7 @@ typedef void* yyscan_t;
 %token TOKEN_MULTIPLY
 %token TOKEN_IDENTIFIER
 %token TOKEN_KEYWORD
+%token TOKEN_STRING_LIT
 %token <value> TOKEN_NUMBER
 
 %type <node> expr

@@ -30,7 +30,7 @@ DELIM		[;.]
 KEYWORD		break|default|func|interface|select|case|defer|go|map|struct|chan|else|goto|package|switch|const|fallthrough|if|range|type|continue|for|import|return|var
 WS          [ \r\n\t]*
 IDENTIFIER	[a-zA-Z][a-zA-Z_0-9]*
-
+STRINGLIT	"\"".*"\""
  
 %%
  
@@ -43,6 +43,8 @@ IDENTIFIER	[a-zA-Z][a-zA-Z_0-9]*
 {RPAREN}        { return TOKEN_RPAREN; }
 {CLPAREN}		{ return TOKEN_CLPAREN; }
 {CRPAREN}		{ return TOKEN_CRPAREN; }
+{IDENTIFIER}	{ return TOKEN_IDENTIFIER;	}
+{STRINGLIT}		{sscanf(yytext, "%s", &yylaval->value);  return TOKEN_STRING_LIT;	}
 .               {/* skip everything else*/  }
  
 %%
