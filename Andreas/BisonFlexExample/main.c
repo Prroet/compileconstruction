@@ -7,10 +7,12 @@
 #include "Lexer.h"
  
 #include <stdio.h>
+
+// extern FILE *yyin;
  
 int yyparse(SExpression **expression, yyscan_t scanner);
  
-SExpression *getAST(const char *expr)
+SExpression *getAST(const char *filename)
 {
     SExpression *expression;
     yyscan_t scanner;
@@ -21,7 +23,16 @@ SExpression *getAST(const char *expr)
         return NULL;
     }
  
-    state = yy_scan_string(expr, scanner);
+	 	// state = yy_scan_string(expr, scanner);
+	FILE* myFile = fopen(filename, "r");
+	if(!myFile)
+	{
+		fprintf(stdout, "Couldn't open File! \n");
+	}
+	else
+	{
+		yyin = myFile;
+	}
  
     if (yyparse(&expression, scanner)) {
         // error parsing
@@ -35,33 +46,16 @@ SExpression *getAST(const char *expr)
     return expression;
 }
  
-int evaluate(SExpression *e)
-{
-    switch (e->type) {
-        case eVALUE:
-            return e->value;
-        case eMULTIPLY:
-            return evaluate(e->left) * evaluate(e->right);
-        case ePLUS:
-            return evaluate(e->left) + evaluate(e->right);
-        default:
-            // shouldn't be here
-            return 0;
-    }
-}
- 
-int main(void)
+int main(int argc, char* args[])
 {
     SExpression *e = NULL;
-    char test[]=" 4 + 2*10 + 3*( 5 + 1 )";
-    int result = 0;
- 
-    e = getAST(test);
- 
-    result = evaluate(e);
- 
-    printf("Result of '%s' is %d\n", test, result);
- 
+ 	if(argc != 2)
+	{
+		// printUsage();
+		return -1;
+	}
+    e = getAST(args[1]);
+   
     deleteExpression(e);
  
     return 0;

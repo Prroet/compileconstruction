@@ -14,9 +14,9 @@ typedef enum tagEOperationType
 	eNUMLIT,
     eKEYWORD,
 	eIDENTIFIER,
-	eEQUAL,
-    eMULTIPLY,
-    ePLUS
+	eMULTIPLY,
+	ePLUS,
+	eASSIGNMENT
 } EOperationType;
 
 /**
@@ -25,18 +25,29 @@ typedef enum tagEOperationType
 typedef struct tagSExpression
 {
     EOperationType type;///< type of operation
-
-    int value;///< valid only when type is eVALUE
+	
+	char* stringValue;
+    int numlit;///< valid only when type is eNUMLIT
     struct tagSExpression *left; ///< left side of the tree
     struct tagSExpression *right;///< right side of the tree
 } SExpression;
+
+/**
+	@ creates a Node for the tree that contains a string which has the type
+		EOperationType
+	@param stringLit the value of the Node which will be copied internally
+		because of later the string can be gone
+	@param EOperationType to set type
+	@ return the expression
+**/
+SExpression *createIdentifier(char* bisonString, EOperationType type);
 
 /**
  * @brief It creates an identifier
  * @param value The number value
  * @return The expression or NULL in case of no memory
  */
-SExpression *createNumber(int value);
+SExpression *createNumber(int numlit);
 
 /**
  * @brief It creates an operation

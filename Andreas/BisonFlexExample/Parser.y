@@ -37,6 +37,7 @@ typedef void* yyscan_t;
 	char* identifier;
 	char* keyword;
 	char* stringLiteral;
+	char* operatorString;
 	SExpression *node; // terminal!!!!!!
 }
  
@@ -47,30 +48,39 @@ typedef void* yyscan_t;
 %token TOKEN_RPAREN
 %token TOKEN_CLPAREN
 %token TOKEN_CRPAREN
-%token TOKEN_PLUS
+%token TOKEN_PLUS 
 %token TOKEN_MULTIPLY
+%token TOKEN_ASSIGNMENT
 %token <identifier> TOKEN_IDENTIFIER
 %token <keyword> TOKEN_KEYWORD
 %token <stringLiteral> TOKEN_STRING_LIT
 %token <value> TOKEN_NUMBER
-%token <value> TOKEN_INT_LIT
+%token <value> TOKEN_NUM_LIT
 
-%type <node> expr
+%type <node> expr A P PPrime I M S F B BPrime N L 
  
 %%
 /*
 	set *expression to value of expr
-	where does expression come from ??
 */
+
 input  /*first alternative is empty */
-    : expr { *expression = $1; }
+    : expr {/** *expression = $1;**/ }
     ;
 
 expr
-    : expr[L] TOKEN_PLUS expr[R] { $$ = createOperation( ePLUS, $L, $R ); }
-    | expr[L] TOKEN_MULTIPLY expr[R] { $$ = createOperation( eMULTIPLY, $L, $R ); }
-    | TOKEN_LPAREN expr[E] TOKEN_RPAREN { $$ = $E; }
-    | TOKEN_NUMBER { $$ = createNumber($1); }
-    ;
- 
+    : A;
+
+A: 	P PPrime {/* Do sth with the tokens */};
+P:	TOKEN_KEYWORD I {/**/};
+PPrime: F | M F {};
+I:	TOKEN_IDENTIFIER {};
+M: TOKEN_KEYWORD S {/**/};
+S: TOKEN_STRING_LIT {/**/};
+F: TOKEN_KEYWORD I TOKEN_LPAREN TOKEN_RPAREN B {/**/};
+B: TOKEN_CLPAREN BPrime TOKEN_CRPAREN {/**/};
+BPrime: {} | N BPrime {};
+N: I TOKEN_ASSIGNMENT L {};
+L: L TOKEN_PLUS L | I | TOKEN_NUM_LIT {/* $$ = createN( )*/ };
+
 %%

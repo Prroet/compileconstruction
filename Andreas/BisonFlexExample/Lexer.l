@@ -24,8 +24,9 @@ CLPAREN		"{"
 CRPAREN		"}"
 PLUS        "+"
 MULTIPLY    "*"
+ASSIGNMENT	"="|":="
 /*Integer literal*/
-INT_LIT      [0-9]+
+NUM_LIT      [0-9]+
 DELIM		[;.]
 KEYWORD		break|default|func|interface|select|case|defer|go|map|struct|chan|else|goto|package|switch|const|fallthrough|if|range|type|continue|for|import|return|var
 WS          [ \r\n\t]*
@@ -35,9 +36,10 @@ STRINGLIT	"\"".*"\""
 %%
  
 {WS}            { /* Skip blanks. */ }
-{INT_LIT}       { sscanf(yytext, "%d", &yylval->value); return TOKEN_INT_LIT; }
-{MULTIPLY}      { return TOKEN_MULTIPLY; }
-{PLUS}          { return TOKEN_PLUS; }
+{NUM_LIT}       { sscanf(yytext, "%d", &yylval->value); return TOKEN_NUM_LIT; }
+{ASSIGNMENT}	{ sscanf(yytext, "%s", &yylval->operatorString);return TOKEN_ASSIGNMENT; }
+{MULTIPLY}      { sscanf(yytext, "%s", &yylval->operatorString);return TOKEN_MULTIPLY; }
+{PLUS}          { sscanf(yytext, "%s", &yylval->operatorString); return TOKEN_PLUS; }
 {LPAREN}        { return TOKEN_LPAREN; }
 {RPAREN}        { return TOKEN_RPAREN; }
 {CLPAREN}	{ return TOKEN_CLPAREN; }
