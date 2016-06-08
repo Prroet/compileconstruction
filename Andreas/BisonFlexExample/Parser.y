@@ -11,6 +11,7 @@
 
 int yyerror(SExpression **expression, yyscan_t scanner, const char *msg) {
     // Add error handling routine as needed
+	fprintf(stdout, "Error Parsing! %s", msg);
 }
  
 %}
@@ -43,7 +44,8 @@ typedef void* yyscan_t;
  
 %left '+' TOKEN_PLUS
 %left '*' TOKEN_MULTIPLY
- 
+
+%token TOKEN_SEMICOLON 
 %token TOKEN_LPAREN
 %token TOKEN_RPAREN
 %token TOKEN_CLPAREN
@@ -72,15 +74,15 @@ expr
     : A;
 
 A: 	P PPrime {/* Do sth with the tokens */};
-P:	TOKEN_KEYWORD I {/**/};
+P:	TOKEN_KEYWORD I TOKEN_SEMICOLON{/**/};
 PPrime: F | M F {};
 I:	TOKEN_IDENTIFIER {};
-M: TOKEN_KEYWORD S {/**/};
+M: TOKEN_KEYWORD S  TOKEN_SEMICOLON{/**/};
 S: TOKEN_STRING_LIT {/**/};
 F: TOKEN_KEYWORD I TOKEN_LPAREN TOKEN_RPAREN B {/**/};
 B: TOKEN_CLPAREN BPrime TOKEN_CRPAREN {/**/};
 BPrime: {} | N BPrime {};
-N: I TOKEN_ASSIGNMENT L {};
+N: I TOKEN_ASSIGNMENT L  TOKEN_SEMICOLON{};
 L: L TOKEN_PLUS L | I | TOKEN_NUM_LIT {/* $$ = createN( )*/ };
 
 %%
