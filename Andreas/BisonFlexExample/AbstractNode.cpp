@@ -1,17 +1,22 @@
 #include "AbstractNode.h"
 
+#include <iostream>
+
+unsigned AbstractNode::levelCounter = 0;    // because we start at level 0
+
+
 AbstractNode::AbstractNode()
 {
-	if(levelCounter > 0)
-	{
-		levelCounter++;	// make the level higher
-		nodeLevel = levelCounter;	// give it to this node
-		levelCounter--;	// decrement the level for more nodes on the same level
-	}
-	else
-		nodeLevel = levelCounter;	// if this is the first level
+	nodeLevel = levelCounter;
 }
 
+AbstractNode::~AbstractNode()
+{
+	for(int i=0; i<children.size(); i++)
+		delete(children.at(i));
+	while(children.size())
+		children.pop_back();
+}
 unsigned AbstractNode::getNodeLevel()
 {
 	return this->nodeLevel;
@@ -21,10 +26,10 @@ unsigned AbstractNode::getNumberOfChildren()
 {
 	return this->children.size();
 }
-
-void AbstractNode::printNode()
+// the calling Node has to give his nodeValue to this func
+void AbstractNode::printNode(std::string nodeValue)
 {
 	for(int i=0; i<levelCounter; i++)
 		std::cout << "\t";
-	std::cout << "Some Value" << std::endl;
+	std::cout << nodeValue << std::endl;
 }

@@ -14,7 +14,7 @@ Parser.c:	Parser.y Lexer.c
 		bison Parser.y
 
 TreeTest: AbstractNode.cpp TestNode.cpp
-		$(CC) $(CFLAGS) nodetest.cpp AbstractNode.cpp TestNode.cpp -o TreeTest
+		$(CC) $(CFLAGS) AbstractNode.cpp TestNode.cpp nodetest.cpp -o TreeTest
 
 clean:
 		rm -f *.o *~ Lexer.c Lexer.h Parser.c Parser.h BisonParser TreeTest
