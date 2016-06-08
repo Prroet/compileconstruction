@@ -18,7 +18,6 @@ SExpression *getAST(const char *filename)
 {
     SExpression *expression;
     yyscan_t scanner;
-    YY_BUFFER_STATE state;
  
     if (yylex_init(&scanner)) {
         // couldn't initialize
@@ -37,10 +36,7 @@ SExpression *getAST(const char *filename)
 	{
 		return NULL;
 	}
-	 	// state = yy_scan_string(expr, scanner);	
- 
-//     yy_delete_buffer(state, scanner);
- 
+	 
     yylex_destroy(scanner);
 	return expression;
 }

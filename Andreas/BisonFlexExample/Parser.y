@@ -62,7 +62,7 @@ typedef void* yyscan_t;
 %token <value> TOKEN_NUMBER
 %token <value> TOKEN_NUM_LIT
 
-// %type <node> A P PPrime I M S F B BPrime N L 
+%type <node> A P PPrime I M S F B BPrime N L 
  
 %%
 /*
