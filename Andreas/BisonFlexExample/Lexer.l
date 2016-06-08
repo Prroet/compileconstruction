@@ -41,22 +41,42 @@ DEFAULT		.
 %%
 
 {WS}            { }
-{KEYWORD}       { yylval->keyword = yytext ; return TOKEN_KEYWORD;}
-{IDENTIFIER}    { yylval->identifier=yytext; return TOKEN_IDENTIFIER;  }
-{NUM_LIT}       { sscanf(yytext, "%d", &yylval->value); return TOKEN_NUM_LIT; }
-{ASSIGNMENT}    { yylval->operatorString=yytext; return TOKEN_ASSIGNMENT; }
-{MULTIPLY}      { yylval->operatorString=yytext ;return TOKEN_MULTIPLY; }
-{PLUS}          {yylval->operatorString=yytext ; return TOKEN_PLUS; }
+{KEYWORD}       { 
+					// yylval->keyword = yytext ; 
+					return TOKEN_KEYWORD;
+				}
+{IDENTIFIER}    { 
+				//	yylval->identifier=yytext; 
+					return TOKEN_IDENTIFIER;  
+				}
+{NUM_LIT}       { 
+				//	sscanf(yytext, "%d", &yylval->value); 
+					return TOKEN_NUM_LIT; 
+				}
+{ASSIGNMENT}    { 
+				//	yylval->operatorString=yytext; 
+					return TOKEN_ASSIGNMENT; 
+				}
+{MULTIPLY}      { 
+				//	yylval->operatorString=yytext ;
+					return TOKEN_MULTIPLY; 
+				}
+{PLUS}          { 
+				//	yylval->operatorString=yytext ; 
+					return TOKEN_PLUS; 
+				}
 {LPAREN}        { return TOKEN_LPAREN; }
 {RPAREN}        { return TOKEN_RPAREN; }
 {CLPAREN}       { return TOKEN_CLPAREN; }
 {CRPAREN}       { return TOKEN_CRPAREN; }
-{STRINGLIT}     { yylval->stringLiteral=yytext ;  return TOKEN_STRING_LIT;}
-{SEMICOLON}     {return TOKEN_SEMICOLON; }
+{STRINGLIT}     {
+				//	yylval->stringLiteral=yytext;  
+					return TOKEN_STRING_LIT;
+				}
+{SEMICOLON}     { return TOKEN_SEMICOLON; }
 {COMMENT}		{}
 {MULTICOMMENT}	{}
-<<EOF>>         {return TOKEN_EOF;}
-{DEFAULT}       {fprintf(stdout, "Unknow Token!!!\n");}
+{DEFAULT}       { fprintf(stdout, "Unknown Token!!!\n");}
 
 %%
  

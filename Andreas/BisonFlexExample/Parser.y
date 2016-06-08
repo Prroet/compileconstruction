@@ -44,7 +44,7 @@ typedef void* yyscan_t;
  
 %left '+' TOKEN_PLUS
 %left '*' TOKEN_MULTIPLY
-%right ':=' TOKEN_ASSIGNMENT
+%right ":=" TOKEN_ASSIGNMENT
 
 
 %token TOKEN_SEMICOLON 
@@ -62,14 +62,14 @@ typedef void* yyscan_t;
 %token <value> TOKEN_NUMBER
 %token <value> TOKEN_NUM_LIT
 
-%type <node> A P PPrime I M S F B BPrime N L 
+// %type <node> A P PPrime I M S F B BPrime N L 
  
 %%
 /*
 	First can be empty, so the file is empty and we are happy
 */
 
-A: {} | P PPrime {/* Do sth with the tokens */};
+A:  P PPrime {/* Do sth with the tokens */};
 P:	TOKEN_KEYWORD I TOKEN_SEMICOLON{
 	// fprintf(stdout, "Found Keyword \n" ); 
 	};
@@ -85,7 +85,7 @@ S: TOKEN_STRING_LIT {
 	};
 F: TOKEN_KEYWORD I TOKEN_LPAREN TOKEN_RPAREN B {/**/};
 B: TOKEN_CLPAREN BPrime TOKEN_CRPAREN {
-	fprintf(stdout, "Function Body!\n");
+	// fprintf(stdout, "Function Body!\n");
 	};
 BPrime: {} | N BPrime {};
 N: I TOKEN_ASSIGNMENT L  TOKEN_SEMICOLON {
