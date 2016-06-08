@@ -7,11 +7,13 @@
 #include "Lexer.h"
  
 #include <stdio.h>
- 
+
+int yylex(YYSTYPE * lvalp, yyscan_t scanner); 
 int yyparse(SExpression **expression, yyscan_t scanner);
+
 // extern "C" FILE *yyin;
 
- 
+
 SExpression *getAST(const char *filename)
 {
     SExpression *expression;
@@ -23,29 +25,21 @@ SExpression *getAST(const char *filename)
         return NULL;
     }
 	FILE* inputFile=NULL;
-	inputFile = yyget_in(scanner);
 	inputFile = fopen(filename, "r");
 	if(inputFile == NULL)
 	{
 		fprintf(stdout, "Error couldn't open file!\n");
 		return NULL;
 	}
+	yyset_in(inputFile,scanner);	
+
 
 	if(yyparse(&expression, scanner))
 	{
 		return NULL;
 	}
-	 	// state = yy_scan_string(expr, scanner);
-	/*FILE* myFile = fopen(filename, "r");
-	if(!myFile)
-	{
-		fprintf(stdout, "Couldn't open File! \n");
-	}
-	else
-	{
-		yyin = myFile;
-	}
-*/ 
+	 	// state = yy_scan_string(expr, scanner);	
+ 
     yy_delete_buffer(state, scanner);
  
     yylex_destroy(scanner);
@@ -60,10 +54,11 @@ int main(int argc, char* args[])
 	{
 		// printUsage();
 		return -1;
-	}
-    e = getAST(args[1]);
-   
+	}	 	
+
+	e = getAST(args[1]);
+
     deleteExpression(e);
- 
+
     return 0;
 }

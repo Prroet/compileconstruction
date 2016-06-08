@@ -27,27 +27,37 @@ MULTIPLY    "*"
 ASSIGNMENT	"="|":="
 NUM_LIT      [0-9]+
 DELIM		[;.]
-SEMICOLON	;
+SEMICOLON	";"
+
 KEYWORD		break|default|func|interface|select|case|defer|go|map|struct|chan|else|goto|package|switch|const|fallthrough|if|range|type|continue|for|import|return|var
+
 WS          [ \r\n\t]*
 IDENTIFIER	[a-zA-Z][a-zA-Z_0-9]*
 STRINGLIT	"\"".*"\""
+COMMENT		"//".*
+MULTICOMMENT	[/][*][^*]*[*]+([^*/][^*]*[*]+)*[/]
+DEFAULT		.
  
 %%
- 
-{WS}            ;
+
+{WS}            { }
+{KEYWORD}       { sscanf(yytext, "%s", &yylval->keyword); return TOKEN_KEYWORD;}
+{IDENTIFIER}    {  sscanf(yytext, "%s", &yylval->identifier); return TOKEN_IDENTIFIER;  }
 {NUM_LIT}       { sscanf(yytext, "%d", &yylval->value); return TOKEN_NUM_LIT; }
-{ASSIGNMENT}	{ sscanf(yytext, "%s", &yylval->operatorString);return TOKEN_ASSIGNMENT; }
+{ASSIGNMENT}    { sscanf(yytext, "%s", &yylval->operatorString);return TOKEN_ASSIGNMENT; }
 {MULTIPLY}      { sscanf(yytext, "%s", &yylval->operatorString);return TOKEN_MULTIPLY; }
 {PLUS}          { sscanf(yytext, "%s", &yylval->operatorString); return TOKEN_PLUS; }
 {LPAREN}        { return TOKEN_LPAREN; }
 {RPAREN}        { return TOKEN_RPAREN; }
-{CLPAREN}		{ return TOKEN_CLPAREN; }
-{CRPAREN}		{ return TOKEN_CRPAREN; }
-{IDENTIFIER}	{  sscanf(yytext, "%s", &yylval->identifier); return TOKEN_IDENTIFIER;	}
-{STRINGLIT}		{sscanf(yytext, "%s", &yylval->stringLiteral);  return TOKEN_STRING_LIT;}
-{SEMICOLON}		{return TOKEN_SEMICOLON; }
- 
+{CLPAREN}       { return TOKEN_CLPAREN; }
+{CRPAREN}       { return TOKEN_CRPAREN; }
+{STRINGLIT}     {sscanf(yytext, "%s", &yylval->stringLiteral);  return TOKEN_STRING_LIT;}
+{SEMICOLON}     {return TOKEN_SEMICOLON; }
+{COMMENT}		{}
+{MULTICOMMENT}	{}
+<<EOF>>         {return TOKEN_EOF;}
+{DEFAULT}       {fprintf(stdout, "Unknow Token!!!\n");}
+
 %%
  
 int yyerror(const char *msg) {

@@ -11,7 +11,7 @@
 
 int yyerror(SExpression **expression, yyscan_t scanner, const char *msg) {
     // Add error handling routine as needed
-	fprintf(stdout, "Error Parsing! %s", msg);
+	fprintf(stdout, "Error Parsing! %s\n", msg);
 }
  
 %}
@@ -53,6 +53,7 @@ typedef void* yyscan_t;
 %token TOKEN_PLUS 
 %token TOKEN_MULTIPLY
 %token TOKEN_ASSIGNMENT
+%token TOKEN_EOF
 %token <identifier> TOKEN_IDENTIFIER
 %token <keyword> TOKEN_KEYWORD
 %token <stringLiteral> TOKEN_STRING_LIT
@@ -67,7 +68,7 @@ typedef void* yyscan_t;
 */
 
 input  /*first alternative is empty */
-    : expr {/** *expression = $1;**/ }
+    : expr {fprintf(stdout, "Hello from Input Production!! \n");  }
     ;
 
 expr
