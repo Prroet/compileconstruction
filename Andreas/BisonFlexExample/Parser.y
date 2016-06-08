@@ -44,6 +44,8 @@ typedef void* yyscan_t;
  
 %left '+' TOKEN_PLUS
 %left '*' TOKEN_MULTIPLY
+%right ':=' TOKEN_ASSIGNMENT
+
 
 %token TOKEN_SEMICOLON 
 %token TOKEN_LPAREN
@@ -60,30 +62,35 @@ typedef void* yyscan_t;
 %token <value> TOKEN_NUMBER
 %token <value> TOKEN_NUM_LIT
 
-%type <node> expr A P PPrime I M S F B BPrime N L 
+%type <node> A P PPrime I M S F B BPrime N L 
  
 %%
 /*
-	set *expression to value of expr
+	First can be empty, so the file is empty and we are happy
 */
 
-input  /*first alternative is empty */
-    : expr {fprintf(stdout, "Hello from Input Production!! \n");  }
-    ;
-
-expr
-    : A;
-
-A: 	P PPrime {/* Do sth with the tokens */};
-P:	TOKEN_KEYWORD I TOKEN_SEMICOLON{/**/};
+A: {} | P PPrime {/* Do sth with the tokens */};
+P:	TOKEN_KEYWORD I TOKEN_SEMICOLON{
+	// fprintf(stdout, "Found Keyword \n" ); 
+	};
 PPrime: F | M F {};
-I:	TOKEN_IDENTIFIER {};
-M: TOKEN_KEYWORD S  TOKEN_SEMICOLON{/**/};
-S: TOKEN_STRING_LIT {/**/};
+I:	TOKEN_IDENTIFIER {
+	// fprintf(stdout, "Found identifier! %s\n", $1);
+	};
+M: TOKEN_KEYWORD S  TOKEN_SEMICOLON{ 
+	// fprintf(stdout, "Keyword: %s\n", $1);
+	};
+S: TOKEN_STRING_LIT {
+	//fprintf(stdout, "Found string Literal Token\n"); 
+	};
 F: TOKEN_KEYWORD I TOKEN_LPAREN TOKEN_RPAREN B {/**/};
-B: TOKEN_CLPAREN BPrime TOKEN_CRPAREN {/**/};
+B: TOKEN_CLPAREN BPrime TOKEN_CRPAREN {
+	fprintf(stdout, "Function Body!\n");
+	};
 BPrime: {} | N BPrime {};
-N: I TOKEN_ASSIGNMENT L  TOKEN_SEMICOLON{};
+N: I TOKEN_ASSIGNMENT L  TOKEN_SEMICOLON {
+	// fprintf(stdout, "Found TOKEN_ASSIGNMENT!\n")
+	;};
 L: L TOKEN_PLUS L | I | TOKEN_NUM_LIT {/* $$ = createN( )*/ };
 
 %%

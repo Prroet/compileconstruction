@@ -41,17 +41,17 @@ DEFAULT		.
 %%
 
 {WS}            { }
-{KEYWORD}       { sscanf(yytext, "%s", &yylval->keyword); return TOKEN_KEYWORD;}
-{IDENTIFIER}    {  sscanf(yytext, "%s", &yylval->identifier); return TOKEN_IDENTIFIER;  }
+{KEYWORD}       { yylval->keyword = yytext ; return TOKEN_KEYWORD;}
+{IDENTIFIER}    { yylval->identifier=yytext; return TOKEN_IDENTIFIER;  }
 {NUM_LIT}       { sscanf(yytext, "%d", &yylval->value); return TOKEN_NUM_LIT; }
-{ASSIGNMENT}    { sscanf(yytext, "%s", &yylval->operatorString);return TOKEN_ASSIGNMENT; }
-{MULTIPLY}      { sscanf(yytext, "%s", &yylval->operatorString);return TOKEN_MULTIPLY; }
-{PLUS}          { sscanf(yytext, "%s", &yylval->operatorString); return TOKEN_PLUS; }
+{ASSIGNMENT}    { yylval->operatorString=yytext; return TOKEN_ASSIGNMENT; }
+{MULTIPLY}      { yylval->operatorString=yytext ;return TOKEN_MULTIPLY; }
+{PLUS}          {yylval->operatorString=yytext ; return TOKEN_PLUS; }
 {LPAREN}        { return TOKEN_LPAREN; }
 {RPAREN}        { return TOKEN_RPAREN; }
 {CLPAREN}       { return TOKEN_CLPAREN; }
 {CRPAREN}       { return TOKEN_CRPAREN; }
-{STRINGLIT}     {sscanf(yytext, "%s", &yylval->stringLiteral);  return TOKEN_STRING_LIT;}
+{STRINGLIT}     { yylval->stringLiteral=yytext ;  return TOKEN_STRING_LIT;}
 {SEMICOLON}     {return TOKEN_SEMICOLON; }
 {COMMENT}		{}
 {MULTICOMMENT}	{}
