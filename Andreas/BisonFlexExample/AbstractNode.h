@@ -10,12 +10,18 @@ class AbstractNode
 		AbstractNode();
 		virtual ~AbstractNode();
 		/**
-		 * @param string with Node Value information
+		 * @recursive function which prints this Node and all the Child Nodes
 		**/
-		void printNode(std::string);
+		void printNode();
 		unsigned getNodeLevel();
 		unsigned getNumberOfChildren();
-		virtual void incrementLevelCounter() = 0;
+		void incrementLevelCounter();
+		void decrementLevelCounter();
+		unsigned getLevelCounter();
+		/**
+		 * Abstract method for printing the Node Value	
+		**/
+		virtual void printNodeValue()=0;
 	private:
 	protected:
 		std::vector<AbstractNode*> children;

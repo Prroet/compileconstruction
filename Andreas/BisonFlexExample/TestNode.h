@@ -9,6 +9,7 @@ class TestNode: public AbstractNode
 		TestNode(char);
 		~TestNode();
 		void incrementLevelCounter();
+		void printNodeValue();
 	protected:
 		char value;
 	private:

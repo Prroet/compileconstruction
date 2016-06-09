@@ -16,3 +16,8 @@ TestNode::~TestNode()
 void TestNode::incrementLevelCounter()
 {
 }
+
+void TestNode::printNodeValue()
+{
+	std::cout << this->value;
+}
