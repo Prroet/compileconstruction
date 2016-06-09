@@ -67,139 +67,81 @@ typedef void* yyscan_t;
 	First can be empty, so the file is empty and we are happy
 	NonTerminalNode("A");
 */
+input : A {*abstractNode = $1;}
 
 A:  P PPrime {	AbstractNode* A = new NonTerminalNode("A");
-				AbstractNode* P = new NonTerminalNode("P");
-				AbstractNode* PPrime = new NonTerminalNode("PPrime");
-				P->append($1);
-				PPrime->append($2);
-				A->append(P);
-				A->append(PPrime);
+				A->append($1);
+				A->append($2);
 				$$ = A;
 	 };
 
-P:  Kp I C { AbstractNode* Kp = new NonTerminalNode("Kp");
-			 Kp->append($1);
-			 AbstractNode* I = new NonTerminalNode("I");
-			 I->append($2);
-			 AbstractNode* C = new NonTerminalNode("C");
-			 C->append($3);
-			 AbstractNode* P = new NonTerminalNode("P");
-			 P->append(Kp);
-			 P->append(I);
-			 P->append(C);
+P:  Kp I C { AbstractNode* P = new NonTerminalNode("P");
+			 P->append($1);
+			 P->append($2);
+			 P->append($3);
 			 $$ = P; 
 			};
 
-PPrime: F { AbstractNode* F = new NonTerminalNode("F");
-			F->append($1);
-			AbstractNode* PPrime = new NonTerminalNode("PPrime");
-			PPrime->append(F);
+PPrime: F { 	AbstractNode* PPrime = new NonTerminalNode("PPrime");
+			PPrime->append($1);
 			$$ = PPrime;
 		   }
- 	| M F {
-			AbstractNode* M = new NonTerminalNode("M");
-			M->append($1);
-			AbstractNode* F = new NonTerminalNode("F");
-			F->append($2);
-			AbstractNode* PPrime = new NonTerminalNode("PPrime");
-			PPrime->append(M);
-			PPrime->append(F);
+ 	| M F {	AbstractNode* PPrime = new NonTerminalNode("PPrime");
+			PPrime->append($1);
+			PPrime->append($2);
 			$$ = PPrime;
 		  };
 
-M: Ki S C {
-			AbstractNode* Ki = new NonTerminalNode("Ki");
-			AbstractNode* S = new NonTerminalNode("S");
-			AbstractNode* C = new NonTerminalNode("C");
-			AbstractNode* M = new NonTerminalNode("M");
+M: Ki S C {		AbstractNode* M = new NonTerminalNode("M");
 			Ki->append($1);
 			S->append($2);
 			C->append($3);
-			M->append(Ki);
-			M->append(S);
-			M->append(C);
-			M->append(M);
+			M->append($1);
+			M->append($2);
+			M->append($3);
 			$$=M;
 		  };
 
-F: Kf I R RPrime B {
-						AbstractNode* Kf = new NonTerminalNode("Kf");
-						AbstractNode* I = new NonTerminalNode("I");
-						AbstractNode* R = new NonTerminalNode("R");
-						AbstractNode* RPrime = new NonTerminalNode("RPrime");
-						AbstractNode* B = new NonTerminalNode("B");
-						AbstractNode* F = new NonTerminalNode("F");
-						Kf->append($1);
-						I->append($2);
-						R->append($3);
-						RPrime->append($4);
-						B->append($5);
-						F->append(Kf);
-						F->append(I);
-						F->append(R);
-						F->append(RPrime);
-						F->append(B);
+F: Kf I R RPrime B {	AbstractNode* F = new NonTerminalNode("F");
+						F->append($1);
+						F->append($2);
+						F->append($3);
+						F->append($4);
+						F->append($5);
 						$$ = F;
 				   };
 
-B: G BPrime GPrime {
-						AbstractNode *G = new NonTerminalNode("G");
-						G->append($1);
-						AbstractNode *BPrime = new NonTerminalNode("BPrime");
-						BPrime->append($2);
-						AbstractNode *GPrime = new NonTerminalNode("GPrime");
-						GPrime->append($3);
-						Abstract *B = new NonTerminalNode("B");
-						B->append(G);
-						B->append(BPrime);
-						B->append(GPrime);
+B: G BPrime GPrime {Abstract *B = new NonTerminalNode("B");
+						B->append($1);
+						B->append($2);
+						B->append($3);
 						$$ = B;
 				   };
 
-BPrime: { 
-			AbstractNode *BPrime = new NonTerminalNode("BPrime");
-			$$ = BPrime;
+BPrime: { /*Epsilon*/
+			
 		 } 
-	| N BPrime {
-					AbstractNode *N = new NonTerminalNode("N");
-					N->append($1);
-					AbstractNode *BPrime1 = new NonTerminalNode("BPrime");
-					BPrime->append($2);
-					AbstractNode *BPrime2 = new NonTerminalNode("BPrime");
-					BPrime2.append(N);
-					BPrime2.append(BPrime1);
-					$$ = BPrime2;
+	| N BPrime {AbstractNode *BPrime = new NonTerminalNode("BPrime");
+					BPrime.append($1);
+					BPrime.append($2);
+					$$ = BPrime;
 			   };
 
-N: I O L C { AbstractNode *I = new NonTerminalNode("I");
-			 I->append($1);
-			 AbstractNode *O = new NonTerminalNode("O");
-			 O->append($2);
-			 AbstractNode *L = new NonTerminalNode("L");
-			 L->append($3);
-			 AbstractNode* C = new NonTerminalNode("C");
-			 C->append($4);
-			 AbstractNode* N = new NonTerminalNode("N");
-			 N->append(I);
-			 N->append(O);
-			 N->append(L);
-			 N->append(C);
+N: I O L C { 		 AbstractNode* N = new NonTerminalNode("N");
+			 N->append($1);
+			 N->append($2);
+			 N->append($3);
+			 N->append($4);
 			 $$=N;
 		   };
 
 L:
-	I {
-		AbstractNode *I =  new NonTerminalNode("I");
-		I->append($1);
-		AbstractNode *L = new NonTerminalNode("L");
-		L->append(I);
+	I {	AbstractNode *L = new NonTerminalNode("L");
+		L->append($1);
 		$$ = L;
 			  }
-	| Z {AbstractNode *Z =  new NonTerminalNode("Z");
-		Z->append($1);
-		AbstractNode *L = new NonTerminalNode("L");
-		L->append(Z);
+	| Z {	AbstractNode *L = new NonTerminalNode("L");
+		L->append($1);
 		$$ = L;
 		} ;
 
