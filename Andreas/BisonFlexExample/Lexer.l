@@ -4,8 +4,10 @@
  * Lexer.l file
  * To generate the lexical analyzer run: "flex Lexer.l"
  */
- 
-#include "Expression.h"
+
+#include "AbstractNode.h"
+#include "TerminalNode.h"
+#include "NonTerminalNode.h"
 #include "Parser.h"
 
 #include <stdio.h>
@@ -26,7 +28,6 @@ PLUS        "+"
 MULTIPLY    "*"
 ASSIGNMENT	"="|":="
 NUM_LIT      [0-9]+
-DELIM		[;.]
 SEMICOLON	";"
 
 KEYWORD		break|default|func|interface|select|case|defer|go|map|struct|chan|else|goto|package|switch|const|fallthrough|if|range|type|continue|for|import|return|var
@@ -41,28 +42,28 @@ DEFAULT		.
 %%
 
 {WS}            { }
-{KEYWORD}       { 
-					// yylval->keyword = yytext ; 
+{KEYWORD}       {	// fprintf(stdout, "keyword from Lexer: %s", yytext); 
+					yylval->keyword = yytext ; 
 					return TOKEN_KEYWORD;
 				}
 {IDENTIFIER}    { 
-				//	yylval->identifier=yytext; 
+					yylval->identifier=yytext; 
 					return TOKEN_IDENTIFIER;  
 				}
 {NUM_LIT}       { 
-				//	sscanf(yytext, "%d", &yylval->value); 
+					sscanf(yytext, "%d", &yylval->value); 
 					return TOKEN_NUM_LIT; 
 				}
 {ASSIGNMENT}    { 
-				//	yylval->operatorString=yytext; 
+					yylval->operatorString=yytext; 
 					return TOKEN_ASSIGNMENT; 
 				}
 {MULTIPLY}      { 
-				//	yylval->operatorString=yytext ;
-					return TOKEN_MULTIPLY; 
+					/*yylval->operatorString=yytext ;
+					return TOKEN_MULTIPLY;  */
 				}
 {PLUS}          { 
-				//	yylval->operatorString=yytext ; 
+					yylval->operatorString=yytext ; 
 					return TOKEN_PLUS; 
 				}
 {LPAREN}        { return TOKEN_LPAREN; }
@@ -70,7 +71,7 @@ DEFAULT		.
 {CLPAREN}       { return TOKEN_CLPAREN; }
 {CRPAREN}       { return TOKEN_CRPAREN; }
 {STRINGLIT}     {
-				//	yylval->stringLiteral=yytext;  
+					yylval->stringLiteral=yytext;  
 					return TOKEN_STRING_LIT;
 				}
 {SEMICOLON}     { return TOKEN_SEMICOLON; }

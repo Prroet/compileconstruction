@@ -7,8 +7,8 @@
 class NonTerminalNode: public AbstractNode 
 {
 	public:
-		TestNode(std::string);
-		~TestNode();
+		NonTerminalNode(std::string);
+		~NonTerminalNode();
 		void incrementLevelCounter();
 		void printNodeValue();
 	protected:

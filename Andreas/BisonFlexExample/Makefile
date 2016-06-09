@@ -1,6 +1,6 @@
 # Makefile
 
-FILES	= Lexer.c Parser.c Expression.c main.c
+FILES = AbstractNode.cpp NonTerminalNode.cpp TerminalNode.cpp Lexer.c Parser.c Expression.c main.c
 CC	= g++
 CFLAGS	= -g -ansi
 

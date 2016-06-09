@@ -2,21 +2,22 @@
  * main.c file
  */
 
-#include "Expression.h"
+//#include "Expression.h"
+#include "AbstractNode.h"
 #include "Parser.h"
 #include "Lexer.h"
  
 #include <stdio.h>
 
 int yylex(YYSTYPE * lvalp, yyscan_t scanner); 
-int yyparse(SExpression **expression, yyscan_t scanner);
+int yyparse(AbstractNode **expression, yyscan_t scanner);
 
 // extern "C" FILE *yyin;
 
 
-SExpression *getAST(const char *filename)
+AbstractNode *getAST(const char *filename)
 {
-    SExpression *expression;
+    AbstractNode *abstractNode=NULL;
     yyscan_t scanner;
  
     if (yylex_init(&scanner)) {
@@ -31,28 +32,32 @@ SExpression *getAST(const char *filename)
 		return NULL;
 	}
 	yyset_in(inputFile,scanner);		
-	// &expression instead NULL
-	if(yyparse(NULL, scanner))
+
+	if(yyparse(&abstractNode, scanner))
 	{
 		return NULL;
 	}
-	 
+//	fprintf(stdout, "Hello after Parsing!\n");
+ 
     yylex_destroy(scanner);
-	return expression;
+	return abstractNode;
 }
  
 int main(int argc, char* args[])
 {
-    SExpression *e = NULL;
+    AbstractNode *abstractNode = NULL;
  	if(argc != 2)
 	{
 		// printUsage();
 		return -1;
 	}	 	
-	getAST(args[1]);
-	// e = getAST(args[1]);
-
-    deleteExpression(e);
-
+	abstractNode = getAST(args[1]);
+	if(abstractNode== NULL)
+	{
+		fprintf(stdout, "Error Tree is empty!!\n");
+		return -1;
+	}
+	abstractNode->printNode(); 
+	delete(abstractNode);
     return 0;
 }
