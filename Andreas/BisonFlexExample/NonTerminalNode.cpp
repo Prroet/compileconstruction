@@ -18,5 +18,10 @@ void NonTerminalNode::incrementLevelCounter()
 
 void NonTerminalNode::printNodeValue()
 {
-	std::cout << this->value;
+	if(this->value.size())
+	{	
+		std::cout << "NonTerminal Value= " << this->value << std::endl;
+	}
+	else
+		std::cout << "This node has no value" << std::endl;
 }

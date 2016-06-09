@@ -20,6 +20,7 @@ TerminalNode::~TerminalNode()
 
 void TerminalNode::printNodeValue()
 {
+	std::cout << "Terminal Node ";
     if(isString && this->stringValue.size() )
         std::cout << this->stringValue;
     else if(numValue != -1)

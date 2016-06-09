@@ -93,9 +93,6 @@ PPrime: F { 	AbstractNode* PPrime = new NonTerminalNode("PPrime");
 		  };
 
 M: Ki S C {		AbstractNode* M = new NonTerminalNode("M");
-			Ki->append($1);
-			S->append($2);
-			C->append($3);
 			M->append($1);
 			M->append($2);
 			M->append($3);
@@ -111,7 +108,7 @@ F: Kf I R RPrime B {	AbstractNode* F = new NonTerminalNode("F");
 						$$ = F;
 				   };
 
-B: G BPrime GPrime {Abstract *B = new NonTerminalNode("B");
+B: G BPrime GPrime {AbstractNode *B = new NonTerminalNode("B");
 						B->append($1);
 						B->append($2);
 						B->append($3);
@@ -122,8 +119,8 @@ BPrime: { /*Epsilon*/
 			
 		 } 
 	| N BPrime {AbstractNode *BPrime = new NonTerminalNode("BPrime");
-					BPrime.append($1);
-					BPrime.append($2);
+					BPrime->append($1);
+					BPrime->append($2);
 					$$ = BPrime;
 			   };
 
@@ -148,24 +145,38 @@ L:
 /*Hier kommen die Produktionen auf Terminalsymbole*/
 S: TOKEN_STRING_LIT { $$ = (new TerminalNode($1));};
 
-I: TOKEN_IDENTIFIER {fprintf(stdout, "%s\n", $1);
-					$$ = new TerminalNode($1); 
-};
-Kp: TOKEN_KEYWORD { if(strcmp($1, "package"))
+I: TOKEN_IDENTIFIER {	
+						$$ = new TerminalNode($1); 
+					};
+Kp: TOKEN_KEYWORD { if(strcmp($1, "package") == 0)
 					 $$ = new TerminalNode($1);
+					else
+					{
+						fprintf(stdout, "No keyword package found!\n");
+						$$ = new TerminalNode("Sth wrong!");
+					}
 				  };
 
 Kf:	TOKEN_KEYWORD {if(strcmp($1, "func") == 0)
 						$$ = new TerminalNode($1);
-				  }
+					else
+					{
+						fprintf(stdout, "No keyword func\n");
+						$$ = new TerminalNode("Sth wrong!");
+					}
+				  };
 
 Ki:	TOKEN_KEYWORD { if(strcmp($1, "import") == 0)
 					{
 						$$ = new TerminalNode($1);
 					}
 					else
-						fprintf(stdout, "Found no keyword!!\n");
-					 }
+					{
+						fprintf(stdout, "No keyword import %s\n", $1);
+						$$ = new TerminalNode("Sth wrong!");			
+					}
+
+					 };
 
 Z: TOKEN_NUM_LIT {$$ = new TerminalNode($1);};
 

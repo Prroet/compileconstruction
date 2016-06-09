@@ -48,11 +48,14 @@ unsigned AbstractNode::getNumberOfChildren()
 	return this->children.size();
 }
 // the calling Node has to give his nodeValue to this func
-void AbstractNode::printNode()
+void AbstractNode::printNode(int depth)
 {
-	for(int i=0; i<children.size(); i++)
-		children.at(i)->printNode();
-	for(int i=0; i<nodeLevel; i++)
+	for(int i=0; i<depth; i++)
 		std::cout << "\t";
 	printNodeValue(); std::cout << std::endl;
+	for(int i=0; i<children.size(); i++)
+	{
+		if(children.at(i) != NULL)
+			children.at(i)->printNode(depth+1);
+	}
 }

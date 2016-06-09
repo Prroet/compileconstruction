@@ -12,7 +12,7 @@ class AbstractNode
 		/**
 		 * recursive function which prints this Node and all the Child Nodes
 		**/
-		void printNode();
+		void printNode(int depth);
 		unsigned getNodeLevel();
 		unsigned getNumberOfChildren();
 		/**

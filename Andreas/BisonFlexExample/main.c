@@ -57,7 +57,7 @@ int main(int argc, char* args[])
 		fprintf(stdout, "Error Tree is empty!!\n");
 		return -1;
 	}
-	abstractNode->printNode(); 
-	delete(abstractNode);
+	abstractNode->printNode(0); 
+//	delete(abstractNode);
     return 0;
 }
