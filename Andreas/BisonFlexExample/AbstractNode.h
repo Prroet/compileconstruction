@@ -18,6 +18,7 @@ class AbstractNode
 		void incrementLevelCounter();
 		void decrementLevelCounter();
 		unsigned getLevelCounter();
+		void appendNode(AbstractNode*);
 		/**
 		 * Abstract method for printing the Node Value	
 		**/

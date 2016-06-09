@@ -33,6 +33,11 @@ unsigned AbstractNode::getLevelCounter()
 	return this->levelCounter;
 }
 
+void AbstractNode::appendNode(AbstractNode* newNode)
+{
+	this->children.push_back(newNode);	
+}
+
 unsigned AbstractNode::getNodeLevel()
 {
 	return this->nodeLevel;

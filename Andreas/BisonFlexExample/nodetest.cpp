@@ -3,8 +3,16 @@
 #include "TestNode.h"
 int main(int argc, char* args[])
 {
-	AbstractNode*  an = new TestNode('a');
+	AbstractNode*  parent = new TestNode('a');
+	AbstractNode*  child1 = new TestNode('b');
 	an->printNodeValue(); std::cout << std::endl;
 	delete an;
 	return 0;
 }
+
+
+// NonTerminalNode("A");
+
+// NonTerminalNode("PPrime");
+
+

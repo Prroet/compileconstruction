@@ -69,7 +69,11 @@ typedef void* yyscan_t;
 	First can be empty, so the file is empty and we are happy
 */
 
-A:  P PPrime {/* Do sth with the tokens */};
+A:  P PPrime {
+				/* AbstractNode* a= new a();
+				a.append(new p()); a.append(new pprime());
+				$$ = a;  */
+			 };
 P:	TOKEN_KEYWORD I TOKEN_SEMICOLON{
 	// fprintf(stdout, "Found Keyword \n" ); 
 	};
