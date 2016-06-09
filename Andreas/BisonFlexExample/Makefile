@@ -12,7 +12,7 @@ Lexer.c:	Lexer.l
 
 Parser.c:	Parser.y Lexer.c
 		bison Parser.y
-
+## make TreeTest 
 TreeTest: AbstractNode.cpp TestNode.cpp
 		$(CC) $(CFLAGS) AbstractNode.cpp TestNode.cpp nodetest.cpp -o TreeTest
 
