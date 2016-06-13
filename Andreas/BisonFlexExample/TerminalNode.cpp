@@ -7,10 +7,8 @@ TerminalNode::TerminalNode(std::string givenValue):stringValue(givenValue), Abst
     this->isString = true;
 }
 
-TerminalNode::TerminalNode(int givenValue): numValue(givenValue)
+TerminalNode::TerminalNode(int givenValue): numValue(givenValue), isString(false)
 {
-    this->isString = false;
-	numValue = -1;
 }
 
 TerminalNode::~TerminalNode()
@@ -23,8 +21,6 @@ void TerminalNode::printNodeValue()
 	std::cout << "Terminal Node ";
     if(isString && this->stringValue.size() )
         std::cout << this->stringValue;
-    else if(numValue != -1)
-        std::cout << this->numValue;
-	else
-		std::cout << "This node has no Value";
+    else
+		std::cout << this->numValue; 
 }

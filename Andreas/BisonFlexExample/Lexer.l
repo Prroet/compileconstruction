@@ -26,7 +26,8 @@ CLPAREN		"{"
 CRPAREN		"}"
 PLUS        "+"
 MULTIPLY    "*"
-ASSIGNMENT	"="|":="
+ASSIGNMENT	"="
+DECLARE_ASSIGN ":="
 NUM_LIT      [0-9]+
 SEMICOLON	";"
 
@@ -42,18 +43,24 @@ DEFAULT		.
 %%
 
 {WS}            { }
-{KEYWORD}       {	// fprintf(stdout, "keyword from Lexer: %s", yytext); 
-					yylval->keyword = yytext ; 
-					return TOKEN_KEYWORD;
-				}
+"func"			{return TOKEN_KEYWORD_FUNC;}
+"package"		{return TOKEN_KEYWORD_PACKAGE;}
+"import"		{return TOKEN_KEYWORD_IMPORT;}
+
 {IDENTIFIER}    { 
 					yylval->identifier=yytext; 
 					return TOKEN_IDENTIFIER;  
 				}
-{NUM_LIT}       { 
+{NUM_LIT}       {
+					//fprintf(stdout, "NUM_LIT %s\n", yytext); 
 					sscanf(yytext, "%d", &yylval->value); 
 					return TOKEN_NUM_LIT; 
 				}
+{DECLARE_ASSIGN} {
+					yylval->operatorString=yytext;
+					return TOKEN_DECLARE_ASSIGN;
+				 }
+
 {ASSIGNMENT}    { 
 					yylval->operatorString=yytext; 
 					return TOKEN_ASSIGNMENT; 
