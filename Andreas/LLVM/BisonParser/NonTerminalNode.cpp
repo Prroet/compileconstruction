@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-NonTerminalNode::NonTerminalNode(std::string givenValue):value(givenValue), AbstractNode()
+NonTerminalNode::NonTerminalNode(std::string givenValue):value(givenValue)
 {
 }
 

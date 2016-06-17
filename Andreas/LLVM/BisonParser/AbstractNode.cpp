@@ -12,7 +12,7 @@ AbstractNode::AbstractNode()
 
 AbstractNode::~AbstractNode()
 {
-	for(int i=0; i<children.size(); i++)
+	for(unsigned i=0; i<children.size(); i++)
 		delete(children.at(i));
 	while(children.size())
 		children.pop_back();
@@ -53,7 +53,7 @@ void AbstractNode::printNode(int depth)
 	for(int i=0; i<depth; i++)
 		std::cout << "\t";
 	printNodeValue(); std::cout << std::endl;
-	for(int i=0; i<children.size(); i++)
+	for(unsigned i=0; i<children.size(); i++)
 	{
 		if(children.at(i) != NULL)
 			children.at(i)->printNode(depth+1);

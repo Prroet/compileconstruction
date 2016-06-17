@@ -1,8 +1,6 @@
 #include "TerminalNode.h"
 
-#include <iostream>
-
-TerminalNode::TerminalNode(std::string givenValue):stringValue(givenValue), AbstractNode()
+TerminalNode::TerminalNode(std::string givenValue):stringValue(givenValue)
 {
     this->isString = true;
 }
@@ -25,6 +23,8 @@ void TerminalNode::printNodeValue()
 		std::cout << this->numValue; 
 }
 
-/*Value* TerminalNode::codegen()
+
+Value* TerminalNode::codegen()
 {
-} */
+	
+}

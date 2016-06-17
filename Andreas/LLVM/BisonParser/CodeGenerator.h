@@ -12,9 +12,9 @@
 using namespace llvm;
 
 static LLVMContext TheContext;
-/*static IRBuilder<> Builder(TheContext);
+static IRBuilder<> Builder(TheContext);
 static std::unique_ptr<Module> TheModule;
-static std::map<std::string, Value *> NamedValues;*/
+static std::map<std::string, Value *> NamedValues;
 
 void generateIRCode(AbstractNode* rootNode)
 {

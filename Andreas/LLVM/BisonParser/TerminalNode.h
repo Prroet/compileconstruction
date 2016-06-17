@@ -3,7 +3,10 @@
 
 #include "AbstractNode.h"
 #include <string>
-// #include "llvm/IR/DerivedTypes.h"
+#include <iostream>
+#include "llvm/IR/DerivedTypes.h"
+
+using namespace llvm;
 
 class TerminalNode: public AbstractNode
 {
@@ -11,7 +14,7 @@ class TerminalNode: public AbstractNode
 		TerminalNode(std::string);
 		TerminalNode(int givenValue);
 		~TerminalNode();
-//		virtual Value* codegen();
+		virtual Value* codegen();
 	protected:
 		std::string stringValue;
         int numValue;
