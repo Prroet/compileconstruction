@@ -5,20 +5,30 @@
 #include <string>
 #include <iostream>
 #include "llvm/IR/DerivedTypes.h"
+#include "llvm/IR/Verifier.h"
+#include "llvm/IR/IRBuilder.h"
+#include "llvm/IR/LLVMContext.h"
+#include "llvm/IR/Module.h"
 
 using namespace llvm;
+
+static LLVMContext TheContext;
+static IRBuilder<> Builder(TheContext);
+static std::unique_ptr<Module> TheModule;
+static std::map<std::string, Value *> NamedValues;
 
 class TerminalNode: public AbstractNode
 {
 	public:
+		TerminalNode(){};
 		TerminalNode(std::string);
 		TerminalNode(int givenValue);
 		~TerminalNode();
-		virtual Value* codegen();
+//		virtual Value* codegen()=0;
 	protected:
 		std::string stringValue;
         int numValue;
-		void printNodeValue();
+		virtual void printNodeValue();
 	private:
         bool isString;
 };

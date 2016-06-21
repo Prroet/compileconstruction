@@ -23,8 +23,3 @@ void TerminalNode::printNodeValue()
 		std::cout << this->numValue; 
 }
 
-
-Value* TerminalNode::codegen()
-{
-	
-}

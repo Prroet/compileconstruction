@@ -8,6 +8,8 @@
 #include "AbstractNode.h"
 #include "NonTerminalNode.h"
 #include "TerminalNode.h"
+#include "NumberNode.h"
+#include "VariableNode.h"
 #include "Parser.h"
 #include "Lexer.h"
 
@@ -72,9 +74,7 @@ typedef void* yyscan_t;
  
 %%
 /*get the tree from the parser */
-input: A{
-		*node = $1;
-		}
+input: A{*node = $1;}
 
 A:  P PPrime {
 				AbstractNode *A = new NonTerminalNode("A");
@@ -100,7 +100,7 @@ PPrime: F {
 					$$ = PPrime;
 				  };
 I:	TOKEN_IDENTIFIER {
-			$$ = new TerminalNode($1);
+			$$ = new VariableNode($1);
 		};
 M: TOKEN_KEYWORD_IMPORT S  TOKEN_SEMICOLON{
 			AbstractNode *M = new NonTerminalNode("M");
@@ -110,7 +110,7 @@ M: TOKEN_KEYWORD_IMPORT S  TOKEN_SEMICOLON{
 			$$ = M;
 		};
 S: TOKEN_STRING_LIT {
-	 $$ = new TerminalNode($1); 
+	$$ = new TerminalNode($1); 
 	};
 F: TOKEN_KEYWORD_FUNC I TOKEN_LPAREN TOKEN_RPAREN B {
 														AbstractNode *F = new NonTerminalNode("F");
@@ -128,14 +128,12 @@ B: TOKEN_CLPAREN BPrime TOKEN_CRPAREN {
 										B->append(new TerminalNode("}"));
 										$$ = B;
 	};
-BPrime: {
-		AbstractNode* BPrime = new NonTerminalNode("BPrime"); $$ = BPrime;} | N BPrime { AbstractNode *BPrime = new NonTerminalNode("BPrime"); 
-		BPrime->append($1);
-		BPrime->append($2);
-		$$ = BPrime;
+BPrime: {AbstractNode* BPrime = new NonTerminalNode("BPrime"); $$ = BPrime;} | N BPrime { AbstractNode *BPrime = new NonTerminalNode("BPrime"); 
+						BPrime->append($1);
+						BPrime->append($2);
+						$$ = BPrime;
 					  };
-N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON { 
-		AbstractNode* N = new NonTerminalNode("N");
+N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON { AbstractNode* N = new NonTerminalNode("N");
 		N->append($1);
 		N->append(new TerminalNode(":="));
 		N->append($3);
@@ -155,7 +153,6 @@ L: L TOKEN_PLUS L {
 				   L->append($1);
 				   L->append(new TerminalNode("+"));
 				   L->append($3);
-				   $$ = L;
 				  } | 
 				 I {
 					AbstractNode *L = new NonTerminalNode("L");
@@ -164,7 +161,7 @@ L: L TOKEN_PLUS L {
 				   } | 
 				 TOKEN_NUM_LIT {
 					AbstractNode *L =new NonTerminalNode("L");
-					L->append(new TerminalNode($1));
+					L->append(new NumberNode($1));
 					$$ = L;
 };
 
