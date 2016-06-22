@@ -1,10 +1,10 @@
 #include "TerminalNode.h"
 
-#include "llvm/IR/DerivedTypes.h"
+/*#include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/Verifier.h"
 #include "llvm/IR/IRBuilder.h"
 #include "llvm/IR/LLVMContext.h"
-#include "llvm/IR/Module.h"
+#include "llvm/IR/Module.h" */
 
 void LogError(const char* Str)
 {
@@ -38,7 +38,15 @@ int TerminalNode::isTerminalNode()
 
 Value* TerminalNode::codegen()
 {
-	return NULL;
+	Value* returnValue;
+	if(this->children.size() == 0)
+		return NULL;
+	for(unsigned i=0; i< this->children.size(); i++)
+	{
+		returnValue = this->children.at(i)->codegen();
+		if(returnValue)
+			return returnValue;	
+	}
 }
 
 void TerminalNode::printNodeValue()

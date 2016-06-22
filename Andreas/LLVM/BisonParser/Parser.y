@@ -11,6 +11,7 @@
 #include "NumberNode.h"
 #include "VariableNode.h"
 #include "BinaryNode.h"
+#include "DeclarationNode.h"
 #include "Parser.h"
 #include "Lexer.h"
 #include "FuncIdentifierNode.h"
@@ -138,28 +139,39 @@ BPrime: {AbstractNode* BPrime = new NonTerminalNode("BPrime"); $$ = BPrime;} | N
 						BPrime->append($2);
 						$$ = BPrime;
 					  };
-N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON { AbstractNode* N = new NonTerminalNode("N");
+N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON { 
+	/*	AbstractNode* N = new NonTerminalNode("N");
 		N->append($1);
-		N->append(new BinaryNode(":="));
+		N->append(new BinaryNode(":=")); // this is no binary node!! Need to add Assignment Node!
 		N->append($3);
 		N->append(new TerminalNode(";"));
+		$$ = N; */
+		AbstractNode* N = new DeclarationNode(":="); 		// change later!!!!!!!
+		N->append($1);
+		N->append($3);
 		$$ = N;
 	};
 L: L TOKEN_PLUS L {
-				   AbstractNode* L = new NonTerminalNode("L");
+/*				   AbstractNode* L = new NonTerminalNode("L");
 				   L->append($1);
 				   L->append(new BinaryNode("+"));
+				   L->append($3); */
+				   AbstractNode* L = new BinaryNode("+");
+				   L->append($1);
 				   L->append($3);
+				   $$ = L;
 				  } | 
 				 I {
-					AbstractNode *L = new NonTerminalNode("L");
+					/*AbstractNode *L = new NonTerminalNode("L");
 					L->append($1);
-					$$ = L;
+					$$ = L; */
+					$$ = $1;
 				   } | 
 				 TOKEN_NUM_LIT {
-					AbstractNode *L =new NonTerminalNode("L");
+					/*AbstractNode *L =new NonTerminalNode("L");
 					L->append(new NumberNode($1));
-					$$ = L;
+					$$ = L; */
+					$$ = new NumberNode($1);
 };
 
 %%

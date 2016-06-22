@@ -4,6 +4,7 @@
 #include "AbstractNode.h"
 #include <string>
 #include <iostream>
+#include <vector>
 #include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/Verifier.h"
 #include "llvm/IR/IRBuilder.h"

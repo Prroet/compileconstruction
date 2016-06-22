@@ -10,7 +10,7 @@ NumberNode::~NumberNode()
 
 Value* NumberNode::codegen()
 {
- return	ConstantFP::get(TheContext, APFloat(this->Val));
+  return ConstantFP::get(TheContext, APFloat(this->Val));
 }
 
 int NumberNode::isTerminalNode()
