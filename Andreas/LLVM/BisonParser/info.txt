@@ -1,0 +1,4 @@
+Laut Kapitel 3 von llvm kommem in die Symboltabelle zunächst nur die argumente der Funktionen und sonst nichts
+
+Bei uns sieht das aber anders aus, da wir auch was anderes als Zahlen haben.
+

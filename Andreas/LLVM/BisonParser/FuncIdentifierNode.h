@@ -16,12 +16,12 @@ class FuncIdentifierNode: public TerminalNode
 		virtual Value* codegen();
 		std::string Name;
 	protected:
-		void printNodeValue();
 	public:
 		int isTerminalNode();
 		FuncIdentifierNode(VariableNode* var);
 		FuncIdentifierNode(std::string);
 		virtual ~FuncIdentifierNode();
+		void printNodeValue();
 };
 
 #endif

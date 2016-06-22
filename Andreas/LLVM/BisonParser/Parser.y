@@ -146,9 +146,10 @@ N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON {
 		N->append($3);
 		N->append(new TerminalNode(";"));
 		$$ = N; */
-		AbstractNode* N = new DeclarationNode(":="); 		// change later!!!!!!!
+		DeclarationNode* N = new DeclarationNode(":=");
 		N->append($1);
 		N->append($3);
+		N->insertChildrenInSymbolTable();
 		$$ = N;
 	};
 L: L TOKEN_PLUS L {
@@ -157,6 +158,7 @@ L: L TOKEN_PLUS L {
 				   L->append(new BinaryNode("+"));
 				   L->append($3); */
 				   AbstractNode* L = new BinaryNode("+");
+// Debug				   std::cout << "L node Value "; $3->printNodeValue(); std::cout << std::endl;
 				   L->append($1);
 				   L->append($3);
 				   $$ = L;

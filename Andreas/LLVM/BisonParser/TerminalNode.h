@@ -30,10 +30,10 @@ class TerminalNode: public AbstractNode
 		~TerminalNode();
 		virtual int isTerminalNode();
 		virtual Value* codegen();
+		virtual void printNodeValue();
 	protected:
 		std::string stringValue;
         int numValue;
-		virtual void printNodeValue();
 	private:
         bool isString;
 };

@@ -13,14 +13,15 @@ class DeclarationNode: public TerminalNode
 
 	private:
 		virtual Value* codegen();
-		void insertChildrenInSymbolTable();
-		std::string Value;
+			std::string Value;
 	protected:
-		void printNodeValue();
 	public:
 		int isTerminalNode();
+		void insertChildrenInSymbolTable();
 		DeclarationNode(std::string);
 		virtual ~DeclarationNode();
+		void printNodeValue();
+
 };
 
 #endif

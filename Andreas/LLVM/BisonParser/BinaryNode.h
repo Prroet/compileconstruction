@@ -14,8 +14,8 @@ class BinaryNode: public TerminalNode
 	private:
 		virtual Value* codegen();
 		std::string Value;
-	protected:
 		void printNodeValue();
+	protected:
 	public:
 		int isTerminalNode();
 		BinaryNode(std::string);

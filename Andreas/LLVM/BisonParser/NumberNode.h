@@ -11,11 +11,11 @@ class NumberNode: public TerminalNode
 		virtual Value* codegen();
 		double Val;
 	protected:
-		void printNodeValue();
 	public:
 		NumberNode(int);
 		virtual ~NumberNode();
 		int isTerminalNode();
+		void printNodeValue();
 };
 
 #endif

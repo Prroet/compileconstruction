@@ -39,9 +39,10 @@ class AbstractNode
 		/**
 		 * Abstract method for printing the Node Value
 		**/
+		virtual void printNodeValue()=0;
 	private:
 	protected:
-		virtual void printNodeValue()=0;
+
 		std::vector<AbstractNode*> children;
 		// on which level is this node? needed for printing the node later!
 		unsigned nodeLevel;

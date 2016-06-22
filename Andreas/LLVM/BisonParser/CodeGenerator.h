@@ -9,7 +9,8 @@
 #include "llvm/IR/Module.h"
 #include "llvm/IR/DerivedTypes.h" */
 #include "NumberNode.h"
-
+#include <typeinfo>
+#include <string>
 // using namespace llvm;
 
 /*static LLVMContext TheContext;
@@ -21,7 +22,10 @@ void generateIRCode(AbstractNode* rootNode)
 {
 	if(rootNode != NULL)
 		rootNode->printNode(0);
-	NumberNode myNumberNode(5);
+	AbstractNode* as=new NumberNode(5);
+	AbstractNode* bs= new NumberNode(1000);
+	std::string typeName = typeid(*as).name();
+	std::cout << "type of as " << typeName << std::endl;
 }
 
 #endif
