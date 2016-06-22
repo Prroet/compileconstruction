@@ -10,7 +10,12 @@ NumberNode::~NumberNode()
 
 Value* NumberNode::codegen()
 {
- return	ConstantInt::get(TheContext, APInt(sizeof(Val)*8, Val, true));
+ return	ConstantFP::get(TheContext, APFloat(this->Val));
+}
+
+int NumberNode::isTerminalNode()
+{
+	return 2;
 }
 
 void NumberNode::printNodeValue()

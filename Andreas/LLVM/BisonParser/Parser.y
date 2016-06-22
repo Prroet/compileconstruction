@@ -10,12 +10,17 @@
 #include "TerminalNode.h"
 #include "NumberNode.h"
 #include "VariableNode.h"
+#include "BinaryNode.h"
 #include "Parser.h"
 #include "Lexer.h"
+#include "FuncIdentifierNode.h"
+#include <vector>
+#include <string>
 
 int yyerror(AbstractNode **node, yyscan_t scanner, const char *msg) {
     // Add error handling routine as needed
 	fprintf(stdout, "Error Parsing! %s\n", msg);
+	return -1;
 }
  
 %}
@@ -85,7 +90,7 @@ A:  P PPrime {
 P:	TOKEN_KEYWORD_PACKAGE I TOKEN_SEMICOLON{
 		AbstractNode* P = new NonTerminalNode("P");
 		P->append(new TerminalNode("package"));
-		P->append($2);
+		P->append($2); // need a hack here from Variable Node to packageIdentifierNode
 		P->append(new TerminalNode(";"));
 		$$ = P;
 	};
@@ -115,7 +120,7 @@ S: TOKEN_STRING_LIT {
 F: TOKEN_KEYWORD_FUNC I TOKEN_LPAREN TOKEN_RPAREN B {
 														AbstractNode *F = new NonTerminalNode("F");
 														F->append(new TerminalNode("func"));
-														F->append($2);
+														F->append(new FuncIdentifierNode((VariableNode*)$2)); // hack from VariableNode to funcIdentNode
 														F->append(new TerminalNode("("));
 														F->append(new TerminalNode(")"));
 														F->append($5);
@@ -135,15 +140,7 @@ BPrime: {AbstractNode* BPrime = new NonTerminalNode("BPrime"); $$ = BPrime;} | N
 					  };
 N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON { AbstractNode* N = new NonTerminalNode("N");
 		N->append($1);
-		N->append(new TerminalNode(":="));
-		N->append($3);
-		N->append(new TerminalNode(";"));
-		$$ = N;
-	}
- | I TOKEN_ASSIGNMENT L  TOKEN_SEMICOLON {
-		AbstractNode* N = new NonTerminalNode("N");
-		N->append($1);
-		N->append(new TerminalNode("="));
+		N->append(new BinaryNode(":="));
 		N->append($3);
 		N->append(new TerminalNode(";"));
 		$$ = N;
@@ -151,7 +148,7 @@ N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON { AbstractNode* N = new NonTerminalN
 L: L TOKEN_PLUS L {
 				   AbstractNode* L = new NonTerminalNode("L");
 				   L->append($1);
-				   L->append(new TerminalNode("+"));
+				   L->append(new BinaryNode("+"));
 				   L->append($3);
 				  } | 
 				 I {

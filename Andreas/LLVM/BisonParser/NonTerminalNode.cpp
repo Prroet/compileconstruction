@@ -16,6 +16,11 @@ NonTerminalNode::~NonTerminalNode()
 {
 } */
 
+int NonTerminalNode::isTerminalNode()
+{
+	return 0;
+}
+
 void NonTerminalNode::printNodeValue()
 {
 	if(this->value.size())
@@ -26,7 +31,7 @@ void NonTerminalNode::printNodeValue()
 		std::cout << "This node has no value" << std::endl;
 }
 
-/*Value* NonTerminalNode::codegen()
+Value* NonTerminalNode::codegen()
 {
 	return NULL;
-} */
+}

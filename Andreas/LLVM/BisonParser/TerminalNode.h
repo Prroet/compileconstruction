@@ -17,6 +17,9 @@ static IRBuilder<> Builder(TheContext);
 static std::unique_ptr<Module> TheModule;
 static std::map<std::string, Value *> NamedValues;
 
+void LogError(const char*);
+Value* LogErrorV(const char*);
+
 class TerminalNode: public AbstractNode
 {
 	public:
@@ -24,7 +27,8 @@ class TerminalNode: public AbstractNode
 		TerminalNode(std::string);
 		TerminalNode(int givenValue);
 		~TerminalNode();
-//		virtual Value* codegen()=0;
+		virtual int isTerminalNode();
+		virtual Value* codegen();
 	protected:
 		std::string stringValue;
         int numValue;

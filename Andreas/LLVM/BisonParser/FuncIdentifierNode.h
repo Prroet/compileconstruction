@@ -1,14 +1,15 @@
-#ifndef VARIABLENODE_H
-#define VARIABLENODE_H
+#ifndef FUNCIDENTIFIERNODE_H
+#define FUNCIDENTIFIERNODE_H
 
 #include "TerminalNode.h"
 #include "llvm/IR/Value.h"
 #include "llvm/IR/Constants.h"
+#include "VariableNode.h"
 #include <string>
 
 using namespace llvm;
 
-class VariableNode: public TerminalNode
+class FuncIdentifierNode: public TerminalNode
 {
 
 	private:
@@ -18,9 +19,9 @@ class VariableNode: public TerminalNode
 		void printNodeValue();
 	public:
 		int isTerminalNode();
-		VariableNode(std::string);
-		virtual ~VariableNode();
-		std::string getName();
+		FuncIdentifierNode(VariableNode* var);
+		FuncIdentifierNode(std::string);
+		virtual ~FuncIdentifierNode();
 };
 
 #endif

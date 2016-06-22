@@ -1,5 +1,5 @@
-#ifndef VARIABLENODE_H
-#define VARIABLENODE_H
+#ifndef BINARYNODE_H
+#define BINARYNODE_H
 
 #include "TerminalNode.h"
 #include "llvm/IR/Value.h"
@@ -8,19 +8,18 @@
 
 using namespace llvm;
 
-class VariableNode: public TerminalNode
+class BinaryNode: public TerminalNode
 {
 
 	private:
 		virtual Value* codegen();
-		std::string Name;
+		std::string Value;
 	protected:
 		void printNodeValue();
 	public:
 		int isTerminalNode();
-		VariableNode(std::string);
-		virtual ~VariableNode();
-		std::string getName();
+		BinaryNode(std::string);
+		virtual ~BinaryNode();
 };
 
 #endif

@@ -3,9 +3,9 @@
 
 #include <vector>
 #include <string>
-// #include "llvm/IR/DerivedTypes.h"
+#include "llvm/IR/DerivedTypes.h"
 
-//using namespace llvm;
+using namespace llvm;
 
 class AbstractNode
 {
@@ -16,6 +16,12 @@ class AbstractNode
 		 * recursive function which prints this Node and all the Child Nodes
 		**/
 		void printNode(int depth);
+		/**
+			returns 0 if NonTerminalNode
+			returns 1 if TerminalNode
+			returns 2 if SpecializedTerminalNode
+		**/
+		virtual int isTerminalNode() = 0; 
 		unsigned getNodeLevel();
 		unsigned getNumberOfChildren();
 		/**
@@ -29,7 +35,7 @@ class AbstractNode
 		**/
 		void append(AbstractNode*);
 		
-//		virtual Value* codegen() = 0;
+		virtual Value* codegen() = 0;
 		/**
 		 * Abstract method for printing the Node Value
 		**/

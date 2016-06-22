@@ -8,6 +8,5 @@ import "fmt";
 func main () {
 	x := 5;
 	y := 6;
-	z := x + 7;
-//	x = z;
+	z := x + 7; // this should work
 }
