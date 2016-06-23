@@ -1,8 +1,8 @@
 # Makefile
 
-FILES = AbstractNode.cpp DeclarationNode.cpp NonTerminalNode.cpp TerminalNode.cpp FuncIdentifierNode.cpp  NumberNode.cpp VariableNode.cpp BinaryNode.cpp Lexer.c Parser.c Expression.c main.c
+FILES = AbstractNode.cpp PackageIdentifierNode.cpp DeclarationNode.cpp NonTerminalNode.cpp TerminalNode.cpp FuncIdentifierNode.cpp  NumberNode.cpp VariableNode.cpp BinaryNode.cpp Lexer.c Parser.c Expression.c main.c
 CC	= clang++
-CFLAGS = `llvm-config --cxxflags --ldflags --system-libs --libs all` -std=c++11 -g
+CFLAGS = `llvm-config --cxxflags --ldflags --system-libs --libs all` -std=c++11 -g -fexceptions
 BisonParser: $(FILES)
 		$(CC) $(FILES) $(CFLAGS) -o BisonParser
 

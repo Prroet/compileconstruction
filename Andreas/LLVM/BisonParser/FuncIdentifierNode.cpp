@@ -18,8 +18,13 @@ FuncIdentifierNode::FuncIdentifierNode(VariableNode* var)
 
 Value* FuncIdentifierNode::codegen()
 {
-//	ConstantInt::get(TheContext, APInt(sizeof(Name)*8, Val, true));
-
+//	std::cout << "Hello From FuncIdentifierNode codegen()" << std::endl;
+	for(unsigned i=0;i < this->children.size(); i++)
+	{
+		Value* returnValue = this->children.at(i)->codegen();
+		if(returnValue)
+			return returnValue;
+	}
 }
 
 int FuncIdentifierNode::isTerminalNode()

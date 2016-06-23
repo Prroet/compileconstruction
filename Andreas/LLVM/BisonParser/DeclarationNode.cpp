@@ -11,6 +11,7 @@ DeclarationNode::~DeclarationNode()
 // get the number value and then insert the number in symbol table
 Value* DeclarationNode::codegen()
 {
+//	std::cout << "Codegen() DeclNode childrenSize " << this->children.size() << std::endl;
 	if(this->children.size() == 2)
 	{
 		std::string typeNameFirst = typeid(this->children.at(0)).name();
@@ -30,8 +31,7 @@ Value* DeclarationNode::codegen()
 				VariableNode* secondChild =(VariableNode*) this->children.at(1);	// the variable where the value is in
 				std::string firstChildName = firstChild->getName();
 				std::string secondChildName = secondChild->getName();
-				Value* valueOfSecondChild;
-				valueOfSecondChild = NamedValues[secondChildName];
+				Value* valueOfSecondChild = secondChild->codegen();
 				if(!valueOfSecondChild)	// if the variable has no value it's undeclared
 					std::cerr << "Error undeclared Variable " << secondChildName << std::endl;
 				else
@@ -49,11 +49,14 @@ Value* DeclarationNode::codegen()
 			std::cerr << "Error! Unexpected Type!" << std::endl;
 		} // still missing binaryOperatorNode !
 	}
+	else
+		std::cerr << "Number of Nodes is not 2 " << std::endl;
 }
 
 
 void DeclarationNode::insertChildrenInSymbolTable()
-{
+{//  std::cout << "Codegen() DeclNode childrenSize " << this->children.size() << std::endl;
+
 /*	if(this->children.size() == 2)
 	{
 		std::string typeNameFirst = typeid(this->children.at(0)).name();

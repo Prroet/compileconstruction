@@ -41,12 +41,21 @@ Value* TerminalNode::codegen()
 	Value* returnValue;
 	if(this->children.size() == 0)
 		return NULL;
-	for(unsigned i=0; i< this->children.size(); i++)
+	else
+		std::cerr << "Terminal Node should not have children!" << std::endl;
+/*	for(unsigned i=0; i< this->children.size(); i++)
 	{
+		try
+		{
 		returnValue = this->children.at(i)->codegen();
+		}
+		catch(std::exception& e)
+		{
+			std::cout << "out of range from TerminalNode!" << std::endl; 
+		}
 		if(returnValue)
 			return returnValue;	
-	}
+	} */
 }
 
 void TerminalNode::printNodeValue()

@@ -12,7 +12,6 @@ class VariableNode: public TerminalNode
 {
 
 	private:
-		virtual Value* codegen();
 		std::string Name;
 	protected:
 		void printNodeValue();
@@ -21,6 +20,7 @@ class VariableNode: public TerminalNode
 		VariableNode(std::string);
 		virtual ~VariableNode();
 		std::string getName();
+		virtual Value* codegen();
 };
 
 #endif

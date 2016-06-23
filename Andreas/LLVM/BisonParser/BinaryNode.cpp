@@ -15,6 +15,10 @@ Value* BinaryNode::codegen()
 	{
 		Value* L = this->children.at(0)->codegen();
 		Value* R = this->children.at(1)->codegen();
+		if(!L || !R)
+		{
+			std::cerr << "Error Left or Right are not valid BinaryNode::codegen()" << std::endl;
+		}
 		if(operatorSymbol.compare("+"))
 			return Builder.CreateFAdd(L,R, "addtmp");
 		else

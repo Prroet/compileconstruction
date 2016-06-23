@@ -15,6 +15,7 @@
 #include "Parser.h"
 #include "Lexer.h"
 #include "FuncIdentifierNode.h"
+#include "PackageIdentifierNode.h"
 #include <vector>
 #include <string>
 
@@ -91,7 +92,7 @@ A:  P PPrime {
 P:	TOKEN_KEYWORD_PACKAGE I TOKEN_SEMICOLON{
 		AbstractNode* P = new NonTerminalNode("P");
 		P->append(new TerminalNode("package"));
-		P->append($2); // need a hack here from Variable Node to packageIdentifierNode
+		P->append(new PackageIdentifierNode((VariableNode*)$2)); // need a hack here from Variable Node to packageIdentifierNode
 		P->append(new TerminalNode(";"));
 		$$ = P;
 	};
@@ -149,7 +150,7 @@ N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON {
 		DeclarationNode* N = new DeclarationNode();
 		N->append($1);
 		N->append($3);
-		N->insertChildrenInSymbolTable();
+//		N->insertChildrenInSymbolTable();
 		$$ = N;
 	};
 L: L TOKEN_PLUS L {

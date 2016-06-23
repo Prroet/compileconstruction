@@ -34,7 +34,7 @@ class AbstractNode
 			add child to the node
 		**/
 		void append(AbstractNode*);
-		
+//		virtual void codegen();		
 		virtual Value* codegen() = 0;
 		/**
 		 * Abstract method for printing the Node Value

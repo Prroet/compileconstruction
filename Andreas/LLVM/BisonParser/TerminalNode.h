@@ -15,7 +15,7 @@ using namespace llvm;
 
 static LLVMContext TheContext;
 static IRBuilder<> Builder(TheContext);
-static std::unique_ptr<Module> TheModule;
+static Module* TheModule;
 static std::map<std::string, Value *> NamedValues;
 
 void LogError(const char*);

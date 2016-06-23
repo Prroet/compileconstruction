@@ -4,7 +4,7 @@
 #include "AbstractNode.h"
 #include <string>
 #include "llvm/IR/DerivedTypes.h"
-
+#include "llvm/IR/Value.h"
 
 class NonTerminalNode: public AbstractNode 
 {
@@ -14,7 +14,7 @@ class NonTerminalNode: public AbstractNode
 		virtual Value* codegen();
 		virtual int isTerminalNode();
 	protected:
-		std::string value;
+		std::string name;
 		void printNodeValue();
 	private:
 };

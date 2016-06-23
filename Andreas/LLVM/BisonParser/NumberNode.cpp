@@ -10,9 +10,10 @@ NumberNode::~NumberNode()
 
 Value* NumberNode::codegen()
 {
-  return ConstantFP::get(TheContext, APFloat(this->Val));
+  Value* retVal = ConstantFP::get(TheContext, APFloat(this->Val));
+  retVal->dump();
+  return retVal;
 }
-
 int NumberNode::isTerminalNode()
 {
 	return 2;
