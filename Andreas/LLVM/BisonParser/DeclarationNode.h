@@ -2,7 +2,9 @@
 #define DECLARATIONNODE_H
 
 #include "TerminalNode.h"
-#include "llvm/IR/Value.h"
+#include "VariableNode.h"
+#include "NumberNode.h"
+#include "llvm/IR/DerivedTypes.h"
 #include "llvm/IR/Constants.h"
 #include <string>
 
@@ -13,12 +15,11 @@ class DeclarationNode: public TerminalNode
 
 	private:
 		virtual Value* codegen();
-			std::string Value;
 	protected:
 	public:
 		int isTerminalNode();
 		void insertChildrenInSymbolTable();
-		DeclarationNode(std::string);
+		DeclarationNode();
 		virtual ~DeclarationNode();
 		void printNodeValue();
 

@@ -9,6 +9,7 @@
 #include "llvm/IR/Module.h"
 #include "llvm/IR/DerivedTypes.h" */
 #include "NumberNode.h"
+#include "TerminalNode.h"
 #include <typeinfo>
 #include <string>
 // using namespace llvm;
@@ -22,10 +23,11 @@ void generateIRCode(AbstractNode* rootNode)
 {
 	if(rootNode != NULL)
 		rootNode->printNode(0);
-	AbstractNode* as=new NumberNode(5);
+	Value* immediateCode = rootNode->codegen();
+/*	AbstractNode* as=new NumberNode(5);
 	AbstractNode* bs= new NumberNode(1000);
 	std::string typeName = typeid(*as).name();
-	std::cout << "type of as " << typeName << std::endl;
+	std::cout << "type of as " << typeName << std::endl; */
 }
 
 #endif

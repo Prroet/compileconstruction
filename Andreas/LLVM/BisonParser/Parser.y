@@ -146,7 +146,7 @@ N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON {
 		N->append($3);
 		N->append(new TerminalNode(";"));
 		$$ = N; */
-		DeclarationNode* N = new DeclarationNode(":=");
+		DeclarationNode* N = new DeclarationNode();
 		N->append($1);
 		N->append($3);
 		N->insertChildrenInSymbolTable();

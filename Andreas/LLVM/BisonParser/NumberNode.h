@@ -8,7 +8,6 @@ using namespace llvm;
 class NumberNode: public TerminalNode
 {
 	private:
-		virtual Value* codegen();
 		double Val;
 	protected:
 	public:
@@ -16,6 +15,7 @@ class NumberNode: public TerminalNode
 		virtual ~NumberNode();
 		int isTerminalNode();
 		void printNodeValue();
+		virtual Value* codegen();
 };
 
 #endif
