@@ -7,12 +7,14 @@ CPPFILES := $(CPPFILES) $(wildcard *.cpp)
 OBJFILES = $(CPPFILES:.cpp=.o)
 CC= clang++
 CFLAGS = `llvm-config --cxxflags --ldflags --system-libs --libs all` -std=c++11 -g -fexceptions
+CLANGFIX = -D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS
+
 
 BisonParser: $(OBJFILES)
 		$(CC) $^ $(CFLAGS) -o BisonParser
 
 %.o: %.cpp
-		$(CC) -std=c++11 -g -c $^ 
+		$(CC) $(CLANGFIX) -std=c++11 -g -c $^ 
 
 Lexer.cpp Parser.cpp: Lexer.l Parser.y
 	flex Lexer.l;
