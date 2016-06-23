@@ -39,19 +39,6 @@ int TerminalNode::isTerminalNode()
 Value* TerminalNode::codegen()
 {
 	return NULL;
-/*	for(unsigned i=0; i< this->children.size(); i++)
-	{
-		try
-		{
-		returnValue = this->children.at(i)->codegen();
-		}
-		catch(std::exception& e)
-		{
-			std::cout << "out of range from TerminalNode!" << std::endl; 
-		}
-		if(returnValue)
-			return returnValue;	
-	} */
 }
 
 void TerminalNode::printNodeValue()
