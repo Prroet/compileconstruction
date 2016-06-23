@@ -33,16 +33,11 @@ void generateIRCode(AbstractNode* rootNode)
 {
 	TheModule = new Module("sth", TheContext);
 	
-/*	if(rootNode != NULL)
-		rootNode->printNode(0); */
-	Value* immediateCode = rootNode->codegen(); // this fails because bs
-	
+	if(rootNode != NULL)
+		rootNode->printNode(0);
+	Value* rootValue = rootNode->codegen(); // recursive Call to codegen
+	std::cout << "Now dumping code !" << std::endl;	
 	TheModule->dump();
-//	printSymbolTableNames();
-/*	AbstractNode* as=new NumberNode(5);
-	AbstractNode* bs= new NumberNode(1000);
-	std::string typeName = typeid(*as).name();
-	std::cout << "type of as " << typeName << std::endl; */
 }
 
 #endif

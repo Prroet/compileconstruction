@@ -1,15 +1,20 @@
 # Makefile
-
-FILES = AbstractNode.cpp PackageIdentifierNode.cpp DeclarationNode.cpp NonTerminalNode.cpp TerminalNode.cpp FuncIdentifierNode.cpp  NumberNode.cpp VariableNode.cpp BinaryNode.cpp Lexer.c Parser.c Expression.c main.c
-CC	= clang++
+CPPFILES = $(wildcard *.cpp)
+OBJFILES=$(wildcard *.o)
+CC= g++
 CFLAGS = `llvm-config --cxxflags --ldflags --system-libs --libs all` -std=c++11 -g -fexceptions
-BisonParser: $(FILES)
-		$(CC) $(FILES) $(CFLAGS) -o BisonParser
 
-Lexer.c: Lexer.l 
+
+BisonParser: $(OBJFILES)
+		$(CC) $(OBJFILES) -o BisonParser
+
+$(OBJFILES): $(CPPFILES)
+		$(CC) -c $(CFLAGS) $(CPPFILES)
+
+Lexer.cpp: Lexer.l 
 	flex Lexer.l
 
-Parser.c: Parser.y Lexer.c
+Parser.cpp: Parser.y Lexer.cpp
 	bison Parser.y
 clean:
-	rm -f *.o *~ Lexer.c Lexer.h Parser.c Parser.h BisonParser TreeTest
+	rm -f *.o *~ Lexer.cpp Lexer.h Parser.cpp Parser.h BisonParser

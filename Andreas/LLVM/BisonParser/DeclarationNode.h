@@ -18,7 +18,6 @@ class DeclarationNode: public TerminalNode
 	protected:
 	public:
 		int isTerminalNode();
-		void insertChildrenInSymbolTable();
 		DeclarationNode();
 		virtual ~DeclarationNode();
 		void printNodeValue();

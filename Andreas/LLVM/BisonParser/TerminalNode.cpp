@@ -38,11 +38,7 @@ int TerminalNode::isTerminalNode()
 
 Value* TerminalNode::codegen()
 {
-	Value* returnValue;
-	if(this->children.size() == 0)
-		return NULL;
-	else
-		std::cerr << "Terminal Node should not have children!" << std::endl;
+	return NULL;
 /*	for(unsigned i=0; i< this->children.size(); i++)
 	{
 		try

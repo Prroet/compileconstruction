@@ -11,7 +11,7 @@ NumberNode::~NumberNode()
 Value* NumberNode::codegen()
 {
   Value* retVal = ConstantFP::get(TheContext, APFloat(this->Val));
-  retVal->dump();
+//  retVal->dump();
   return retVal;
 }
 int NumberNode::isTerminalNode()
