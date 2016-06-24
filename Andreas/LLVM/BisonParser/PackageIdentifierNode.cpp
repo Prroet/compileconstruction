@@ -3,9 +3,9 @@
 PackageIdentifierNode::PackageIdentifierNode(VariableNode* varNode)
 {
 	this->Name = varNode->getName();
-	std::cout << "Deleting varNode from PackageIdNode()" << std::endl;
+//	std::cout << "Deleting varNode from PackageIdNode()" << std::endl;
 	delete varNode;	// dirty
-	std::cout << "Delete done "<< std::endl;
+//	std::cout << "Delete done "<< std::endl;
 	
 }
 
@@ -36,6 +36,6 @@ int PackageIdentifierNode::isTerminalNode()
 
 void PackageIdentifierNode::printNodeValue()
 {
-    std::cout << "Variable Node ";
+    std::cout << "Package Node ";
 	std::cout << this->Name;
 }
