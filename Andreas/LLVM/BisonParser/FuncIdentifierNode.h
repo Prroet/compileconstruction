@@ -9,7 +9,10 @@
 #include <vector>
 
 using namespace llvm;
-
+/**
+	Function definition and declaration
+	because there is no definition in our Grammar
+**/
 class FuncIdentifierNode: public TerminalNode
 {
 	private:

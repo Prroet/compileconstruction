@@ -16,6 +16,7 @@
 #include "Lexer.h"
 #include "FuncIdentifierNode.h"
 #include "PackageIdentifierNode.h"
+#include "BodyNode.h"
 #include <vector>
 #include <string>
 
@@ -120,19 +121,23 @@ S: TOKEN_STRING_LIT {
 	$$ = new TerminalNode($1); 
 	};
 F: TOKEN_KEYWORD_FUNC I TOKEN_LPAREN TOKEN_RPAREN B {
-														AbstractNode *F = new NonTerminalNode("F");
-														F->append(new TerminalNode("func"));
-														F->append(new FuncIdentifierNode((VariableNode*)$2)); // hack from VariableNode to funcIdentNode
-														F->append(new TerminalNode("("));
-														F->append(new TerminalNode(")"));
-														F->append($5);
-														$$ = F;
-													};
+/*					AbstractNode *F = new NonTerminalNode("F");
+					F->append(new TerminalNode("func"));
+					F->append(new FuncIdentifierNode((VariableNode*)$2)); // hack from VariableNode to funcIdentNode
+					F->append(new TerminalNode("("));
+					F->append(new TerminalNode(")"));
+					F->append($5);
+					$$ = F; */
+//					AbstractNode* F = new NonTerminalNode("F");
+					AbstractNode* funcId = new FuncIdentifierNode((VariableNode*)$2);
+					funcId->append($5);
+					$$ = funcId;
+												};
 B: TOKEN_CLPAREN BPrime TOKEN_CRPAREN {
-										AbstractNode *B = new NonTerminalNode("B");
-										B->append(new TerminalNode("{"));
+										AbstractNode *B = new BodyNode("B");
+									//	B->append(new TerminalNode("{"));
 										B->append($2);
-										B->append(new TerminalNode("}"));
+									//	B->append(new TerminalNode("}"));
 										$$ = B;
 	};
 BPrime: {AbstractNode* BPrime = new NonTerminalNode("BPrime"); $$ = BPrime;} | N BPrime { AbstractNode *BPrime = new NonTerminalNode("BPrime"); 

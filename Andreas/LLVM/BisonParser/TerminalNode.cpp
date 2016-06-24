@@ -32,7 +32,7 @@ int TerminalNode::isTerminalNode()
 
 Value* TerminalNode::codegen()
 {
-	std::cout << "Hello from TerminalNode::codgen() NodeName " << this->stringValue << std::endl;
+//	std::cout << "Hello from TerminalNode::codgen() NodeName " << this->stringValue << std::endl;
 	return NULL;
 }
 

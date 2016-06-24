@@ -25,12 +25,6 @@ class AbstractNode
 		unsigned getNodeLevel();
 		unsigned getNumberOfChildren();
 		/**
-            increment level Counter is a good idea!! use it before creating Child Nodes!!
-        **/
-//		void incrementLevelCounter();
-//		void decrementLevelCounter();
-//		unsigned getLevelCounter();
-		/**
 			add child to the node
 		**/
 		void append(AbstractNode*);
