@@ -19,11 +19,15 @@ Value* BinaryNode::codegen()
 		{
 			std::cerr << "Error Left or Right are not valid BinaryNode::codegen()" << std::endl;
 		}
-		if(operatorSymbol.compare("+"))
+		if(operatorSymbol.compare("+")==0)
 			return Builder.CreateFAdd(L,R, "addtmp");
 		else
-			std::cerr << "Error! invalid operator!" << std::endl;
-	}		
+		{
+			std::cout << "Operator is " << operatorSymbol << std::endl;
+			LogError("Not supported operator!");
+		}
+	}
+	return NULL;		
 }
 
 int BinaryNode::isTerminalNode()

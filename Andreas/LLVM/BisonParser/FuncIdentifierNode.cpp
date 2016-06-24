@@ -19,12 +19,10 @@ FuncIdentifierNode::FuncIdentifierNode(VariableNode* var)
 Value* FuncIdentifierNode::codegen()
 {
 //	std::cout << "Hello From FuncIdentifierNode codegen()" << std::endl;
-	for(unsigned i=0;i < this->children.size(); i++)
-	{
-		Value* returnValue = this->children.at(i)->codegen();
-		if(returnValue)
-			return returnValue;
-	}
+	if(this->children.size() > 0)
+		LogError("FuncIdentifierNode should have no children!!!");
+	
+	return NULL;
 }
 
 int FuncIdentifierNode::isTerminalNode()

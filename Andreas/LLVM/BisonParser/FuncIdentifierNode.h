@@ -6,15 +6,15 @@
 #include "llvm/IR/Constants.h"
 #include "VariableNode.h"
 #include <string>
+#include <vector>
 
 using namespace llvm;
 
 class FuncIdentifierNode: public TerminalNode
 {
-
 	private:
-		virtual Value* codegen();
 		std::string Name;
+		std::vector<std::string> arguments;
 	protected:
 	public:
 		int isTerminalNode();
@@ -22,6 +22,7 @@ class FuncIdentifierNode: public TerminalNode
 		FuncIdentifierNode(std::string);
 		virtual ~FuncIdentifierNode();
 		void printNodeValue();
+		virtual Value* codegen();
 };
 
 #endif

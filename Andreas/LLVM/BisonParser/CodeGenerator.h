@@ -14,30 +14,9 @@
 #include <string>
 #include "llvm/IR/Module.h"
 #include "llvm/Support/Compiler.h"
+
 using namespace llvm;
 
-/*static LLVMContext TheContext;
-static IRBuilder<> Builder(TheContext);
-static std::unique_ptr<Module> TheModule;
-static std::map<std::string, Value *> NamedValues; */
-
-void printSymbolTableNames()
-{
-	for(std::map<std::string, Value*>::iterator it=NamedValues.begin(); it!=NamedValues.end(); it++)
-	{
-		std::cout << it->first << std::endl;
-	}
-}
-
-void generateIRCode(AbstractNode* rootNode)
-{
-	TheModule = new Module("sth", TheContext);
-	
-	if(rootNode != NULL)
-		rootNode->printNode(0);
-	Value* rootValue = rootNode->codegen(); // recursive Call to codegen
-	std::cout << "Now dumping code !" << std::endl;	
-	TheModule->dump();
-}
+void generateIRCode(AbstractNode* rootNode);
 
 #endif
