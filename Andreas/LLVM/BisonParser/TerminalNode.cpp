@@ -1,16 +1,5 @@
 #include "TerminalNode.h"
 
-void LogError(const char* Str)
-{
-    std::cerr << Str << std::endl;
-}
-
-Value *LogErrorV(const char* Str)
-{
-    LogError(Str);
-    return NULL;
-}
-
 TerminalNode::TerminalNode(std::string givenValue):stringValue(givenValue)
 {
     this->isString = true;

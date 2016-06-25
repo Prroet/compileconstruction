@@ -33,6 +33,7 @@ void NonTerminalNode::printNodeValue()
 
 Value* NonTerminalNode::codegen()
 {
+//	std::cout << "NonTerminalNode codegen myName is " << this->name << std::endl;
 	for(AbstractNode* i: this->children)
 	{
 		std::cout << "Hello From NonTerminalNode::codegen() NodeName is "<< this->name << std::endl;

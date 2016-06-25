@@ -2,6 +2,7 @@
 #define NUMBERNODE_H
 
 #include "TerminalNode.h"
+#include "LLVMStuff.h"
 
 using namespace llvm;
 

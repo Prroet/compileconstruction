@@ -13,14 +13,6 @@
 
 using namespace llvm;
 
-static LLVMContext TheContext;
-static IRBuilder<> Builder(TheContext);
-static Module* TheModule;
-static std::map<std::string, Value *> NamedValues;
-
-void LogError(const char*);
-Value* LogErrorV(const char*);
-
 class TerminalNode: public AbstractNode
 {
 	public:

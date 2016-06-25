@@ -5,6 +5,7 @@
 #include "llvm/IR/Value.h"
 #include "llvm/IR/Constants.h"
 #include "VariableNode.h"
+#include "LLVMStuff.h"
 #include <string>
 #include <vector>
 

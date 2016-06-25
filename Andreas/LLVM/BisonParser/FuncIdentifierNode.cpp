@@ -17,7 +17,9 @@ FuncIdentifierNode::FuncIdentifierNode(VariableNode* var)
 }
 
 Value* FuncIdentifierNode::codegen()
-{
+{	
+	std::cout << "Hello From FuncIdentifierNOde" << std::endl;
+	std::cout << "The Module " << TheModule << std::endl;
 	Function* TheFunction=NULL;
 	if(TheModule != NULL)
 		TheFunction = TheModule->getFunction(this->Name);

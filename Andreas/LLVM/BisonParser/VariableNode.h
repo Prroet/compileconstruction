@@ -4,6 +4,7 @@
 #include "TerminalNode.h"
 #include "llvm/IR/Value.h"
 #include "llvm/IR/Constants.h"
+#include "LLVMStuff.h"
 #include <string>
 
 using namespace llvm;
