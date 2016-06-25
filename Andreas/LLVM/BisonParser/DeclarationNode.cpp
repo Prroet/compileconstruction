@@ -19,7 +19,11 @@ Value* DeclarationNode::codegen()
 		Value* rightNodeValue = this->children.at(rightIndex)->codegen();	// give value
 		VariableNode* leftNode = (VariableNode*) this->children.at(leftIndex);
 		NamedValues[leftNode->getName()] = rightNodeValue;
-		return rightNodeValue;
+//		Builder->create 			should allocate memory here for load instruction from stack
+		IRBuilder<> TmpB(&TheFunction->getEntryBlock(), TheFunction->getEntryBlock().begin());
+		AllocaInst* allocInst = TmpB.CreateAlloca(Type::getDoubleTy(TheContext), 0, leftNode->getName().c_str());
+		return allocInst;
+//		return rightNodeValue;
 	}
 	else
 	{

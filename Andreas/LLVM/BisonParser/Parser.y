@@ -17,6 +17,7 @@
 #include "FuncIdentifierNode.h"
 #include "PackageIdentifierNode.h"
 #include "BodyNode.h"
+#include "InstructionNode.h"
 #include <vector>
 #include <string>
 
@@ -140,11 +141,17 @@ B: TOKEN_CLPAREN BPrime TOKEN_CRPAREN {
 									//	B->append(new TerminalNode("}"));
 										$$ = B;
 	};
-BPrime: {AbstractNode* BPrime = new NonTerminalNode("BPrime"); $$ = BPrime;} | N BPrime { AbstractNode *BPrime = new NonTerminalNode("BPrime"); 
-						BPrime->append($1);
-						BPrime->append($2);
-						$$ = BPrime;
-					  };
+BPrime: {
+		AbstractNode* BPrime = new NonTerminalNode("BPrime"); 
+		$$ = BPrime;
+	} | 
+	N BPrime 
+	{ 
+		AbstractNode *BPrime = new InstructionNode("BPrimeInstruction"); 
+		BPrime->append($1);
+		BPrime->append($2);
+		$$ = BPrime;
+	};
 N: I TOKEN_DECLARE_ASSIGN L TOKEN_SEMICOLON { 
 	/*	AbstractNode* N = new NonTerminalNode("N");
 		N->append($1);

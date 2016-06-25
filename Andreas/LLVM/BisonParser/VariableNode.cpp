@@ -20,7 +20,7 @@ Value* VariableNode::codegen()
   Value *V = NamedValues[Name];
   if (!V)
     LogErrorV("Unknown variable name");
-  return V;
+  return Builder.CreateLoad(V, Name.c_str());
 }
 
 int VariableNode::isTerminalNode()
