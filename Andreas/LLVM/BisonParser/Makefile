@@ -6,6 +6,7 @@ CPPFILES :=	$(BISONFILES:.y=.cpp) $(CPPFILES)
 CPPFILES := $(CPPFILES) $(wildcard *.cpp)
 OBJFILES = $(CPPFILES:.cpp=.o)
 CC= clang++
+#CC = g++
 CFLAGS = `llvm-config --cxxflags --ldflags --system-libs --libs all` -std=c++11 -g -fexceptions
 CLANGFIX = #-D__STDC_CONSTANT_MACROS -D__STDC_LIMIT_MACROS
 
