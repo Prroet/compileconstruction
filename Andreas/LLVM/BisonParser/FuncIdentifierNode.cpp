@@ -46,7 +46,7 @@ Value* FuncIdentifierNode::codegen()
 			Value* retVal = NULL;
 			for(AbstractNode* i : children)	// if we would have multiple children generate code for it
 				retVal = i->codegen();	// the codegen call is most important
-			Builder.CreateRet(retVal);
+//			Builder.CreateRet(retVal);
 			verifyFunction(*MainFunction);
 			return MainFunction;
 		}
